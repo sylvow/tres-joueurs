@@ -12,8 +12,8 @@ class RequestsController < ApplicationController
   end
 
   def index
-    @meetings = Meeting.where(user: current_user)
-    @requests = @meetings.requests
+    @requests = Request.where(user_id: current_user)
+    @meetings = Meeting.where(user_id: current_user)
   end
 
   def edit

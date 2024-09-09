@@ -1,0 +1,15 @@
+<div class="container">
+  <h3>Mes demandes</h3>
+  <% @requests.each do |request| %>
+    <div class="request-card p-2 my-2">
+      <p><%= request.status %></p>
+    </div>
+  <% end %>
+  <h3>Mes sessions de jeu</h3>
+  <% @meetings.each do |meeting| %>
+    <div class="request-card p-2 my-2">
+      <p><%= meeting.title %></p>
+      <p><%= meeting.status %></p>
+    </div>
+  <% end %>
+</div>
