@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 p-5 m-5 shadow">
+    <h1 class="d-flex justify-content-center annonce-titre">Crée ton annonce ! 😎</h1>
+    <%= simple_form_for @game do |f| %>
+    <%= f.input :title,
+                placeholder: "titre",
+                label: "titre" %>
+    <%= f.input :description,
+                placeholder: "Description",
+                label: "Description" %>
+    <%= f.input :address,
+                label: "Adresse" %>
+                <%# # input_html: {data: {address_autocomplete_target: "address"}, class: "d-none"},
+                # wrapper_html: {
+                #   data: {
+                #     controller: "address-autocomplete",
+                #     address_autocomplete_api_key_value: ENV['MAPBOX_API_KEY']
+                #     }} %>
+
+    <%# <%= f.input :picture, as: :file %>
+    <div class="text-center pt-3">
+      <%= f.button :submit,"CREER L'ANNONCE'", class: "btn btn-primary " %>
+      <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
+    </div>
+    <% end %>
+    </div>
+  </div>
+  <%= link_to "< Liste", meetings_path %>
+</div>

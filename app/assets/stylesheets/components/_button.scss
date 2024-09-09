@@ -1,0 +1,47 @@
+@media (max-width: 720px) {
+  .fixed-button {
+   position: fixed;
+   bottom: 5px;
+   right: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 50%;
+   height: 60px;
+   width: 60px;
+   box-shadow: rgba(223, 220, 220, 0.082) 0px 0px 3px;
+   background-color: $dark;
+   border: none;
+   color: white;
+   text-align: center;
+   text-decoration: none;
+   font-size: 16px;
+   }
+   .create-icon {
+     font-size: xx-large;
+   }
+ }
+
+ @media (min-width: 720px) {
+   .fixed-button {
+    position: fixed;
+    bottom: 10px;
+    right: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 85px;
+    width: 85px;
+    box-shadow: rgba(206, 200, 200, 0.041) 0px 0px 5px;
+    background-color: $dark;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    }
+    .create-icon {
+      font-size: 70px;
+    }
+  }
