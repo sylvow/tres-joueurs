@@ -1,0 +1,15 @@
+.games-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.game-card {
+  max-width: 400px;
+}
+
+@media (min-width: 720px) {
+  .game-card {
+    width: 400px;
+  }
+}

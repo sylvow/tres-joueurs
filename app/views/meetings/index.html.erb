@@ -1,0 +1,12 @@
+<div class="container">
+  <% @meetings.each do |meeting| %>
+  <div class="meeting-card p-2 my-2">
+  <p><i>Pseudo : <%= meeting.user.username %></i></p>
+  <p>Jeu : <strong><%= meeting.game.name %></strong></p>
+  <p>- - - - - - - - - -</p>
+  <p>Date : <%= meeting.date %></p>
+  <p><%= meeting.title %></p>
+  <p>description :<%= meeting.description %></p>
+  <p>besoin de <%= meeting.players_needed_min %> joueurs</p>
+  </div>
+</div>
