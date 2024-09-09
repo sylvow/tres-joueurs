@@ -1,5 +1,7 @@
 class MeetingsController < ApplicationController
+  
   before_action set_params, only: %i[show edit update]
+  
   def index
     @meetings = Meeting.all
   end
@@ -46,4 +48,5 @@ class MeetingsController < ApplicationController
                                     :place_name, :place_address, :latitude, :longitude, :status, :level, :date,
                                     :game_id)
   end
+
 end
