@@ -1,0 +1,15 @@
+<div class="container p-3 mt-3">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 shadow rounded-3 mb-3 show-card">
+      <h2 class="py-3 text-center">Ma location de <%= @user.username %> 🥳</h2>
+      <div class="d-flex justify-content-between pb-2"><p>Catégorie : </p><span><%= @game.category %></div>
+      <div class="d-flex justify-content-between pb-2"><p>Jeu : </p><span><%= @game.name %></span></div>
+      <div class="d-flex justify-content-between pb-2"><p>Nombre de joueur minimum : </p><span><%= @meeting.players_needed_min %></span></div>
+      <div class="d-flex justify-content-between pb-2"><p>Nombre de joueur maximum : </p><span><%= @meeting.players_needed_max %></span></div>
+      <div class="d-flex justify-content-between pb-2"><p>Niveau : </p><span><%= @meeting.level %></span></div>
+      <div class="d-flex justify-content-between pb-2"><p>Description : </p><span><%= @meeting.description %></span></div>
+      
+    </div>
+    <%= link_to "< Mes locations", meetings_path %>
+  </div>
+</div>

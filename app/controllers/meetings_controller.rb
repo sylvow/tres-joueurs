@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
   
-  before_action set_params, only: %i[show edit update]
+  before_action :set_params, only: %i[show edit update]
   
   def index
     @meetings = Meeting.all
@@ -11,6 +11,8 @@ class MeetingsController < ApplicationController
   end
 
   def show
+    @game = Game.find(params[:id])
+    @user = current_user
   end
 
   def new
