@@ -185,6 +185,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     ostruct (0.6.0)
+    pg (1.5.8)
     popper_js (2.11.8)
     psych (5.1.2)
       stringio
@@ -315,6 +316,7 @@ DEPENDENCIES
   font-awesome-sass (~> 6.1)
   importmap-rails
   jbuilder
+  pg
   puma (>= 5.0)
   rails (~> 7.1.4)
   sassc-rails

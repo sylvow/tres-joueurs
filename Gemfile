@@ -32,6 +32,8 @@ gem 'ffi', '~> 1.16.0'
 
 gem 'cloudinary'
 
+gem 'pg'
+
 gem "bootstrap", "~> 5.2"
 gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"

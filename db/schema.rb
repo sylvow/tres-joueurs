@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_09_09_123501) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -32,8 +35,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_09_123501) do
     t.string "status"
     t.string "level"
     t.datetime "date"
-    t.integer "user_id", null: false
-    t.integer "game_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "game_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_meetings_on_game_id"
@@ -43,8 +46,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_09_123501) do
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.datetime "date"
-    t.integer "meeting_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "meeting_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meeting_id"], name: "index_messages_on_meeting_id"
@@ -54,8 +57,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_09_123501) do
   create_table "requests", force: :cascade do |t|
     t.string "status"
     t.integer "number_of_friends"
-    t.integer "meeting_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "meeting_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["meeting_id"], name: "index_requests_on_meeting_id"
