@@ -1,9 +1,10 @@
 class RequestsController < ApplicationController
+
+
   def create
-    @meeting = Meeting.find(params[:meeting_id])
+    @meeting = Meeting.find(request_params[:meeting_id])
     @request = Request.new(request_params)
     @request.user = current_user
-    @request.meeting = @meeting
     if @request.save!
       redirect_to requests_path
     else
@@ -18,12 +19,15 @@ class RequestsController < ApplicationController
 
   def edit
     @request = Request.find(params[:id])
+    @status = ["En attente de validation", "Annuler"]
   end
 
   def update
     @request = Request.find(params[:id])
-    if @request.update!(request_params)
-      redirect_to request_path(@request)
+    if @request.update!(request_params) && request_params[:status] == "Annuler"
+      destroy
+    elsif @request.update!(request_params)
+      redirect_to requests_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -38,7 +42,7 @@ class RequestsController < ApplicationController
   private
 
   def request_params
-    params.require(:request).permit(:number_of_friends, :status)
+    params.require(:request).permit(:number_of_friends, :status, :meeting_id)
   end
 
 end

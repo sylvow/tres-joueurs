@@ -9,6 +9,7 @@
       <p><%= meeting.title %></p>
       <p>description :<%= meeting.description %></p>
       <p>besoin de <%= meeting.players_needed_min %> joueurs</p>
+      <%= link_to "Je suis interressé", meeting_path(meeting) %>
     </div>
     <% end %>
   </div>

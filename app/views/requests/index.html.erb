@@ -1,13 +1,16 @@
 <div class="container">
   <h3>Mes demandes</h3>
   <% @requests.each do |request| %>
-    <div class="request-card p-2 my-2">
+    <div class="request-card p-2 my-2  text-dark">
       <p><%= request.status %></p>
+      <p><%= request.meeting.game.name %></p>
+      <p><%= request.meeting.game.category %></p>
+      <%= link_to "Modifier ma demande", edit_request_path(request) %>
     </div>
   <% end %>
   <h3>Mes sessions de jeu</h3>
   <% @meetings.each do |meeting| %>
-    <div class="request-card p-2 my-2">
+    <div class="request-card p-2 my-2 text-dark">
       <p><%= meeting.title %></p>
       <p><%= meeting.status %></p>
     </div>

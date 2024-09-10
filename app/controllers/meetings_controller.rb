@@ -5,6 +5,7 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.all
+    @request = Request.new
   end
 
   def my_meetings
@@ -12,7 +13,8 @@ class MeetingsController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
+    @request = Request.new
+    @meeting = Meeting.find(params[:id])
     @user = current_user
   end
 
