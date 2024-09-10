@@ -1,18 +1,28 @@
 <div class="container">
-  <h3>Mes demandes</h3>
-  <% @requests.each do |request| %>
+  <h3>Mes sessions de jeu en cours</h3>
+  <% @meetings.each do |meeting| %>
+    <div class="request-card p-2 my-2 text-dark">
+      <p>Mon jeu: <%= meeting.title %></p>
+      <p>Nombre de place restante: <%= meeting.players_needed_max - meeting.players_needed_min %></p>
+    </div>
+  <% end %>
+  <h3>Les jeux auxquels je souhaite participer:</h3>
+  <% @my_requests.each do |request| %>
     <div class="request-card p-2 my-2  text-dark">
-      <p><%= request.status %></p>
-      <p><%= request.meeting.game.name %></p>
-      <p><%= request.meeting.game.category %></p>
+      <p>Jeu: <%= request.meeting.game.name %></p>
+      <p>Category: <%= request.meeting.game.category %></p>
+      <p>Lieu: <%= request.meeting.place_name %>, <%= request.meeting.place_address %></p>
+      <p>Status: <%= request.status %></p>
+      <p>Mon groupe: <%= request.number_of_friends %> joueurs</p>
       <%= link_to "Modifier ma demande", edit_request_path(request) %>
     </div>
   <% end %>
-  <h3>Mes sessions de jeu</h3>
-  <% @meetings.each do |meeting| %>
-    <div class="request-card p-2 my-2 text-dark">
-      <p><%= meeting.title %></p>
-      <p><%= meeting.status %></p>
-    </div>
-  <% end %>
+  <h3>Demandes des autres joueurs à me rejoindre</h3>
+    <% @other_requests.each do |request| %>
+      <div class="request-card p-2 my-2  text-dark">
+        <p>Jeu auxquels ils souhaitent participer: <%= request.meeting.game.name %></p>
+        <p>Nombre de joueur souhaitant nous rejoindre: <%= request.number_of_friends + 1 %></p>
+        <%= link_to "Voir le détail de la demande", request_path(request) %>
+      </div>
+    <% end %>
 </div>

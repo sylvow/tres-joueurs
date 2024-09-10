@@ -1,5 +1,14 @@
 class RequestsController < ApplicationController
 
+  def index
+    @meetings = Meeting.where(user_id: current_user)
+    @other_requests = Request.where(meeting_id: @meetings)
+    @my_requests = Request.where(user_id: current_user)
+  end
+
+  def show
+    @request = Request.find(params[:id])
+  end
 
   def create
     @meeting = Meeting.find(request_params[:meeting_id])
@@ -10,11 +19,6 @@ class RequestsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def index
-    @requests = Request.where(user_id: current_user)
-    @meetings = Meeting.where(user_id: current_user)
   end
 
   def edit
