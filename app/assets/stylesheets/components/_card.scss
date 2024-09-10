@@ -1,4 +1,4 @@
-.game-card {
+.meeting-card {
   background-color: $white;
   color: black;
 
@@ -28,7 +28,7 @@
       margin-bottom: 0;
     }
   }
-  .game-card-side-elements {
+  .meeting-card-side-elements {
     text-align: center;
 
     h3 {
@@ -36,14 +36,14 @@
     }
   }
 }
-.rental-card {
+.request-card {
   background-color: $light-gray;
   margin-bottom: 5px;
   padding: 10px 10px 10px 10px;
   border-radius: 5px;
   color: rgb(255, 255, 255);
 
-  .game-img {
+  img {
     object-fit: cover;
     object-position: center;
     width: 100%;
@@ -55,7 +55,7 @@
     color: black !important;
   }
 
-  .rental-card-side-elements {
+  .request-card-side-elements {
     // position: absolute;
     text-align: center;
   }

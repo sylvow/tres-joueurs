@@ -1,7 +1,7 @@
 class MeetingsController < ApplicationController
-  
-  before_action set_params, only: %i[show edit update]
-  
+  before_action :set_params, only: %i[show edit update]
+  skip_before_action :authenticate_user!
+
   def index
     @meetings = Meeting.all
   end
@@ -14,11 +14,14 @@ class MeetingsController < ApplicationController
   end
 
   def new
+    @games = Game.all
+    @game = Game.new
     @meeting = Meeting.new
   end
 
   def create
     @meeting = Meeting.new(meeting_params)
+    @meeting.user = current_user
     if @meeting.save!
       redirect_to meeting_path(@meeting)
     else
