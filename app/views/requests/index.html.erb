@@ -2,18 +2,23 @@
   <h3>Mes sessions de jeu en cours</h3>
   <% @meetings.each do |meeting| %>
     <div class="request-card p-2 my-2 text-dark">
-      <p>Mon jeu: <%= meeting.title %></p>
-      <p>Nombre de place restante: <%= meeting.players_needed_max - meeting.players_needed_min %></p>
+      <p>Titre de mon évenement: <strong><%= meeting.title %></p></strong>
+      <p>Mon jeu: <%= meeting.game.name %></p>
+      <p>Status: <%= meeting.status %></p>
+      <p>Joueurs nécessaire: <%= meeting.players_needed_min %></p>
+      <p>Lieu de l'évenement: <%= meeting.place_address %></p>
+      <p>Nombre de place restante: <%= compute_players_needed(meeting) %></p>
     </div>
   <% end %>
   <h3>Les jeux auxquels je souhaite participer:</h3>
   <% @my_requests.each do |request| %>
     <div class="request-card p-2 my-2  text-dark">
+      <p>Nom de l'évenement: <strong><%= request.meeting.title %></p></strong>
       <p>Jeu: <%= request.meeting.game.name %></p>
       <p>Category: <%= request.meeting.game.category %></p>
       <p>Lieu: <%= request.meeting.place_name %>, <%= request.meeting.place_address %></p>
       <p>Status: <%= request.status %></p>
-      <p>Mon groupe: <%= request.number_of_friends %> joueurs</p>
+      <p>Nombre de joueur avec moi: <%= request.number_of_friends %> joueur(s)</p>
       <%= link_to "Modifier ma demande", edit_request_path(request) %>
     </div>
   <% end %>

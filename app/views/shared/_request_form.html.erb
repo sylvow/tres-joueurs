@@ -1,6 +1,6 @@
 <%= simple_form_for(@request) do |f| %>
   <%= f.hidden_field :status, value: "En attente de validation" %>
   <%= f.hidden_field :meeting_id, value: @meeting.id %>
-  <%= f.input :number_of_friends, label: "Je viens avec plusieurs amis" %>
+  <%= f.input :number_of_friends, label: "Nombre d'ami qui m'accompagne" %>
   <%= f.submit "Je suis interessé.e!" %>
 <% end %>

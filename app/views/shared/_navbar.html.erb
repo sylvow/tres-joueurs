@@ -13,6 +13,7 @@
         <% if user_signed_in? %>
           <li>
             <%= current_user.email %>
+            <%= current_user.id %>
           </li>
           <li class="nav-item">          
             <%= link_to "Trouver un jeu", meetings_path, class: "nav-link" %>

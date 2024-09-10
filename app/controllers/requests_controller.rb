@@ -1,9 +1,11 @@
 class RequestsController < ApplicationController
 
+  helper_method :compute_players_needed
   def index
     @meetings = Meeting.where(user_id: current_user)
-    @other_requests = Request.where(meeting_id: @meetings)
     @my_requests = Request.where(user_id: current_user)
+    @other_requests = Request.where(meeting_id: @meetings)
+
   end
 
   def show
@@ -41,6 +43,11 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
     @request.destroy
     redirect_to requests_path, status: :see_other
+  end
+
+  def compute_players_needed(meeting)
+    requests = Request.where(meeting_id: meeting.id)
+    meeting.players_needed_max - requests.sum(:number_of_friends) - requests.count
   end
 
   private
