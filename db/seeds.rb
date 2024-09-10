@@ -23,7 +23,7 @@ second_game.save!
 
 10.times do |index|
 
-  user = User.new(email: Faker::Internet.email, username: "user#{index}", first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, date_of_birth: Faker::Date.birthday(min_age: 16, max_age: 50), phone_number: Faker::PhoneNumber.phone_number, password: 123456)
+  user = User.new(email: "user#{index}@gmail.com", username: "user#{index}", first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, date_of_birth: Faker::Date.birthday(min_age: 16, max_age: 50), phone_number: Faker::PhoneNumber.phone_number, password: 123456)
   user.save!
 
   meeting = Meeting.new(title: Faker::Game.title, 
