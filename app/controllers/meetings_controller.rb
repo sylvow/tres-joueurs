@@ -1,4 +1,5 @@
 class MeetingsController < ApplicationController
+
   before_action :set_params, only: %i[show edit update]
   skip_before_action :authenticate_user!
 
@@ -11,6 +12,8 @@ class MeetingsController < ApplicationController
   end
 
   def show
+    @game = Game.find(params[:id])
+    @user = current_user
   end
 
   def new
