@@ -18,13 +18,16 @@ class MeetingsController < ApplicationController
 
   def new
     @games = Game.all
-    @game = Game.new
     @meeting = Meeting.new
   end
 
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.user = current_user
+    if params[:meeting][:game_id].to_i.zero?
+      game = Game.create(name: params[:meeting][:game_id].capitalize)
+      @meeting.game_id = game.id
+    end
     if @meeting.save!
       redirect_to meeting_path(@meeting)
     else
