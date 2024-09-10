@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   root to: "pages#home"
-  resources :meetings, except: [:destroy]
+  resources :meetings, except: [:destroy] do
+    resources :requests, only: [:create]
+  end
   resources :requests
   resources :games, only: [:create]
   resources :messages, only: [:new, :create, :index] #tbc mercredi / lecture

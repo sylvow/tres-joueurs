@@ -12,8 +12,8 @@ class MeetingsController < ApplicationController
   end
 
   def show
-    @game = Game.find(params[:id])
     @user = current_user
+    @request = Request.new
   end
 
   def new

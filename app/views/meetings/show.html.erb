@@ -1,15 +1,82 @@
-<div class="container p-3 mt-3">
+<div class="container p-3 mt-3 ">
   <div class="row justify-content-center">
-    <div class="col-lg-6 shadow rounded-3 mb-3 show-card">
-      <h2 class="py-3 text-center">Ma location de <%= @user.username %> 🥳</h2>
-      <div class="d-flex justify-content-between pb-2"><p>Catégorie : </p><span><%= @game.category %></div>
-      <div class="d-flex justify-content-between pb-2"><p>Jeu : </p><span><%= @game.name %></span></div>
-      <div class="d-flex justify-content-between pb-2"><p>Nombre de joueur minimum : </p><span><%= @meeting.players_needed_min %></span></div>
-      <div class="d-flex justify-content-between pb-2"><p>Nombre de joueur maximum : </p><span><%= @meeting.players_needed_max %></span></div>
-      <div class="d-flex justify-content-between pb-2"><p>Niveau : </p><span><%= @meeting.level %></span></div>
-      <div class="d-flex justify-content-between pb-2"><p>Description : </p><span><%= @meeting.description %></span></div>
+
+    <div class="col-lg-6 shadow rounded-3 mb-3 show-card py-3 shadow" data-controller="show-meetings-interest">
+      <div class="image-container d-flex justify-content-center align-items-center">
+        <%= image_tag("profil.png", class: "img-fluid", style: 'height:100%;width:auto;') %>
+        <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
+      </div>
       
+      <h3 class="text-center m-0"><%= @meeting.user.username %></h3>
+      <h2 class="py-3 text-center"><%= @meeting.title.upcase %></h2>
+      
+      <div class="d-flex justify-content-between pb-2">
+        <p><strong>Catégorie</strong></p>
+        <span><%= @meeting.game.category %>
+      </div>
+      
+      <div class="d-flex justify-content-between pb-2">
+        <p><strong>Jeu</strong></p>
+        <span><%= @meeting.game.name %></span>
+      </div>
+      
+      <div class="d-flex justify-content-between pb-2">
+        <p><strong>Nombre de joueurs</strong></p>
+        <span><%= @meeting.players_needed_min %> à <%= @meeting.players_needed_max %></span>
+      </div>
+      
+      <div class="d-flex justify-content-between pb-2">
+        <p><strong>Niveau</strong></p>
+        <span><%= @meeting.level %></span>
+      </div>
+      
+      <div class="d-flex justify-content-between pb-2">
+        <p><strong>Localisation</strong></p>
+        <div class="row pb-2">
+          <span class="text-end"><%= @meeting.location_type %></span>
+          <span class="text-end"><%= @meeting.place_name %></span>
+          <span class="text-end"><%= @meeting.place_address %></span>
+        </div>
+      </div>
+      
+      <div class="d-flex justify-content-between pb-2">
+        <p><strong>Date</strong></p>
+        <span><%= @meeting.date %></span>
+      </div>
+      
+      <% if !@meeting.description.blank? %>
+        <div>
+          <p><strong>Description</strong></p>
+          <p class="bg-light rounded-3 p-3 text-dark"><%= @meeting.description %></p>
+        </div>
+      <% end %>
+
+      <% if @meeting.user != current_user %>
+        <div class="row justify-content-center">
+          <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
+                  data-action="click->show-meetings-interest#display"
+                  data-show-meetings-interest-target="interested">
+                  Je suis intéressé.e
+          </button>
+        
+          <div class="container mt-3 d-none" data-show-meetings-interest-target="friends">
+            <div class="row text-center">
+              <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
+
+                <%= f.input :number_of_friends, 
+                            label: "Nombre d'amis", 
+                            collection: (0..@meeting.players_needed_max - 2).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
+                            prompt: "Sélectionnez le nombre d'amis",
+                            input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
+                <div class="text-center"> 
+                  <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill" %>
+                </div>
+
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
-    <%= link_to "< Mes locations", meetings_path %>
   </div>
 </div>
