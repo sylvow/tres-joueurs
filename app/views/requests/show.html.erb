@@ -4,5 +4,7 @@
 <p>Nombre de joueurs souhaitant rejoindre le jeu: <%= @request.number_of_friends + 1 %></p>
 <p>Lieu: <%= @request.meeting.place_name %>, <%= @request.meeting.place_address %></p>
 <p>Status: <%= @request.status %></p>
+<% if @request.meeting.players_needed_max %>
 <p>Nombre de joueurs encore nécessaire avant validation: <%= @request.meeting.players_needed_max - @request.meeting.players_needed_min %></p>
+<% end %>
 <%= link_to "Retour aux demandes", requests_path %>

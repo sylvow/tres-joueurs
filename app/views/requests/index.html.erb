@@ -7,7 +7,9 @@
       <p>Status: <%= meeting.status %></p>
       <p>Joueurs nécessaire: <%= meeting.players_needed_min %></p>
       <p>Lieu de l'évenement: <%= meeting.place_address %></p>
+      <% if meeting.players_needed_max %>
       <p>Nombre de place restante: <%= compute_players_needed(meeting) %></p>
+      <% end %>
     </div>
   <% end %>
   <h3>Les jeux auxquels je souhaite participer:</h3>
