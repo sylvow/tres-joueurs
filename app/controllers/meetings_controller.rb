@@ -1,4 +1,5 @@
 class MeetingsController < ApplicationController
+
   before_action :set_params, only: %i[show edit update]
   skip_before_action :authenticate_user!
 
@@ -17,6 +18,8 @@ class MeetingsController < ApplicationController
   end
 
   def show
+    @user = current_user
+    @request = Request.new
   end
 
   def new
