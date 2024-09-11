@@ -6,6 +6,7 @@ class GamesController < ApplicationController
       redirect_to meeting_path(@meeting)
     else
       render :new, status: :unprocessable_entity
+    end
   end
 
   private

@@ -1,0 +1,8 @@
+
+<div class="container">
+  <%= simple_form_for(@request) do |f| %>
+    <%= f.input :status, collection: @status, selected: @request.status %>
+    <%= f.input :number_of_friends, label: "Nous ne sommes plus le même nombre de joueur" %>
+    <%= f.submit "Mettre à jour" %>
+  <% end %>
+</div>

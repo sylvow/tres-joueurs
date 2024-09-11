@@ -8,14 +8,15 @@
   <div class="meetings-container mt-4">
     <% @meetings.each do |meeting| %>
       <div class="meeting-card shadow mb-3 p-3 rounded-4">
-        <p><i>Pseudo : <%= meeting.user.username %></i></p>
-        <p>Jeu : <strong><%= meeting.game.name %></strong></p>
-        <p>- - - - - - - - - -</p>
-        <p>Date de la rencontre : <%= meeting.date %></p>
-        <%# .strftime("le %d/%m/%Y à %Hh%M") %>
-        <p><%= meeting.title %></p>
-        <p>description :<%= meeting.description %></p>
-        <p>besoin de <%= meeting.players_needed_min %> joueurs</p>
+      <p><i>Pseudo : <%= meeting.user.username %></i></p>
+      <p>Jeu : <strong><%= meeting.game.name %></strong></p>
+      <p>- - - - - - - - - -</p>
+      <p>Date de la rencontre : <%= meeting.date %></p>
+      <%# .strftime("le %d/%m/%Y à %Hh%M") %>
+      <p><%= meeting.title %></p>
+      <p>description :<%= meeting.description %></p>
+      <p>besoin de <%= meeting.players_needed_min %> joueurs</p>
+      <%= link_to "Je suis interressé", meeting_path(meeting) %>
     </div>
     <% end %>
   </div>

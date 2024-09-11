@@ -5,6 +5,7 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.all
+    @request = Request.new
     @markers = @meetings.geocoded.map do |m|
       {
         lat: m.latitude,
@@ -18,6 +19,8 @@ class MeetingsController < ApplicationController
   end
 
   def show
+    @request = Request.new
+    @meeting = Meeting.find(params[:id])
     @user = current_user
     @request = Request.new
   end
