@@ -1,9 +1,4 @@
 <div class="container">
-      <div style="width: 100%; height: 600px;"
-      data-controller="map"
-      data-map-markers-value="<%= @markers.to_json %>"
-      data-map-api-key-value="<%= ENV['BONJOUR'] %>">
-      </div>
 
   <div class="meetings-container mt-4">
     <% @meetings.each do |meeting| %>
