@@ -6,6 +6,12 @@ class MeetingsController < ApplicationController
   def index
     @meetings = Meeting.all
     @request = Request.new
+    @markers = @meetings.geocoded.map do |m|
+      {
+        lat: m.latitude,
+        lng: m.longitude
+      }
+    end
   end
 
   def my_meetings

@@ -3,13 +3,3 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
-.meeting-card {
-  max-width: 400px;
-}
-
-@media (min-width: 720px) {
-  .meeting-card {
-    width: 400px;
-  }
-}
