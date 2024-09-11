@@ -36,6 +36,17 @@
     }
   }
 }
+
+@media (min-width: 720px) {
+  .meeting-card {
+    width: 400px;
+  }
+}
+@media (max-width: 720px) {
+  .meeting-card {
+    width: 400px;
+  }
+}
 .request-card {
   background-color: $light-gray;
   margin-bottom: 5px;
