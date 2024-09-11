@@ -5,6 +5,17 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.all
+
+    if params[:search].present?
+      params[:search].split(' ').each do |term|
+        @meetings = @meetings.joins(:game)
+        @meetings = @meetings.where(
+          "games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term", 
+          term: "%#{term}%"
+        )
+      end
+    end
+
     @request = Request.new
     @markers = @meetings.geocoded.map do |m|
       {
