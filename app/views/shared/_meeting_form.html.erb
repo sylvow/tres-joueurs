@@ -1,55 +1,65 @@
 <div class="row justify-content-center">
-    <div class="col-lg-6 p-5 m-5 shadow", data-controller="game-select">
+
+    <div class="col-lg-6 p-5 m-5 shadow" data-controller="game-select poi-autocomplete" data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     <h1 class="d-flex justify-content-center annonce-titre">Crée ton annonce ! 😎</h1>
-    <%= simple_form_for @meeting do |f| %>
-    <div class="game-info">
-      <h3> Dis m'en plus sur le jeu </h3>
-      <%= f.input :game_id,
-                  label: "Nom du jeu",
-                  input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
-                  collection: Game.all
-                  %>
-      <%= f.input :players_needed_min,
-                  placeholder: "1, 2, 3...",
-                  label: "De combien de joueurs as-tu besoin (min)?" %>
-      <%= f.input :level,
-                  placeholder: "Débutant, confirmé, expert ?",
-                  collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
-                  label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
-      <%# <%= f.input :players_needed_max,
-                  placeholder: "Description",
-                  label: "Et au max?" %>
+      <%= simple_form_for @meeting do |f| %>
+
+        <div class="game-info">
+          <h3> Dis m'en plus sur le jeu </h3>
+          <%= f.input :game_id,
+                      label: "Nom du jeu",
+                      input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
+                      collection: Game.all
+                      %>
+          <%= f.input :players_needed_min,
+                      placeholder: "1, 2, 3...",
+                      label: "De combien de joueurs as-tu besoin (min)?" %>
+          <%= f.input :level,
+                      placeholder: "Débutant, confirmé, expert ?",
+                      collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
+                      label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
+          <%# <%= f.input :players_needed_max,
+                      placeholder: "Description",
+                      label: "Et au max?" %>
+        </div>
+
+        <div class="meeting-info">
+          <h3> Précise les modalités du rendez-vous </h3>
+          <%= f.input :location_type,
+                      placeholder: "Café, Bar, Parc, A domicile ...",
+                      label: "Dans quel type de lieu veux-tu jouer?",
+                      collection: ["Parc", "Café / Bar", "A domicile", "A définir"]%>
+          <p>Cherche un lieu</p>
+
+          <%= f.input :place_name,
+                      label: "Quel est le nom de l'établissement?" %>
+          <div data-poi-autocomplete-target="searchBox" data-action="click->poi-autocomplete#set-input-value" class="mb-3"></div>
+          <%= f.input :place_address,
+                      placeholder: "1, rue de Lodi, 13006 Marseille",
+                      label: "Et son adresse ?" %>
+          <%= f.input :date,
+                      as: :string,
+                      label: "A quelle date aura lieu le rendez-vous ?",
+                      input_html: { data: { controller: "datetime-selector" } }%>
+        </div>
+
+        <div class="title-and-desc">
+          <h3>Donne un titre à ton annonce</h3>
+          <%= f.input :title,
+                    placeholder: "Titre de ton annonce",
+                    label: "Titre" %>
+          <%= f.input :description,
+                    placeholder: "(Optionnel)",
+                    label: "Description" %>
+      </div>
+
+      <div class="text-center pt-3">
+        <%= f.button :submit,"CREER L'ANNONCE", class: "btn btn-primary " %>
+        <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
+      </div>
+
+      <% end %>
     </div>
-    <div class="meeting-info">
-      <h3> Précise les modalités du rendez-vous </h3>
-      <%= f.input :location_type,
-                  placeholder: "Café, Bar, Parc, A domicile ...",
-                  label: "Dans quel type de lieu veux-tu jouer?",
-                  collection: ["Parc", "Café / Bar", "A domicile", "A définir"]%>
-      <%= f.input :place_name,
-                  placeholder: "Café La Muse",
-                  label: "Quel est le nom de l'établissement?" %>
-      <%= f.input :place_address,
-                  placeholder: "1, rue de Lodi, 13006 Marseille",
-                  label: "Et son adresse ?" %>
-      <%= f.input :date,
-                  placeholder: "Le 12/10/2024 à 18h30",
-                  label: "A quelle date aura lieu le rendez-vous ?" %>
-    </div>
-    <div class="title-and-desc">
-      <h3>Donne un titre à ton annonce</h3>
-      <%= f.input :title,
-                placeholder: "Titre de ton annonce",
-                label: "Titre" %>
-      <%= f.input :description,
-                placeholder: "(Optionnel)",
-                label: "Description" %>
-    </div>
-    <div class="text-center pt-3">
-      <%= f.button :submit,"CREER L'ANNONCE'", class: "btn btn-primary " %>
-      <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
-    </div>
-    <% end %>
-    </div>
+
 </div>
 <%= link_to "< Liste", meetings_path %>
