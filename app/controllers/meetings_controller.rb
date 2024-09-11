@@ -16,6 +16,7 @@ class MeetingsController < ApplicationController
     @request = Request.new
     @meeting = Meeting.find(params[:id])
     @user = current_user
+    @request = Request.new
   end
 
   def new

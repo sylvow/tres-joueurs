@@ -1,6 +1,7 @@
 class RequestsController < ApplicationController
 
   helper_method :compute_players_needed
+  before_action :set_request, only: [:edit, :update, :destroy]
   def index
     @meetings = Meeting.where(user_id: current_user)
     @my_requests = Request.where(user_id: current_user)
@@ -16,6 +17,8 @@ class RequestsController < ApplicationController
     @meeting = Meeting.find(request_params[:meeting_id])
     @request = Request.new(request_params)
     @request.user = current_user
+    @request.meeting = @meeting
+    @request.status = "interested"
     if @request.save!
       redirect_to requests_path
     else
@@ -24,6 +27,7 @@ class RequestsController < ApplicationController
   end
 
   def edit
+
     @request = Request.find(params[:id])
     @status = ["En attente de validation", "Annuler"]
   end
@@ -40,7 +44,6 @@ class RequestsController < ApplicationController
   end
 
   def destroy
-    @request = Request.find(params[:id])
     @request.destroy
     redirect_to requests_path, status: :see_other
   end
@@ -52,6 +55,9 @@ class RequestsController < ApplicationController
 
   private
 
+  def set_request
+    @request = Request.find(params[:id])
+  end
   def request_params
     params.require(:request).permit(:number_of_friends, :status, :meeting_id)
   end
