@@ -22,10 +22,10 @@
               <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Demandes en cours", meetings_path, class: "dropdown-item" %>
-              <%= link_to "Conversations", "#", class: "dropdown-item" %>
+              <%= link_to "Demandes en cours", requests_path, class: "dropdown-item" %>
+              <%= link_to "Conversations", conversations_path, class: "dropdown-item" %>
               <%= link_to "Mes annonces", "#", class: "dropdown-item" %>
-              <%= link_to "Déconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+              <%= link_to "Déconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item bg-danger" %>
             </div>
           </li>
         <% else %>
