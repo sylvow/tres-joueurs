@@ -44,8 +44,8 @@ class MeetingsController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.user = current_user
-    if params[:meeting][:game_id].to_i.zero?
-      game = Game.create(name: params[:meeting][:game_id].capitalize)
+    if params[:meeting][:game_id].instance_of?(String)
+      game = Game.create(name: params[:meeting][:game_id])
       @meeting.game_id = game.id
     end
     if @meeting.save!
@@ -53,6 +53,16 @@ class MeetingsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def conversations
+    @planner_conversations = Meeting.where(user: current_user)
+    # @participant_conversations = Meeting.where(request)
+  end
+
+  def messages
+    @message = Message.new
+    @meeting = Meeting.find(params[:id])
   end
 
   def edit
@@ -65,6 +75,8 @@ class MeetingsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+
 
   private
 
