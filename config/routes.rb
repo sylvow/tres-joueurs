@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get 'meetings/:id/messages', to: 'meetings#messages'
   resources :requests
   resources :games, only: [:create]
-  get 'conversations', to: 'meetings#conversations'
+  get 'conversations', to: 'meetings#conversations', as: "conversations"
   # tbc mercredi / lecture
   # Defines the root path route ("/")
   # root "posts#index"

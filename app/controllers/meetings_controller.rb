@@ -10,7 +10,7 @@ class MeetingsController < ApplicationController
       params[:search].split(' ').each do |term|
         @meetings = @meetings.joins(:game)
         @meetings = @meetings.where(
-          "games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term", 
+          "games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term",
           term: "%#{term}%"
         )
       end
