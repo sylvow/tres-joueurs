@@ -1,14 +1,8 @@
 <div class="container">
-  <div style="width: 100%; height: 600px;"
-    data-controller="map"
-    data-map-markers-value="<%= @markers.to_json %>"
-    data-map-api-key-value="<%= ENV['BONJOUR'] %>">
-  </div>
-
   <div class="row text-center p-2" data-controller="show-filters">
     <button class="btn btn-primary mt-2 p-2 col-6 mx-auto rounded-pill"
             data-action="click->show-filters#display"
-            data-show-filters-target="filtersButton"> 
+            data-show-filters-target="filtersButton">
             Filtres +
     </button>
 
@@ -28,19 +22,19 @@
     <div class="meetings-container">
       <% @meetings.each do |meeting| %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
-          
+
           <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %>" style="height: 100%;">
             <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
             <%= meeting.date.strftime("%d/%m/%Y") %>
             <%= meeting.date.strftime("%H:%M") %>
           </div>
-          
-          
+
+
           <div class="col-9 p-2" style="height: 100%;">
             <h3><strong><%= meeting.game.name %></strong></h3>
             <p><%= meeting.title %></p>
             <p>Joueur : <%= meeting.players_needed_min %> à <%= meeting.players_needed_max %></p>
-            
+
             <% if meeting.user != current_user %>
               <%= link_to "Je suis interressé", meeting_path(meeting) %>
             <% end %>
@@ -49,4 +43,7 @@
       <% end %>
     </div>
   </div>
+  <%= link_to new_meeting_path, class: "fixed-button" do %>
+      <i class="fa-solid fa-plus create-icon"></i>
+      <% end %>
 </div>
