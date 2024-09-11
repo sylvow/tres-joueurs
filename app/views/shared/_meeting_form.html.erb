@@ -30,13 +30,13 @@
                       label: "Dans quel type de lieu veux-tu jouer?",
                       collection: ["Parc", "Café / Bar", "A domicile", "A définir"]%>
           <p>Cherche un lieu</p>
-
+          <div data-poi-autocomplete-target="searchBox" class="mb-3"></div>
           <%= f.input :place_name,
-                      label: "Quel est le nom de l'établissement?" %>
-          <div data-poi-autocomplete-target="searchBox" data-action="click->poi-autocomplete#set-input-value" class="mb-3"></div>
+                      label: "Quel est le nom de l'établissement?",
+                      input_html: { data: { poi_autocomplete_target: "name" }} %>
           <%= f.input :place_address,
-                      placeholder: "1, rue de Lodi, 13006 Marseille",
-                      label: "Et son adresse ?" %>
+                      label: "Et son adresse ?",
+                      input_html: { data: { poi_autocomplete_target: "address" }} %>
           <%= f.input :date,
                       as: :string,
                       label: "A quelle date aura lieu le rendez-vous ?",
