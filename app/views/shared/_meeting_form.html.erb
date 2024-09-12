@@ -11,6 +11,10 @@
                       input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
                       collection: Game.all
                       %>
+          <%= f.input :tags,
+                      label: "Tags",
+                      input_html: {id: "filter-tags", placeholder: "Amusant, Ludique, Stratégie", autocomplete: "off"}
+                      %>
           <%= f.input :players_needed_min,
                       placeholder: "1, 2, 3...",
                       label: "De combien de joueurs as-tu besoin (min)?" %>

@@ -5,7 +5,6 @@ export default class extends Controller {
   static targets = ["interested", "friends"]
 
   connect() {
-    console.log("test hello")
   }
 
   display() {

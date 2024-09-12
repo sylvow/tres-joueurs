@@ -21,7 +21,10 @@
 
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Nombre de joueurs</strong></p>
-        <span><%= @meeting.players_needed_min %> à <%= @meeting.players_needed_max %></span>
+        <span><%= @meeting.players_needed_min %> 
+          <% if !@meeting.players_needed_max.blank? %> 
+            à <%= @meeting.players_needed_max %></span>
+          <% end %>
       </div>
 
       <div class="d-flex justify-content-between pb-2">
@@ -40,7 +43,7 @@
 
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Date</strong></p>
-        <span><%= @meeting.date.strftime("%d/%m/%Y à %H:%M") %></span>
+        <span><%= @meeting.date.strftime("%d/%m à %H:%M") %></span>
       </div>
 
       <% if !@meeting.description.blank? %>
@@ -62,11 +65,10 @@
             <div class="row text-center">
               <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
 
-                              <%= f.input :number_of_friends, 
+                <%= f.input :number_of_friends, 
                             label: "Nombre d'amis", 
                             # collection: (0..@meeting.players_needed_max - 1).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
                             collection: (0..8),
-
                             prompt: "Sélectionnez le nombre d'amis",
                             input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
                 <div class="text-center">
@@ -84,3 +86,9 @@
     </div>
   </div>
 </div>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <%= form.label :avatar, "Photo de profil" %>
+  <%= form.file_field :avatar %>
+  <%= form.submit "Sauvegarder" %>
+<% end %>

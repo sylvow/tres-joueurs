@@ -305,6 +305,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  activestorage
   autoprefixer-rails
   bootsnap
   bootstrap (~> 5.2)
