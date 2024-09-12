@@ -10,7 +10,7 @@ class MeetingsController < ApplicationController
       params[:search].split(' ').each do |term|
         @meetings = @meetings.joins(:game)
         @meetings = @meetings.where(
-          "games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term",
+          "games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term OR tags ILIKE :term",
           term: "%#{term}%"
         )
       end
@@ -88,7 +88,7 @@ class MeetingsController < ApplicationController
   def meeting_params
     params.require(:meeting).permit(:title, :description, :players_needed_min, :players_needed_max, :location_type,
                                     :place_name, :place_address, :latitude, :longitude, :status, :level, :date,
-                                    :game_id)
+                                    :game_id, :tags)
   end
 
 end
