@@ -5,30 +5,30 @@
         <%= image_tag("profil.png", class: "img-fluid", style: 'height:100%;width:auto;') %>
         <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
       </div>
-      
-      <h3 class="text-center m-0"><%= @user.username %></h3>
+
+      <h3 class="text-center m-0"><%= @meeting.user.username %></h3>
       <h2 class="py-3 text-center"><%= @meeting.title.upcase %></h2>
-      
+
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Catégorie</strong></p>
         <span><%= @meeting.game.category %>
       </div>
-      
+
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Jeu</strong></p>
         <span><%= @meeting.game.name %></span>
       </div>
-      
+
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Nombre de joueurs</strong></p>
         <span><%= @meeting.players_needed_min %> à <%= @meeting.players_needed_max %></span>
       </div>
-      
+
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Niveau</strong></p>
         <span><%= @meeting.level %></span>
       </div>
-      
+
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Localisation</strong></p>
         <div class="row pb-2">
@@ -37,12 +37,12 @@
           <span class="text-end"><%= @meeting.place_address %></span>
         </div>
       </div>
-      
+
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Date</strong></p>
         <span><%= @meeting.date.strftime("%d/%m/%Y à %H:%M") %></span>
       </div>
-      
+
       <% if !@meeting.description.blank? %>
         <div>
           <p><strong>Description</strong></p>
@@ -57,17 +57,19 @@
                   data-show-meetings-interest-target="interested">
                   Je suis intéressé.e
           </button>
-        
+
           <div class="container mt-3 d-none" data-show-meetings-interest-target="friends">
             <div class="row text-center">
               <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
 
-                <%= f.input :number_of_friends, 
+                              <%= f.input :number_of_friends, 
                             label: "Nombre d'amis", 
-                            collection: (0..@meeting.players_needed_max - 2).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
+                            # collection: (0..@meeting.players_needed_max - 1).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
+                            collection: (0..8),
+
                             prompt: "Sélectionnez le nombre d'amis",
                             input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
-                <div class="text-center"> 
+                <div class="text-center">
                   <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill" %>
                 </div>
 
@@ -75,6 +77,9 @@
             </div>
           </div>
         </div>
+        <% elsif @meeting.user == current_user %>
+        <div class="row justify-content-center d-flex">
+          <%= link_to "Modifier mon annonce", edit_meeting_path(@meeting), class: "btn btn-primary mt-2 p-2 col-6 rounded-pill" %>
       <% end %>
     </div>
   </div>

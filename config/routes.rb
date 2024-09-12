@@ -9,10 +9,14 @@ Rails.application.routes.draw do
   root to: "pages#home"
   resources :meetings, except: [:destroy] do
     resources :requests, only: [:create]
+    resources :messages, only: [:create]
   end
+  get 'meetings/:id/messages', to: 'meetings#messages'
   resources :requests
   resources :games, only: [:create]
-  resources :messages, only: [:new, :create, :index] #tbc mercredi / lecture
+  get 'conversations', to: 'meetings#conversations', as: "conversations"
+  get 'my-meetings', to: 'meetings#my_meetings', as: "my-meetings"
+  # tbc mercredi / lecture
   # Defines the root path route ("/")
   # root "posts#index"
 end
