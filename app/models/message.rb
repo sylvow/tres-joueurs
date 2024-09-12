@@ -7,7 +7,7 @@ class Message < ApplicationRecord
 
   def broadcast_message
     broadcast_append_to "meeting_#{meeting.id}_messages",
-                        partial: 'messages/message',
+                        partial: "messages/message",
                         locals: { message: self, user: user },
                         target: "messages"
   end
