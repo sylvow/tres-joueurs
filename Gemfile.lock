@@ -246,10 +246,6 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    redis (5.3.0)
-      redis-client (>= 0.22.0)
-    redis-client (0.22.2)
-      connection_pool
     reline (0.5.10)
       io-console (~> 0.5)
     responders (3.1.1)
@@ -331,7 +327,6 @@ DEPENDENCIES
   pg
   puma (>= 5.0)
   rails (~> 7.1.4)
-  redis (>= 4.0.1)
   sassc-rails
   simple_form!
   sprockets-rails
