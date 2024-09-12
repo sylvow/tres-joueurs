@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
 
-    <div class="col-lg-6 p-5 m-5 shadow" data-controller="game-select poi-autocomplete" data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    <div class="col-lg-6 p-5 m-5 shadow" data-controller="game-select poi-autocomplete players-max" data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     <h1 class="d-flex justify-content-center annonce-titre">Crée ton annonce ! 😎</h1>
       <%= simple_form_for @meeting do |f| %>
 
@@ -15,13 +15,23 @@
           <%= f.input :players_needed_min,
                       placeholder: "1, 2, 3...",
                       label: "De combien de joueurs as-tu besoin (min)?" %>
-          <%= f.input :level,
+
+          <div class="form-check form-switch mb-4">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" data-action="click->players-max#reveal">
+            <label class="form-check-label text-muted" for="flexSwitchCheckDefault">Donner une fourchette, ex: entre 2 et 5 participants</label>
+          </div>
+
+          <%= f.input :players_needed_max,
+                      placeholder: "1, 2, 3...",
+                      label: "Et au max ?",
+                      wrapper_html: {data: {players_max_target: "field" }, class: "d-none"}
+                      %>
+
+         <%= f.input :level,
                       placeholder: "Débutant, confirmé, expert ?",
                       collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
                       label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
-          <%# <%= f.input :players_needed_max,
-                      placeholder: "Description",
-                      label: "Et au max?" %>
+
         </div>
 
         <div class="meeting-info">
