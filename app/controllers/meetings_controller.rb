@@ -57,7 +57,7 @@ class MeetingsController < ApplicationController
 
   def conversations
     @planner_conversations = Meeting.where(user: current_user)
-    # @participant_conversations = Meeting.where(request)
+    @participant_conversations = Meeting.joins(:requests).where(requests: { user_id: current_user })
   end
 
   def messages

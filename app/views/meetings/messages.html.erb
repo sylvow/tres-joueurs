@@ -1,8 +1,16 @@
-<div class="container">
+<div class="container chat text-dark">
   <h1>This meetings' messages</h1>
+  <%= turbo_stream_from "meeting_#{@meeting.id}_messages" %>
+
+  <div id="messages" class="messages">
+    <% @meeting.messages.each do |message| %>
+      <%= render "messages/message", message: message, user: current_user %>
+    <% end %>
+  </div>
 
   <%= simple_form_for [@meeting, @message],
-    html: {class: "d-flex"} do |f|
+    html: {class: "d-flex",
+    data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }} do |f|
   %>
     <%# <% other_user = current_user == @meeting.user ? @meeting.user : @meeting.restaurant.user %>
     <%= f.input :content,
