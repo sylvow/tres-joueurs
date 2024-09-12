@@ -40,7 +40,7 @@
       
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Date</strong></p>
-        <span><%= @meeting.date %></span>
+        <span><%= @meeting.date.strftime("%d/%m/%Y à %H:%M") %></span>
       </div>
       
       <% if !@meeting.description.blank? %>
