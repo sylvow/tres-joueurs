@@ -1,19 +1,18 @@
 <div class="row justify-content-center">
 
-    <div class="col-lg-6 p-5 m-5 shadow" data-controller="game-select poi-autocomplete players-max" data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-    <h1 class="d-flex justify-content-center annonce-titre">Crée ton annonce ! 😎</h1>
+    <div
+      class="col-lg-6 p-5 m-5 shadow"
+      data-controller="game-select poi-autocomplete players-max "
+      data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    <h1 class="d-flex justify-content-center annonce-titre mb-4">Crée ton annonce ! 😎</h1>
+
       <%= simple_form_for @meeting do |f| %>
 
         <div class="game-info">
-          <h3> Dis m'en plus sur le jeu </h3>
           <%= f.input :game_id,
-                      label: "Nom du jeu",
+                      label: "Commençons par le jeu",
                       input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
                       collection: Game.all
-                      %>
-          <%= f.input :tags,
-                      label: "Tags",
-                      input_html: {id: "filter-tags", placeholder: "Amusant, Ludique, Stratégie", autocomplete: "off"}
                       %>
           <%= f.input :players_needed_min,
                       placeholder: "1, 2, 3...",
@@ -29,15 +28,9 @@
                       label: "Et au max ?",
                       wrapper_html: {data: {players_max_target: "field" }, class: "d-none"}
                       %>
-
-         <%= f.input :level,
-                      placeholder: "Débutant, confirmé, expert ?",
-                      collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
-                      label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
-
         </div>
 
-        <div class="meeting-info">
+        <div class="meeting-info d-none">
           <h3> Précise les modalités du rendez-vous </h3>
           <%= f.input :location_type,
                       placeholder: "Café, Bar, Parc, A domicile ...",
@@ -57,7 +50,7 @@
                       input_html: { data: { controller: "datetime-selector" } }%>
         </div>
 
-        <div class="title-and-desc">
+        <div class="title-and-desc d-none">
           <h3>Donne un titre à ton annonce</h3>
           <%= f.input :title,
                     placeholder: "Titre de ton annonce",
@@ -65,7 +58,18 @@
           <%= f.input :description,
                     placeholder: "(Optionnel)",
                     label: "Description" %>
-      </div>
+        </div>
+
+        <div class="less-important-fields d-none">
+          <%= f.input :tags,
+                      label: "Indique quelques mots-clés pour faciliter la recherche",
+                      input_html: {id: "filter-tags", placeholder: "Amusant, Ludique, Stratégie", autocomplete: "off"}
+                      %>
+          <%= f.input :level,
+                      placeholder: "Débutant, confirmé, expert ?",
+                      collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
+                      label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
+        </div>
 
       <div class="text-center pt-3">
         <%= f.button :submit,"CREER L'ANNONCE", class: "btn btn-primary " %>
