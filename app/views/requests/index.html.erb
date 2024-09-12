@@ -1,29 +1,78 @@
 <div class="container">
-  <h3>Mes sessions de jeu en cours</h3>
-  <% @meetings.each do |meeting| %>
-    <div class="request-card p-2 my-2 text-dark">
-      <p>Titre de mon évenement: <strong><%= meeting.title %></p></strong>
-      <p>Mon jeu: <%= meeting.game.name %></p>
-      <p>Status: <%= meeting.status %></p>
-      <p>Joueurs nécessaire: <%= meeting.players_needed_min %></p>
-      <p>Lieu de l'évenement: <%= meeting.place_address %></p>
-      <% if meeting.players_needed_max %>
-      <p>Nombre de place restante: <%= compute_players_needed(meeting) %></p>
-      <% end %>
+  <h3>Mes jeux en cours (orga)</h3>
+  <div class="container">
+    <% @user_meetings.each do |meeting| %>
+      <div class="bg-white text-black p-2 m-2">
+        <p><%= meeting.date %> <span></span> <%= meeting.place_address %></p>
+        <div class="row">
+          <div class="col-3 text-center">
+            <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
+            <div class="d-flex flex-column rounded-circle bg-secondary">
+              <p><%= meeting.date.strftime("%-d") %></p>
+              <p><%= meeting.date.strftime("%b") %></p>
+            </div>
+          </div>
+          <div class="col-9 text-end">
+            <div>
+              <div class="d-flex justify-content-between"><p><%= meeting.user.username %></p><span>"clickable"</span></div>
+              <% meeting.requests.all.each do |player| %>
+                <div class="d-flex justify-content-between"><p><%= player.user.username %></p><span>"clickable"</span></div>
+              <% end %>
+            </div>
+          </div>
+          <p class="text-end">Signaler comme complet</p>
+        </div>
+      </div>
+    <% end %>
+</div> 
+
+  <h3>Mes jeux en cours (participant)</h3>
+  <% @requested_meetings.each do |request| %>
+    <div class="bg-white text-black p-2 m-2">
+      <p><%= request.meeting.date %> <span></span> <%= request.meeting.place_address %></p>
+      <div class="row">
+        <div class="col-3 text-center">
+          <h4><%= link_to request.meeting.game.name, meeting_path(request.meeting) %></h4>
+          <div class="d-flex flex-column rounded-circle bg-secondary">
+            <p><%= request.meeting.date.strftime("%-d") %></p>
+            <p><%= request.meeting.date.strftime("%b") %></p>
+          </div>
+        </div>
+        <div class="col-9 text-end">
+          <div>
+            <div class="d-flex justify-content-between"><p><%= request.meeting.user.username %></p><span>"clickable"</span></div>
+          </div>
+
+        </div>
+        <p class="text-end">Signaler comme complet</p>
+      </div>
     </div>
   <% end %>
-  <h3>Les jeux auxquels je souhaite participer:</h3>
-  <% @my_requests.each do |request| %>
-    <div class="request-card p-2 my-2  text-dark">
-      <p>Nom de l'évenement: <strong><%= request.meeting.title %></p></strong>
-      <p>Jeu: <%= request.meeting.game.name %></p>
-      <p>Category: <%= request.meeting.game.category %></p>
-      <p>Lieu: <%= request.meeting.place_name %>, <%= request.meeting.place_address %></p>
-      <p>Status: <%= request.status %></p>
-      <p>Nombre de joueur avec moi: <%= request.number_of_friends %> joueur(s)</p>
-      <%= link_to "Modifier ma demande", edit_request_path(request) %>
-    </div>
-  <% end %>
+
+  <h3>Historiques de jeux</h3>
+  <% @finished_meetings.each do |meeting| %>
+      <div class="bg-white text-black p-2 m-2">
+        <p><%= meeting.date.strftime("%a, %Hh%M") %> <span></span> <%= meeting.place_address %></p>
+        <div class="row">
+          <div class="col-3 text-center">
+            <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
+            <div class="d-flex flex-column rounded-circle bg-secondary">
+              <p><%= meeting.date.strftime("%-d") %></p>
+              <p><%= meeting.date.strftime("%b") %></p>
+            </div>
+          </div>
+          <div class="col-9 text-end">
+            <div>
+              <div class="d-flex justify-content-between"><p><%= meeting.user.username %></p><span>"clickable"</span></div>
+              <% meeting.requests.all.each do |player| %>
+                <div class="d-flex justify-content-between"><p><%= player.user.username %></p><span>"clickable"</span></div>
+              <% end %>
+            </div>
+          </div>
+          <p class="text-end">Signaler comme complet</p>
+        </div>
+      </div>
+    <% end %>
   <h3>Demandes des autres joueurs à me rejoindre</h3>
     <% @other_requests.each do |request| %>
       <div class="request-card p-2 my-2  text-dark">

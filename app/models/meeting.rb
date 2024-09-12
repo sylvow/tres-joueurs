@@ -6,6 +6,8 @@ class Meeting < ApplicationRecord
 
   accepts_nested_attributes_for :game
 
+  enum status: { available: "Disponible", full: "Plein", ongoing: "En cours", cancelled: "Annulé", finished: "Terminé" }
+
   geocoded_by :place_address
   after_validation :geocode, if: :will_save_change_to_place_address?
 
