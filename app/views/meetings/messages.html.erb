@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>This meetings' messages</h1>
+
+  <%= simple_form_for [@meeting, @message],
+    html: {class: "d-flex"} do |f|
+  %>
+    <%# <% other_user = current_user == @meeting.user ? @meeting.user : @meeting.restaurant.user %>
+    <%= f.input :content,
+      label: false,
+      placeholder: "Message to group", # #{other_user.username}",
+      wrapper_html: {class: "flex-grow-1"}
+    %>
+    <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+  <% end %>
+</div>
