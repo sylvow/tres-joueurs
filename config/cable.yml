@@ -1,10 +1,10 @@
 development:
-  adapter: async
+  adapter: enhanced_postgresql
 
 test:
   adapter: test
 
 production:
-  adapter: redis
+  adapter: enhanced_postgresql
   url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
   channel_prefix: tres_joueurs_production

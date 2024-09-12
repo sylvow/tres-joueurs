@@ -27,4 +27,38 @@
       margin-bottom: 0;
     }
   }
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .message-info {
+    opacity: 0.5;
+    margin: auto;
+    text-align: center;
+    width: fit-content;
+  }
+
+  .message-content {
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    max-width: 70%;
+    width: fit-content;
+    word-wrap: break-word;
+  }
+
+  .message.sent .message-content {
+    align-self: flex-end;
+    background: $blue;
+    color: $light-gray;
+  }
+
+  .message.received .message-content {
+    align-self: flex-start;
+    background: $gray-200;
+  }
 }

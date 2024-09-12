@@ -12,4 +12,18 @@
       </div>
     <% end %>
   </div>
+
+  <h1>Your conversations as a participant </h1>
+  <div id="messages-list" class="messages-list">
+    <% @participant_conversations.each do |meeting| %>
+      <div id="chat-preview">
+        <small>
+          <strong><%= meeting.game.name %> - <%= meeting.date %></strong>
+          <i><%= meeting.place_name %> - <%= meeting.place_address %></i>
+          <%= link_to 'Accéder à la conversation', meeting_messages_path(meeting) %>
+        </small>
+      </div>
+    <% end %>
+  </div>
+
 </div>
