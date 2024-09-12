@@ -2,13 +2,13 @@
 
     <div
       class="col-lg-6 p-5 m-5 shadow"
-      data-controller="game-select poi-autocomplete players-max "
+      data-controller="game-select poi-autocomplete players-max steps"
       data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     <h1 class="d-flex justify-content-center annonce-titre mb-4">Crée ton annonce ! 😎</h1>
 
       <%= simple_form_for @meeting do |f| %>
 
-        <div class="game-info">
+        <div class="game-info" data-steps-target="step">
           <%= f.input :game_id,
                       label: "Commençons par le jeu",
                       input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
@@ -28,15 +28,21 @@
                       label: "Et au max ?",
                       wrapper_html: {data: {players_max_target: "field" }, class: "d-none"}
                       %>
+              <%= button_tag "Next", type: :button,
+                    data: {
+                      action: "click->steps#goToNext",
+                      next_step: "1"
+                    } %>
         </div>
 
-        <div class="meeting-info d-none">
+        <div class="meeting-info step d-none" data-steps-target="step">
+
           <h3> Précise les modalités du rendez-vous </h3>
           <%= f.input :location_type,
                       placeholder: "Café, Bar, Parc, A domicile ...",
                       label: "Dans quel type de lieu veux-tu jouer?",
                       collection: ["Parc", "Café / Bar", "A domicile", "A définir"]%>
-          <p>Cherche un lieu</p>
+
           <div data-poi-autocomplete-target="searchBox" class="mb-3"></div>
           <%= f.input :place_name,
                       label: "Quel est le nom de l'établissement?",
@@ -48,22 +54,35 @@
                       as: :string,
                       label: "A quelle date aura lieu le rendez-vous ?",
                       input_html: { data: { controller: "datetime-selector" } }%>
+
+          <%= button_tag "Previous", type: :button,
+                data: {
+                  action: "click->wizard#goToPrevious",
+                  previous_step: "1"
+                } %>
+
+          <%= button_tag "Next", type: :button,
+                data: {
+                  action: "click->steps#goToNext",
+                  next_step: "1"
+                } %>
+
         </div>
 
-        <div class="title-and-desc d-none">
+        <div class="title-and-desc d-none" data-steps-target="step">
           <h3>Donne un titre à ton annonce</h3>
           <%= f.input :title,
                     placeholder: "Titre de ton annonce",
                     label: "Titre" %>
           <%= f.input :description,
-                    placeholder: "(Optionnel)",
-                    label: "Description" %>
+                    placeholder: "(Optionnel) Ajouter une description..."
+                    %>
         </div>
 
-        <div class="less-important-fields d-none">
+        <div class="less-important-fields d-none" data-steps-target="step">
           <%= f.input :tags,
                       label: "Indique quelques mots-clés pour faciliter la recherche",
-                      input_html: {id: "filter-tags", placeholder: "Amusant, Ludique, Stratégie", autocomplete: "off"}
+                      input_html: {id: "filter-tags", placeholder: "Cartes, stratégie, ambiance", autocomplete: "off"}
                       %>
           <%= f.input :level,
                       placeholder: "Débutant, confirmé, expert ?",
@@ -71,13 +90,13 @@
                       label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
         </div>
 
-      <div class="text-center pt-3">
+      <div class="text-center pt-3 d-none">
         <%= f.button :submit,"CREER L'ANNONCE", class: "btn btn-primary " %>
         <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
       </div>
 
       <% end %>
-    </div>
+
 
 </div>
 <%= link_to "< Liste", meetings_path %>
