@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: enhanced_postgresql
-  channel_prefix: tres_joueurs_production
+  # channel_prefix: tres_joueurs_production
