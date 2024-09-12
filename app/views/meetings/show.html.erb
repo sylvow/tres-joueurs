@@ -64,7 +64,8 @@
 
                 <%= f.input :number_of_friends, 
                             label: "Nombre d'amis", 
-                            collection: (0..@meeting.players_needed_max - 2).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
+                            # collection: (0..@meeting.players_needed_max - 2).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
+                            collection: (0..8),
                             prompt: "Sélectionnez le nombre d'amis",
                             input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
                 <div class="text-center"> 
