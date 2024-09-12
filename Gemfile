@@ -34,6 +34,8 @@ gem 'ffi', '~> 1.16.0'
 
 gem 'cloudinary'
 
+gem 'activestorage'
+
 gem 'pg'
 
 gem "bootstrap", "~> 5.2"
