@@ -4,8 +4,10 @@ class RequestsController < ApplicationController
   before_action :set_request, except: [:index, :create]
 
   def index
-    @meetings = Meeting.where(user_id: current_user)
-    @my_requests = Request.where(user_id: current_user)
+    @user_meetings = Meeting.where(user_id: current_user).where.not(status: :cancelled).where.not(status: :finished) # View Mes jeux en cours ORGA - OK
+    @requested_meetings = Request.where(user_id: current_user)
+
+    @finished_meetings = Meeting.where(status: Meeting.statuses[:finished])
     @other_requests = Request.where(meeting_id: @meetings)
   end
 
@@ -52,6 +54,11 @@ class RequestsController < ApplicationController
 
   def set_request
     @request = Request.find(params[:id])
+  end
+
+  def historical_player_meetings
+    Meeting.where(user_id: current_user, status: Meeting.statuses[:finished])
+
   end
 
   def request_params
