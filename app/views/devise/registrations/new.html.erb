@@ -37,6 +37,11 @@
                 input_html: { autocomplete: "new-password" } %>
   </div>
 
+  <div class="field">
+    <%= f.label :profile_picture %>
+    <%= f.input :profile_picture, as: :file %>
+  </div>
+
   <div class="form-actions">
     <%= f.button :submit, "Sign up" %>
   </div>
