@@ -43,6 +43,7 @@ class MeetingsController < ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
+    @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
     @meeting.status = Meeting.statuses[:available]
     if params[:meeting][:game_id].instance_of?(String)
