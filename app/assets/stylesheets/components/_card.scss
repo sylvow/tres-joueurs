@@ -110,3 +110,18 @@
   width: 80px;
   height: 80px;
 }
+
+.meeting-card-top {
+  position: relative;
+
+  .profile-pic {
+    padding: 0px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 40px;
+    border-radius: 50%;
+    height: 40px;
+    object-fit: cover;
+  }
+}
