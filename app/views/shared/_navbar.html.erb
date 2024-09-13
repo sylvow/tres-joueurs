@@ -19,7 +19,11 @@
           </li>
           <li class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+              <% unless current_user.profile_picture.attached? %>
+                <%= image_tag "profil.png", class: "avatar rounded-circle", alt: "dropdown menu" %>
+              <% else %>
+                <%= cl_image_tag current_user.profile_picture.key, class: "avatar rounded-circle", alt: "dropdown menu" %>
+              <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Demandes en cours", requests_path, class: "dropdown-item" %>
