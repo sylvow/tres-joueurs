@@ -3,9 +3,12 @@ class RequestsController < ApplicationController
   helper_method :compute_players_needed
   before_action :set_request, except: [:index, :create]
 
+
+  # CRUD methods
   def index
-    @user_meetings = Meeting.where(user_id: current_user).where.not(status: :cancelled).where.not(status: :finished) # View Mes jeux en cours ORGA - OK
-    @requested_meetings = Request.where(user_id: current_user)
+    @user_meetings = Meeting.where(user_id: current_user).where.not(status: :cancelled).where.not(status: :finished)
+    @requested_meetings = Meeting.joins(:requests).where(requests: { user_id: current_user })
+    # Celle au dessus à jour
 
     @finished_meetings = Meeting.where(status: Meeting.statuses[:finished])
     @other_requests = Request.where(meeting_id: @meetings)
@@ -31,19 +34,29 @@ class RequestsController < ApplicationController
   end
 
   def update
-    if @request.update!(request_params) && request_params[:status] == Request.statuses[:rejected]
-      destroy
-    elsif @request.update!(request_params)
+    if @request.update!(request_params)
       redirect_to requests_path
     else
       render :new, status: :unprocessable_entity
     end
   end
 
+  def reject
+    @request.status = "Annuler"
+    @request.save!
+  end
+
+  def accept
+    @request.status = "Validé"
+    @request.save!
+  end
+
   def destroy
     @request.destroy
     redirect_to requests_path, status: :see_other
   end
+
+  # Other methods
 
   def compute_players_needed(meeting)
     requests = Request.where(meeting_id: meeting.id)
@@ -56,13 +69,7 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
   end
 
-  def historical_player_meetings
-    Meeting.where(user_id: current_user, status: Meeting.statuses[:finished])
-
-  end
-
   def request_params
     params.require(:request).permit(:number_of_friends, :status, :meeting_id)
   end
-
 end

@@ -11,8 +11,13 @@ Rails.application.routes.draw do
     resources :requests, only: [:create]
     resources :messages, only: [:create]
   end
-  get 'meetings/:id/messages', to: 'meetings#messages'
-  resources :requests
+  get 'meetings/:id/messages', to: 'meetings#messages', as: "meeting_message"
+  resources :requests do 
+    member do
+      patch :accept
+      patch :reject
+    end
+  end
   resources :games, only: [:create]
   get 'conversations', to: 'meetings#conversations', as: "conversations"
   get 'my-meetings', to: 'meetings#my_meetings', as: "my-meetings"
