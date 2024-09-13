@@ -57,14 +57,14 @@
 
           <%= button_tag "Previous", type: :button,
                 data: {
-                  action: "click->wizard#goToPrevious",
-                  previous_step: "1"
+                  action: "click->steps#goToPrevious",
+                  previous_step: "0"
                 } %>
 
           <%= button_tag "Next", type: :button,
                 data: {
                   action: "click->steps#goToNext",
-                  next_step: "1"
+                  next_step: "2"
                 } %>
 
         </div>
@@ -77,6 +77,17 @@
           <%= f.input :description,
                     placeholder: "(Optionnel) Ajouter une description..."
                     %>
+          <%= button_tag "Previous", type: :button,
+                data: {
+                  action: "click->steps#goToPrevious",
+                  previous_step: "1"
+                } %>
+
+          <%= button_tag "Next", type: :button,
+                data: {
+                  action: "click->steps#goToNext",
+                  next_step: "3"
+                } %>
         </div>
 
         <div class="less-important-fields d-none" data-steps-target="step">
@@ -88,12 +99,19 @@
                       placeholder: "Débutant, confirmé, expert ?",
                       collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
                       label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
-        </div>
-
-      <div class="text-center pt-3 d-none">
+          <%= button_tag "Previous", type: :button,
+                data: {
+                  action: "click->steps#goToPrevious",
+                  previous_step: "2"
+                } %>
+      <div class="text-center pt-3">
         <%= f.button :submit,"CREER L'ANNONCE", class: "btn btn-primary " %>
         <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
       </div>
+
+        </div>
+
+
 
       <% end %>
 

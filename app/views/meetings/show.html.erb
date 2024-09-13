@@ -21,8 +21,8 @@
 
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Nombre de joueurs</strong></p>
-        <span><%= @meeting.players_needed_min %> 
-          <% if !@meeting.players_needed_max.blank? %> 
+        <span><%= @meeting.players_needed_min %>
+          <% if !@meeting.players_needed_max.blank? %>
             à <%= @meeting.players_needed_max %></span>
           <% end %>
       </div>
@@ -65,8 +65,8 @@
             <div class="row text-center">
               <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
 
-                <%= f.input :number_of_friends, 
-                            label: "Nombre d'amis", 
+                <%= f.input :number_of_friends,
+                            label: "Nombre d'amis",
                             # collection: (0..@meeting.players_needed_max - 1).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
                             collection: (0..8),
                             prompt: "Sélectionnez le nombre d'amis",

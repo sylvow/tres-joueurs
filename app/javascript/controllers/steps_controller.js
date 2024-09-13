@@ -8,6 +8,7 @@ export default class extends Controller {
     console.log("connected to steps controller");
   }
 
+
   goToNext(event) {
     const nextStep = event.target.dataset.nextStep - 1;
     const actualStep = event.target.dataset.nextStep;
