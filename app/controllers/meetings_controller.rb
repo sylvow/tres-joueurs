@@ -44,6 +44,7 @@ class MeetingsController < ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
     @meeting.user = current_user
+    @meeting.status = Meeting.statuses[:available]
     if params[:meeting][:game_id].instance_of?(String)
       game = Game.create(name: params[:meeting][:game_id])
       @meeting.game_id = game.id
@@ -76,7 +77,10 @@ class MeetingsController < ApplicationController
     end
   end
 
-
+  def history
+    @finished_meetings = Meeting.where(status: Meeting.statuses[:finished])
+    @other_requests = Request.where(meeting_id: @meetings)
+  end
 
   private
 

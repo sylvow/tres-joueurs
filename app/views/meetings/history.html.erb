@@ -1,0 +1,33 @@
+<h3>Historiques de jeux</h3>
+<% @finished_meetings.each do |meeting| %>
+  <div class="bg-white text-black p-2 m-2">
+    <p><%= meeting.date.strftime("%a, %Hh%M") %> 
+      <span></span> 
+      <%= meeting.place_address %>
+    </p>
+    <div class="row">
+      <div class="col-3 text-center">
+        <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
+        <div class="rounded-circle bg-secondary">
+          <p><%= meeting.date.strftime("%-d") %></p>
+          <p><%= meeting.date.strftime("%b") %></p>
+        </div>
+      </div>
+      <div class="col-9 text-end">
+        <div>
+          <div class="d-flex justify-content-between">
+              <p><%= meeting.user.username %></p>
+              <span>"clickable"</span>
+            </div>
+          <% meeting.requests.all.each do |player| %>
+            <div class="d-flex justify-content-between">
+                <p><%= player.user.username %></p>
+                <span>"clickable"</span>
+              </div>
+          <% end %>
+        </div>
+      </div>
+      <p class="text-end">Signaler comme complet</p>
+    </div>
+  </div>
+<% end %>

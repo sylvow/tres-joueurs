@@ -6,11 +6,16 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  root to: "pages#home"
+  root to: "meetings#index"
+
   resources :meetings, except: [:destroy] do
     resources :requests, only: [:create]
     resources :messages, only: [:create]
+    collection do
+      get :historique, to: 'meetings#history'
+    end
   end
+
   get 'meetings/:id/messages', to: 'meetings#messages', as: "meeting_message"
   resources :requests do 
     member do
@@ -18,10 +23,9 @@ Rails.application.routes.draw do
       patch :reject
     end
   end
+
   resources :games, only: [:create]
   get 'conversations', to: 'meetings#conversations', as: "conversations"
   get 'my-meetings', to: 'meetings#my_meetings', as: "my-meetings"
-  # tbc mercredi / lecture
-  # Defines the root path route ("/")
-  # root "posts#index"
+
 end
