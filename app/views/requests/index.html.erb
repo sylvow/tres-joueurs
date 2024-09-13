@@ -25,22 +25,34 @@
           </div>
           <div class="col-9 text-end d-flex flex-column justify-content-between px-4">
             <div>
-              <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
                   <p class="mb-0 pb-1"><%= meeting.user.username %> (moi)</p>
-                  <i class="fa-solid fa-xmark"></i>
               </div>
               <% meeting.requests.each do |request| %>
-                <div class="d-flex justify-content-between align-items-center">
-                  <p class="mb-0 pb-1"><%= request.user.username %></p>
-                  <div>
-                    <%= link_to accept_request_path(request), data: { turbo_method: :patch } do %>
-                      <i class="fa-regular fa-circle-check px-2"></i>
+                <% if request.status != "rejected" %>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <%= link_to request_path(request) do %>
+                      <p class="mb-0 pb-1">
+                        <%= request.user.username %>
+                        <% if request.number_of_friends == 0 %>
+                          seul(e)
+                        <% elsif request.number_of_friends == 1 %>
+                          + 1 ami(e)
+                        <% else %>
+                          + <%= request.number_of_friends %> ami(e)s
+                        <% end %>
+                      </p>
                     <% end %>
-                    <%= link_to reject_request_path(request), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette demande?" } do %>
-                      <i class="fa-solid fa-xmark"></i>
-                    <% end %>
+                    <div>
+                      <%= link_to accept_request_path(request), data: { turbo_method: :patch } do %>
+                        <i class="fa-regular fa-circle-check px-2"></i>
+                      <% end %>
+                      <%= link_to reject_request_path(request), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette demande?" } do %>
+                        <i class="fa-solid fa-xmark"></i>
+                      <% end %>
+                    </div>
                   </div>
-                </div>
+                <% end %>
               <% end %>
             </div>
             <div class="form-check form-switch ms-5 p-2 d-flex">
