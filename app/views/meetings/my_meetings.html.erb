@@ -8,14 +8,14 @@
 
           <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %>" style="height: 100%;">
             <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
-            <%= meeting.date.strftime("%d/%m/%Y") %>
+            <%= meeting.date.strftime("%d/%m") %>
             <%= meeting.date.strftime("%H:%M") %>
           </div>
 
 
           <div class="col-9 p-2" style="height: 100%;">
-            <h3><strong><%= meeting.game.name %></strong></h3>
-            <p><%= meeting.title %></p>
+            <h3><strong><%= meeting.title %></strong></h3>
+            <p><%= meeting.game.name %></p>
             <p>Joueur : <%= meeting.players_needed_min %> à <%= meeting.players_needed_max %></p>
 
 

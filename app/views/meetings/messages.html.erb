@@ -2,7 +2,7 @@
   <h1>This meetings' messages</h1>
   <%= turbo_stream_from "meeting_#{@meeting.id}_messages" %>
 
-  <div class="messages">
+  <div id="messages" class="messages">
     <% @meeting.messages.each do |message| %>
       <%= render "messages/message", message: message, user: current_user %>
     <% end %>

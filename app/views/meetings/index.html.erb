@@ -9,7 +9,7 @@
     <div class="filter-form d-none " data-show-filters-target="showFilters">
       <%= form_with url: meetings_path, method: :get, local: true do %>
         <div class="col-md-12 my-2">
-          <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Jeu, Catégorie, Adresse, Lieu, etc." %>
+          <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Jeu, Catégorie, Adresse, Lieu, Tags etc." %>
         </div>
 
         <div class="col-md-12">
@@ -23,17 +23,24 @@
       <% @meetings.each do |meeting| %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
 
-          <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %>" style="height: 100%;">
-            <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
-            <%= meeting.date.strftime("%d/%m/%Y") %>
-            <%= meeting.date.strftime("%H:%M") %>
+          <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+            <%= cl_image_tag("uupiilz8hssw6l2gtmym", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
+            <p><strong><%= meeting.date.strftime("%d/%m") %></strong></p>
+            <p><strong><%= meeting.date.strftime("%H:%M") %></strong></p>
           </div>
 
 
           <div class="col-9 p-2" style="height: 100%;">
-            <h3><strong><%= meeting.game.name %></strong></h3>
-            <p><%= meeting.title %></p>
-            <p>Joueur : <%= meeting.players_needed_min %> à <%= meeting.players_needed_max %></p>
+            <div>
+              <h5><strong><%= meeting.title %></strong></h5>
+              <p><strong><%= meeting.game.name %></strong></p>
+              <p>Joueurs : <%= meeting.players_needed_min %> 
+                <% if !meeting.players_needed_max.blank? %>
+                  à <%= meeting.players_needed_max %></p>
+                <% end %>
+              <p>Niveau : <%= meeting.level %></p>
+              <p><strong><%= meeting.place_address %></strong></p>
+            </div>
 
             <% if meeting.user != current_user %>
               <%= link_to "Je suis interressé", meeting_path(meeting) %>
@@ -44,6 +51,6 @@
     </div>
   </div>
   <%= link_to new_meeting_path, class: "fixed-button" do %>
-      <i class="fa-solid fa-plus create-icon"></i>
-      <% end %>
+    <i class="fa-solid fa-plus create-icon"></i>
+    <% end %>
 </div>

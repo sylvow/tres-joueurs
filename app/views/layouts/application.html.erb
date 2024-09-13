@@ -20,7 +20,7 @@
 
   </head>
 
-  <body>
+  <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
     <%= render 'shared/navbar' %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
