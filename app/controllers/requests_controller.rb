@@ -43,12 +43,12 @@ class RequestsController < ApplicationController
 
   def reject
     @request.status = "Annuler"
-    @request.save!
+    redirect_to requests_path if @request.save!
   end
 
   def accept
     @request.status = "Validé"
-    @request.save!
+    redirect_to requests_path if @request.save!
   end
 
   def destroy
