@@ -5,12 +5,11 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
-
+    
     if params[:search].present?
       params[:search].split(' ').each do |term|
-        @meetings = @meetings.joins(:game)
-        @meetings = @meetings.where(
-          "games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term OR tags ILIKE :term",
+        @meetings = @meetings.joins(:game).where(
+          "title ILIKE :term OR games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term OR lower(tags::text) LIKE lower(:term)",
           term: "%#{term}%"
         )
       end

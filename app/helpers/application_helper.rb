@@ -1,12 +1,14 @@
 module ApplicationHelper
   def meeting_status_class(status)
     case status
-    when 'disponible'
+    when 'available'
       'bg-success'
-    when 'en cours'
-      'bg-grey'
-    when 'complet'
-      'bg-danger'
+    when 'ongoing'
+      'bg-success'
+    when 'full'
+      'bg-success'
+    when 'success'
+      'bg-success'
     else
       'bg-success'
     end

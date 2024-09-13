@@ -14,6 +14,10 @@ export default class extends Controller {
 
     new TomSelect("#input-tags", config);
 
-    new TomSelect("#filter-tags", config);
+    new TomSelect("#filter-tags",{
+      persist: false,
+      createOnBlur: true,
+      create: true
+    });
   }
 }
