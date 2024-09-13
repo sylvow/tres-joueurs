@@ -1,11 +1,15 @@
 <div class="container">
-  <div class="d-flex justify-content-between mb-2">
+  <div class="d-flex justify-content-between mb-2 align-items-center">
   <h3>Mes jeux en cours (orga)</h3>
-  <span>V</span>
+  <i class="fa-solid fa-xmark"></i>
   </div>
     <% @user_meetings.each do |meeting| %>
       <div class="request-card bg-white text-black px-3 mb-4 rounded-5">
-        <p><%= meeting.date.strftime("%a, %kh%M") %> <%= image_tag "location-dot-solid.svg", id: "location-svg" %> <%= meeting.place_address %></p>
+        <p>
+          <%= meeting.date.strftime("%a, %kh%M") %> 
+          <i class="fa-solid fa-location-dot"></i> 
+          <%= meeting.place_address %>
+        </p>
         <div class="d-flex">
           <div class="col-3 d-flex flex-column text-center">
             <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
@@ -14,14 +18,29 @@
               <span class="text-center"><%= meeting.date.strftime("%b") %></span>
             </div>
             <div class="mt-4">
-              <%= image_tag "message-solid.svg", alt: "Icone message", id: "message-svg" %>
+              <%= link_to  meeting_message_path(meeting), id: "location-svg" do %>
+                <i class="fa-solid fa-message display-6"></i>
+              <% end %>
             </div>
           </div>
           <div class="col-9 text-end d-flex flex-column justify-content-between px-4">
             <div>
-              <div class="d-flex justify-content-between"><p><%= meeting.user.username %> (moi)</p><span>X</span></div>
-              <% meeting.requests.all.each do |player| %>
-                <div class="d-flex justify-content-between"><p><%= player.user.username %></p><span>"clickable"</span></div>
+              <div class="d-flex justify-content-between align-items-center">
+                  <p class="mb-0 pb-1"><%= meeting.user.username %> (moi)</p>
+                  <i class="fa-solid fa-xmark"></i>
+              </div>
+              <% meeting.requests.each do |request| %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="mb-0 pb-1"><%= request.user.username %></p>
+                  <div>
+                    <%= link_to accept_request_path(request), data: { turbo_method: :patch } do %>
+                      <i class="fa-regular fa-circle-check px-2"></i>
+                    <% end %>
+                    <%= link_to reject_request_path(request), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette demande?" } do %>
+                      <i class="fa-solid fa-xmark"></i>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
             </div>
             <div class="form-check form-switch ms-5 p-2 d-flex">
@@ -32,15 +51,18 @@
         </div>
       </div>
     <% end %>
- 
 
-  <div class="d-flex justify-content-between mb-2">
+  <div class="d-flex justify-content-between mb-2 align-items-center">
   <h3>Mes jeux en cours (participant)</h3>
-  <span>V</span>
+  <i class="fa-solid fa-xmark"></i>
   </div>
   <% @requested_meetings.each do |meeting| %>
     <div class="request-card bg-white text-black px-3 mb-4 rounded-5">
-      <p><%= meeting.date.strftime("%a, %kh%M") %> <%= image_tag "location-dot-solid.svg", id: "location-svg" %> <%= meeting.place_address %></p>
+      <p>
+        <%= meeting.date.strftime("%a, %kh%M") %> 
+        <i class="fa-solid fa-location-dot"></i> 
+        <%= meeting.place_address %>
+      </p>
       <div class="d-flex">
         <div class="col-3 d-flex flex-column text-center">
           <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
@@ -49,18 +71,29 @@
             <span class="text-center"><%= meeting.date.strftime("%b") %></span>
           </div>
           <div class="mt-4">
-            <%= image_tag "message-solid.svg", alt: "Icone message", id: "message-svg" %>
+            <%= link_to meeting_message_path(meeting), id: "location-svg" do %>
+                <i class="fa-solid fa-message display-6"></i>
+              <% end %>
           </div>
         </div>
-        <div class="col-9 text-end d-flex flex-column justify-content-between">
+        <div class="col-9 text-end d-flex flex-column justify-content-between px-4">
           <div>
-            <div class="d-flex justify-content-between"><p><%= meeting.user.username %> (moi)</p><span>X</span></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mb-0"><%= meeting.user.username %> (moi)</p>
+              <i class="fa-solid fa-xmark"></i>
+            </div>
             <% meeting.requests.all.each do |player| %>
-              <div class="d-flex justify-content-between"><p><%= player.user.username %></p><span>"clickable"</span></div>
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0"><%= player.user.username %></p>
+                  <div>
+                    <i class="fa-regular fa-circle-check px-2"></i>
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+              </div>
             <% end %>
           </div>
-          <div class="form-check form-switch ms-5 p-2 d-flex justify-content-end">
-            <p><%= Meeting.statuses[meeting.status] %></p>
+          <div class="form-check form-switch p-2 d-flex justify-content-center">
+            <p class=""><%= Meeting.statuses[meeting.status] %></p>
           </div>
         </div>
       </div>
