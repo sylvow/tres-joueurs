@@ -2,7 +2,11 @@
   <div class="row justify-content-center">
     <div class="col-lg-6 shadow rounded-3 mb-3 show-card py-3 shadow" data-controller="show-meetings-interest">
       <div class="image-container d-flex justify-content-center align-items-center">
-        <%= image_tag("profil.png", class: "img-fluid", style: 'height:100%;width:auto;') %>
+        <% if @meeting.user.avatar.blank? %>
+              <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 100px; width: 100px;') %>
+            <% else %>
+              <%= cl_image_tag(@meeting.user.avatar, class: "img-fluid rounded-circle", style: 'height: 100px; width: 100px;') %>
+            <% end %>
         <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
       </div>
 
@@ -86,9 +90,3 @@
     </div>
   </div>
 </div>
-
-<%= form_with(model: @user, local: true) do |form| %>
-  <%= form.label :avatar, "Photo de profil" %>
-  <%= form.file_field :avatar %>
-  <%= form.submit "Sauvegarder" %>
-<% end %>
