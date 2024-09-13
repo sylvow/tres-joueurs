@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   skip_before_action :authenticate_user!
 
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
 
     if params[:search].present?
       params[:search].split(' ').each do |term|

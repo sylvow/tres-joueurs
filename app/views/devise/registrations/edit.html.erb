@@ -23,6 +23,11 @@
                 input_html: { autocomplete: "current-password" } %>
   </div>
 
+  <div class="field">
+    <%= f.label :profile_picture %>
+    <%= f.input :profile_picture, as: :file %>
+  </div>
+
   <div class="form-actions">
     <%= f.button :submit, "Update" %>
   </div>

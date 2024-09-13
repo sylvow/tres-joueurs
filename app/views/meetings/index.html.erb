@@ -27,7 +27,12 @@
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
 
           <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
-            <%# <%= cl_image_tag("uupiilz8hssw6l2gtmym", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
+
+            <% unless meeting.user.profile_picture.attached? %>
+              <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
+            <% else %>
+              <%= cl_image_tag(meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
+            <% end %>
             <p><strong><%= meeting.date.strftime("%d/%m") %></strong></p>
             <p><strong><%= meeting.date.strftime("%H:%M") %></strong></p>
           </div>
