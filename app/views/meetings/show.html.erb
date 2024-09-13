@@ -2,10 +2,10 @@
   <div class="row justify-content-center">
     <div class="col-lg-6 shadow rounded-3 mb-3 show-card py-3 shadow" data-controller="show-meetings-interest">
       <div class="image-container d-flex justify-content-center align-items-center">
-        <% if @meeting.user.avatar.blank? %>
+        <% unless @meeting.user.profile_picture.attached? %>
               <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 100px; width: 100px;') %>
             <% else %>
-              <%= cl_image_tag(@meeting.user.avatar, class: "img-fluid rounded-circle", style: 'height: 100px; width: 100px;') %>
+              <%= cl_image_tag(@meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 100px; width: 100px;') %>
             <% end %>
         <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
       </div>
@@ -26,7 +26,7 @@
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Nombre de joueurs</strong></p>
         <span><%= @meeting.players_needed_min %>
-          <% if !@meeting.players_needed_max.blank? %>
+          <% if @meeting.players_needed_max != @meeting.players_needed_min %>
             à <%= @meeting.players_needed_max %></span>
           <% end %>
       </div>
