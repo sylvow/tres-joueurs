@@ -3,12 +3,16 @@ import mapboxgl from "mapbox-gl"
 
 // Connects to data-controller="poi-autocomplete"
 export default class extends Controller {
-  static targets = ["searchBox", "name", "address"]
+  static targets = ["searchBox", "name", "address", "divToDisplay"]
   static values = { apiKey: String }
 
   connect() {
     const searchBox = this.searchBoxTarget
     mapboxgl.accessToken = this.apiKeyValue
+    searchBox.options = {
+      language: 'fr',
+      country: 'FR'
+    }
 
     const search = new MapboxSearchBox()
     search.accessToken = this.apiKeyValue
@@ -22,6 +26,7 @@ export default class extends Controller {
       const placeAddress = featureCollection["features"][0]["properties"]["full_address"]
       this.nameTarget.value = placeName
       this.addressTarget.value = placeAddress
+      this.divToDisplayTarget.classList.remove("d-none")
     })
   }
 
