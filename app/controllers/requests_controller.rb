@@ -18,10 +18,11 @@ class RequestsController < ApplicationController
     @request = Request.new(request_params)
     @request.user = current_user
     @request.meeting = @meeting
-    @request.status = Request.statuses[:interested]
+    @request.interested!
     if @request.save!
       redirect_to requests_path
     else
+      render :alert, status: :unprocessable_entity
       render :new, status: :unprocessable_entity
     end
   end
