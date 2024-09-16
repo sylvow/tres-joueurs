@@ -1,11 +1,11 @@
-<div class="row justify-content-center" data-controller="step-by-step">
+
 
     <div
-      class="col-lg-6 p-5 m-5 shadow"
-      data-controller="game-select poi-autocomplete players-max "
+      class="col-lg-6 px-5 shadow"
+      data-controller="game-select poi-autocomplete players-max step-by-step"
       data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
 
-      <h1 class="d-flex justify-content-center annonce-titre mb-4">Crée ton annonce ! 😎</h1>
+
 
       <%= simple_form_for @meeting do |f| %>
 
@@ -98,12 +98,12 @@
           </div>
 
           <div class="text-center pt-3">
-            <%= f.button :submit,"CREER L'ANNONCE", class: "btn btn-primary " %>
-            <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
+            <%= f.button :submit,"Soumettre", class: "btn btn-primary " %>
+            <%= link_to "Annuler", meetings_path, class: "btn btn-danger text-white" %>
           </div>
 
         </div>
-    </div>
+
 
       <% end %>
 
