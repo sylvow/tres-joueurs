@@ -53,6 +53,11 @@ class RequestsController < ApplicationController
     redirect_to requests_path, status: :see_other
   end
 
+  def cancel
+    @request.rejected!
+    redirect_to meetings_path
+  end
+
   # Other methods
 
   def compute_players_needed(meeting)
