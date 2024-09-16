@@ -4,7 +4,17 @@ class MeetingsController < ApplicationController
   skip_before_action :authenticate_user!
 
   def index
-    @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
+    @start_date = Date.today
+    @end_date = @start_date + 29.days
+    @dates = (@start_date..@end_date).to_a
+    
+    @selected_date = params[:date] ? Date.parse(params[:date]) : nil
+    
+    @meetings = if @selected_date
+                  Meeting.where(date: @selected_date.beginning_of_day..@selected_date.end_of_day)
+                else
+                  Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
+                end
 
     if params[:search].present?
       params[:search].split(' ').each do |term|
@@ -22,6 +32,11 @@ class MeetingsController < ApplicationController
         lng: m.longitude
       }
     end
+
+    
+
+    
+    
   end
 
   def my_meetings
@@ -32,7 +47,11 @@ class MeetingsController < ApplicationController
     @request = Request.new
     @meeting = Meeting.find(params[:id])
     @user = current_user
-    @user_request =  Request.find_by(meeting_id: @meeting.id, user_id: current_user.id)
+    if @user
+      @user_request = Request.find_by(meeting_id: @meeting.id, user_id: @user.id)
+    else
+      @user_request = nil
+    end
   end
 
   def new

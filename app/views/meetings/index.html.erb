@@ -1,4 +1,18 @@
 <div class="container">
+
+<div class="carousel" data-controller="carousel">
+  <button class="carousel-prev" data-action="click->carousel#previous">⟨</button>
+
+  <div class="carousel-dates" data-carousel-target="datesContainer">
+    <% @dates.each do |date| %>
+      <%= link_to date.strftime("%d %B"), meetings_path(date: date), class: "carousel-date #{'bg-success' if @selected_date == date}" %>
+    <% end %>
+  </div>
+
+  <button class="carousel-next" data-action="click->carousel#next">⟩</button>
+</div>
+
+
   <div class="row text-center p-2" data-controller="show-filters">
     <button class="btn btn-primary mt-2 p-2 col-6 mx-auto rounded-pill"
             data-action="click->show-filters#display"

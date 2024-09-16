@@ -65,7 +65,7 @@
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Nombre de joueurs.ses recherché.es</strong></p>
         <span><%= @meeting.players_needed_min %>
-          <% if @meeting.players_needed_max != @meeting.players_needed_min %>
+          <% unless @meeting.players_needed_max == @meeting.players_needed_min || @meeting.players_needed_max.blank? %>
             à <%= @meeting.players_needed_max %></span>
           <% end %>
       </div>
