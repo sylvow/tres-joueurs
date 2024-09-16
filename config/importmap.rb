@@ -12,3 +12,4 @@ pin "flatpickr" # @4.6.13
 pin "stimulus-flatpickr" # @3.0.0
 pin "mapbox-gl", to: "https://ga.jspm.io/npm:mapbox-gl@3.1.2/dist/mapbox-gl.js"
 pin "process", to: "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process-production.js"
+pin "sweetalert2", to: "https://ga.jspm.io/npm:sweetalert2@11.14.0/dist/sweetalert2.all.js"

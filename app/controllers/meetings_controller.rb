@@ -5,7 +5,7 @@ class MeetingsController < ApplicationController
 
   def index
     @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
-    
+
     if params[:search].present?
       params[:search].split(' ').each do |term|
         @meetings = @meetings.joins(:game).where(
@@ -45,7 +45,7 @@ class MeetingsController < ApplicationController
     @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
     @meeting.status = Meeting.statuses[:available]
-    if params[:meeting][:game_id].instance_of?(String)
+    unless Game.all.pluck(:name).include?(params[:meeting][:game_id])
       game = Game.create(name: params[:meeting][:game_id])
       @meeting.game_id = game.id
     end

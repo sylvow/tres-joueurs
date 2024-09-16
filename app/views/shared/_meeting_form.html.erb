@@ -1,115 +1,116 @@
-<div class="row justify-content-center">
-  <div
-    class="col-lg-6 p-5 m-5 shadow"
-    data-controller="game-select poi-autocomplete players-max steps"
-    data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-    <div class="image-container d-flex justify-content-center align-items-center">
-      <h1 class="d-flex justify-content-center annonce-titre mb-4">Crée ton annonce ! 😎</h1>
+
+<div class="image-container d-flex justify-content-center align-items-center">
+     
       <a href="/meetings" class="btn-close close-button-meeting-form" aria-label="Close"></a>
     </div>
-    <%= simple_form_for @meeting do |f| %>
 
-      <div class="game-info" data-steps-target="step">
-        <%= f.input :game_id,
-                    label: "Commençons par le jeu",
-                    input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
-                    collection: Game.all
-                    %>
-        <%= f.input :players_needed_min,
-                    placeholder: "1, 2, 3...",
-                    label: "De combien de joueurs as-tu besoin (min)?" %>
+    <div
+      class="col-lg-6 px-5 shadow"
+      data-controller="game-select poi-autocomplete players-max step-by-step"
+      data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
 
-        <div class="form-check form-switch mb-4">
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" data-action="click->players-max#reveal">
-          <label class="form-check-label text-muted" for="flexSwitchCheckDefault">Donner une fourchette, ex: entre 2 et 5 participants</label>
+
+
+      <%= simple_form_for @meeting do |f| %>
+
+        <div class="game-part" data-step-by-step-target="gameInfo">
+          <%= f.input :game_id,
+                      label: "Commençons par le jeu",
+                      input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
+                      collection: Game.all
+                      %>
+
+          <%= f.input :players_needed_min,
+                      placeholder: "1, 2, 3...",
+                      label: "De combien de joueurs as-tu besoin (min)?" %>
+
+          <div class="form-check form-switch mb-4">
+            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" data-action="click->players-max#reveal">
+            <label class="form-check-label text-muted" for="flexSwitchCheckDefault">Donner une fourchette, ex: entre 2 et 5 participants</label>
+          </div>
+
+          <%= f.input :players_needed_max,
+                      placeholder: "1, 2, 3...",
+                      label: "Et au max ?",
+                      wrapper_html: {data: {players_max_target: "field" }, class: "d-none"}
+                      %>
+
+          <%= f.input :level,
+                      placeholder: "Débutant, confirmé, expert ?",
+                      collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
+                      label: "Quel niveau souhaites-tu donner à ta rencontre ?"%>
+
+          <div class="prev-and-next d-flex justify-content-end">
+            <button class="btn btn-primary btn-sm" type="button" data-action="click->step-by-step#goToMeetingInfo">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
         </div>
 
-        <%= f.input :players_needed_max,
-                    placeholder: "1, 2, 3...",
-                    label: "Et au max ?",
-                    wrapper_html: {data: {players_max_target: "field" }, class: "d-none"}
+        <div class="meeting-part d-none" data-step-by-step-target="meetingInfo">
+          <h3 data-action="click->step-by-step#tester"> Précise les modalités du rendez-vous </h3>
+          <%= f.input :date,
+                      as: :string,
+                      label: "A quelle date aura lieu le rendez-vous ?",
+                      input_html: { data: { controller: "datetime-selector" } }%>
+
+          <%= f.input :location_type,
+                      placeholder: "Café, Bar, Parc, A domicile ...",
+                      label: "Dans quel type de lieu veux-tu jouer?",
+                      collection: ["Parc", "Café / Bar", "A définir", "A domicile"]%>
+          <p>Recherche le nom de l'établissement, quartier, ville</p>
+          <div data-poi-autocomplete-target="searchBox" class="mb-3"></div>
+          <div class="d-none" data-poi-autocomplete-target="divToDisplay">
+            <%= f.input :place_name,
+                        label: "Etablissement, quartier, arrondissement",
+                        input_html: { data: { poi_autocomplete_target: "name" }, class:"secondary-form"} %>
+            <%= f.input :place_address,
+                        label: "Adresse",
+                        input_html: { data: { poi_autocomplete_target: "address" }, class:"secondary-form"} %>
+          </div>
+          <div class="prev-and-next d-flex justify-content-between">
+            <button class="btn btn-primary btn-sm" type="button" data-action="click->step-by-step#goToGameInfo">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button class="btn btn-primary btn-sm" type="button" data-action="click->step-by-step#goToTitleAndDesc">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+
+  
+
+
+        <div class="title-and-desc-part d-none" data-step-by-step-target="titleAndDesc">
+          <h3>Donne un titre à ton annonce</h3>
+          <%= f.input :title,
+                    placeholder: "Titre de ton annonce",
+                    label: "Titre" %>
+
+          <%= f.input :tags,
+                      label: "Indique quelques mots-clés pour faciliter la recherche",
+                      input_html: {id: "filter-tags", placeholder: "Cartes, stratégie, ambiance", autocomplete: "off"}
+                      %>
+
+          <%= f.input :description,
+                    placeholder: "(Optionnel) Ajouter une description..."
                     %>
-            <%= button_tag "Next", type: :button,
-                  data: {
-                    action: "click->steps#goToNext",
-                    next_step: "1"
-                  } %>
-      </div>
 
-      <div class="meeting-info step d-none" data-steps-target="step">
+          <div class="prev-and-next d-flex justify-content-start">
+            <button class="btn btn-primary btn-sm" type="button" data-action="click->step-by-step#goToMeetingInfo">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+          </div>
 
-        <h3> Précise les modalités du rendez-vous </h3>
-        <%= f.input :location_type,
-                    placeholder: "Café, Bar, Parc, A domicile ...",
-                    label: "Dans quel type de lieu veux-tu jouer?",
-                    collection: ["Parc", "Café / Bar", "A domicile", "A définir"]%>
+          <div class="text-center pt-3">
+            <%= f.button :submit,"Soumettre", class: "btn btn-primary " %>
+            <%= link_to "Annuler", meetings_path, class: "btn btn-danger text-white" %>
+          </div>
 
-        <div data-poi-autocomplete-target="searchBox" class="mb-3"></div>
-        <%= f.input :place_name,
-                    label: "Quel est le nom de l'établissement?",
-                    input_html: { data: { poi_autocomplete_target: "name" }} %>
-        <%= f.input :place_address,
-                    label: "Et son adresse ?",
-                    input_html: { data: { poi_autocomplete_target: "address" }} %>
-        <%= f.input :date,
-                    as: :string,
-                    label: "A quelle date aura lieu le rendez-vous ?",
-                    input_html: { data: { controller: "datetime-selector" } }%>
-
-        <%= button_tag "Previous", type: :button,
-              data: {
-                action: "click->steps#goToPrevious",
-                previous_step: "0"
-              } %>
-
-        <%= button_tag "Next", type: :button,
-              data: {
-                action: "click->steps#goToNext",
-                next_step: "2"
-              } %>
-
-      </div>
-
-      <div class="title-and-desc d-none" data-steps-target="step">
-        <h3>Donne un titre à ton annonce</h3>
-        <%= f.input :title,
-                  placeholder: "Titre de ton annonce",
-                  label: "Titre" %>
-        <%= f.input :description,
-                  placeholder: "(Optionnel) Ajouter une description..."
-                  %>
-        <%= button_tag "Previous", type: :button,
-              data: {
-                action: "click->steps#goToPrevious",
-                previous_step: "1"
-              } %>
-
-        <%= button_tag "Next", type: :button,
-              data: {
-                action: "click->steps#goToNext",
-                next_step: "3"
-              } %>
-      </div>
-
-      <div class="less-important-fields d-none" data-steps-target="step">
-        <%= f.input :tags,
-                    label: "Indique quelques mots-clés pour faciliter la recherche",
-                    input_html: {id: "filter-tags", placeholder: "Cartes, stratégie, ambiance", autocomplete: "off"}
-                    %>
-        <%= f.input :level,
-                    placeholder: "Débutant, confirmé, expert ?",
-                    collection: ["Débutant", "Normal", "Expert", "Pas de restriction"],
-                    label: "Quel niveau souhaites-tu donner à ta rencontre ?" %>
-        <%= button_tag "Previous", type: :button,
-              data: {
-                action: "click->steps#goToPrevious",
-                previous_step: "2"
-              } %>
-        <div class="text-center pt-3">
-          <%= f.button :submit,"CREER L'ANNONCE", class: "btn btn-primary " %>
-          <%= link_to "ANNULER", meetings_path, class: "btn btn-danger text-white" %>
         </div>
-      </div>
-    <% end %>
-  </div>
+
+
+      <% end %>
+
+
 </div>

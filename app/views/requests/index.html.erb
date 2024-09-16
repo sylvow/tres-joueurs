@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" data-controller="mark-as-full">
   <div class="d-flex justify-content-between mb-2 align-items-center">
   <h3>Mes jeux en cours (orga)</h3>
   <i class="fa-solid fa-xmark"></i>
@@ -29,7 +29,7 @@
                   <p class="mb-0 pb-1"><%= meeting.user.username %> (moi)</p>
               </div>
               <% meeting.requests.each do |request| %>
-                <% if request.status != "rejected" %>
+                <% if !request.rejected? %>
                   <div class="d-flex justify-content-between align-items-center">
                     <%= link_to request_path(request) do %>
                       <p class="mb-0 pb-1">
@@ -45,7 +45,7 @@
                     <% end %>
                     <div>
                       <%= link_to accept_request_path(request), data: { turbo_method: :patch } do %>
-                        <% if !request.status == Request.statuses[:accepted] %>
+                        <% if request.interested? %>
                           <i class="fa-regular fa-circle-check px-2"></i>
                         <% end %>
                       <% end %>
@@ -58,15 +58,17 @@
               <% end %>
             </div>
             <div class="form-check form-switch ms-5 p-2 d-flex">
-              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-              <label class="form-check-label ps-2" for="flexSwitchCheckDefault">Signaler comme complet</label>
+              <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" data-action="click->mark-as-full#full">
+              <label class="form-check-label ps-2" for="switch-<%= meeting.id %>">Signaler comme complet</label>
             </div>
           </div>
         </div>
       </div>
     <% end %>
-
   <div class="d-flex justify-content-between mb-2 align-items-center">
+
+<%# -------------------------------------------------------------------------------------------------------------------- %>
+
   <h3>Mes jeux en cours (participant)</h3>
   <i class="fa-solid fa-xmark"></i>
   </div>
@@ -93,17 +95,20 @@
         <div class="col-9 text-end d-flex flex-column justify-content-between px-4">
           <div>
             <div class="d-flex justify-content-between align-items-center">
-              <p class="mb-0"><%= meeting.user.username %> (moi)</p>
-              <i class="fa-solid fa-xmark"></i>
+              <p class="mb-0"><%= current_user.username %></p>
+                <%= link_to reject_request_path(meeting.requests.find_by(user_id: current_user)), data: { turbo_method: :patch } do %>
+                  <i class="fa-solid fa-xmark"></i>
+                <% end %>
             </div>
-            <% meeting.requests.all.each do |player| %>
-              <div class="d-flex justify-content-between align-items-center">
-                <p class="mb-0"><%= player.user.username %></p>
-                  <div>
-                    <i class="fa-regular fa-circle-check px-2"></i>
-                    <i class="fa-solid fa-xmark"></i>
-                  </div>
-              </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="mb-0"><%= meeting.user.username %> (organisateur)</p>
+            </div>
+            <% meeting.requests.each do |request| %>
+              <% if request.user != current_user %>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="mb-0"><%= request.user.username %></p>
+                </div>
+              <% end %>
             <% end %>
           </div>
           <div class="form-check form-switch p-2 d-flex justify-content-center">
