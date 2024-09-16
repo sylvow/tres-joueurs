@@ -1,15 +1,16 @@
 <div class="container p-3 mt-3 ">
   <div class="row justify-content-center">
     <div class="col-lg-6 shadow rounded-3 mb-3 show-card shadow" data-controller="show-meetings-interest">
-      <div class="d-flex align-items-center">
+      <div class="user-div d-flex align-items-center">
         <% unless @meeting.user.profile_picture.attached? %>
           <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 40px; width: 40px;') %>
         <% else %>
           <%= cl_image_tag(@meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 40pxpx; width: 40pxpx;') %>
         <% end %>
         <p class="text-center m-0 fst-italic"> par <%= @meeting.user.username %></p>
+          <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
       </div>
-      <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
+      
       <h2 class="pt-3 text-center"><%= @meeting.title %></h2>
 
       <% if @meeting.user != current_user %>

@@ -1,8 +1,14 @@
-<div class="container">
+<div class="container p-3 mt-3 ">
   <div class="row justify-content-center">
-    <h1 class="d-flex justify-content-center annonce-titre mb-4">Crée ton annonce ! 😎</h1>
+    <div class="col-lg-6 rounded-3 mb-3 ">
+    <div class="user-div d-flex justify-content-center annonce-titre mb-4">
+      <h1>Crée ton annonce ! 😎</h1>
+      <a href="/meetings" class="btn-close close-button-meeting-new" aria-label="Close"></a>
+    </div>
+   
 
   <%= render 'shared/meeting_form' %>
 
   </div>
+</div>
 </div>
