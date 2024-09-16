@@ -33,22 +33,18 @@ export default class extends Controller {
   }
 
   selectDate(event) {
-    // Supprime la classe active de toutes les dates
     Array.from(this.datesContainerTarget.children).forEach(date => {
       date.classList.remove("active")
     })
 
-    // Ajoute la classe active à la date cliquée
     event.currentTarget.classList.add("active")
   }
 
   saveIndex() {
-    // Sauvegarde l'index dans le localStorage
     localStorage.setItem('carouselIndex', this.index)
   }
 
   loadIndex() {
-    // Récupère l'index depuis le localStorage
     return parseInt(localStorage.getItem('carouselIndex'))
   }
 
