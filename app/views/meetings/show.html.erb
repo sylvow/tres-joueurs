@@ -2,17 +2,18 @@
   <div class="row justify-content-center">
     <div class="col-lg-6 shadow rounded-3 mb-3 show-card shadow" data-controller="show-meetings-interest">
       <div class="d-flex align-items-center">
-          <% unless @meeting.user.profile_picture.attached? %>
-              <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 40px; width: 40px;') %>
-            <% else %>
-              <%= cl_image_tag(@meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 100px; width: 100px;') %>
-            <% end %>
+        <% unless @meeting.user.profile_picture.attached? %>
+          <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 40px; width: 40px;') %>
+        <% else %>
+          <%= cl_image_tag(@meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 40pxpx; width: 40pxpx;') %>
+        <% end %>
         <p class="text-center m-0 fst-italic"> par <%= @meeting.user.username %></p>
       </div>
-        <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
+      <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
       <h2 class="pt-3 text-center"><%= @meeting.title %></h2>
 
       <% if @meeting.user != current_user %>
+        <% if @user_request.nil? %>
         <div class="row justify-content-center mb-4">
           <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
                   data-action="click->show-meetings-interest#display"
@@ -38,9 +39,21 @@
             </div>
           </div>
         </div>
+        <% elsif @user_request.accepted? || @user_request.interested? %>
+          <div class="row justify-content-center d-flex">
+            <%= link_to 'Annuler ma demande', request_path(@user_request), data: { turbo_method: :delete, turbo_confirm: "Êtes-vous certain de vouloir annuler cette demande?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
+          </div>
+        <% elsif @user_request.rejected? %>
+          <div class="row justify-content-center d-flex">
+            <p>Votre demande a été refusée.</p>
+          </div>
+        <% end %>
+
+
         <% elsif @meeting.user == current_user %>
         <div class="row justify-content-center d-flex">
           <%= link_to "Modifier mon annonce", edit_meeting_path(@meeting), class: "btn btn-primary mt-2 p-2 col-6 rounded-pill" %>
+        </div>
       <% end %>
 
       <div class="d-flex justify-content-between">
@@ -87,61 +100,6 @@
           <p class="bg-light rounded-3 p-3 text-dark"><%= @meeting.description %></p>
         </div>
       <% end %>
-
-      <% if @meeting.user != current_user %>
-        <% if @user_request.nil? %>
-          <div class="row justify-content-center">
-            <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
-                    data-action="click->show-meetings-interest#display"
-                    data-show-meetings-interest-target="interested">
-                    Je suis intéressé.e
-            </button>
-
-            <div class="container mt-3 d-none" data-show-meetings-interest-target="friends">
-              <div class="row text-center">
-                <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
-
-                  <%= f.input :number_of_friends,
-                              label: "Nombre d'amis",
-                              # collection: (0..@meeting.players_needed_max - 1).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
-                              collection: (0..8),
-                              prompt: "Sélectionnez le nombre d'amis",
-                              input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
-                  <div class="text-center">
-                    <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill" %>
-                  </div>
-              
-        
-                <% end %>
-              </div>
-            </div>
-          </div>
-        <% elsif @user_request.accepted? || @user_request.interested? %>
-          <div class="row justify-content-center d-flex">
-            <%= link_to 'Annuler ma demande', request_path(@user_request), data: { turbo_method: :delete, turbo_confirm: "Êtes-vous certain de vouloir annuler cette demande?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
-          </div>
-        <% elsif @user_request.rejected? %>
-        <div class="row justify-content-center d-flex">
-          <p>Votre demande a été refusée.</p>
-        </div>
-        <% end %>
-      
-      
-      <% elsif @meeting.user == current_user %>
-        <div class="row justify-content-center d-flex">
-          <%= link_to "Modifier mon annonce", edit_meeting_path(@meeting), class: "btn btn-primary mt-2 p-2 col-6 rounded-pill" %>
-        </div>
-        <div class="row justify-content-center d-flex">
-        <% unless @meeting.cancelled? %>
-            <%= link_to 'Annuler mon annonce', cancel_meeting_path(@meeting), data: { turbo_method: :patch, turbo_confirm: "Êtes-vous certain de vouloir annuler cette annonce?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
-          <% end %>
-        </div>
-        
-      <% end %> 
-      
-
-        
-
 
     </div>
   </div>
