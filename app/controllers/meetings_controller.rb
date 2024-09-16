@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
 
-  before_action :set_params, only: %i[show edit update]
+  before_action :set_params, only: %i[show edit update cancel]
   skip_before_action :authenticate_user!
 
   def index
@@ -32,7 +32,7 @@ class MeetingsController < ApplicationController
     @request = Request.new
     @meeting = Meeting.find(params[:id])
     @user = current_user
-    @request = Request.new
+    @user_request =  Request.find_by(meeting_id: @meeting.id, user_id: current_user.id)
   end
 
   def new
@@ -80,6 +80,11 @@ class MeetingsController < ApplicationController
   def history
     @finished_meetings = Meeting.where(status: Meeting.statuses[:finished])
     @other_requests = Request.where(meeting_id: @meetings)
+  end
+
+  def cancel
+    @meeting.cancelled!
+    redirect_to meetings_path, notice: 'Votre annonce a été annulée.'
   end
 
   private

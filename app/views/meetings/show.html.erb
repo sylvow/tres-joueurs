@@ -56,37 +56,59 @@
           <p class="bg-light rounded-3 p-3 text-dark"><%= @meeting.description %></p>
         </div>
       <% end %>
-
       <% if @meeting.user != current_user %>
-        <div class="row justify-content-center">
-          <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
-                  data-action="click->show-meetings-interest#display"
-                  data-show-meetings-interest-target="interested">
-                  Je suis intéressé.e
-          </button>
+        <% if @user_request.nil? %>
+          <div class="row justify-content-center">
+            <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
+                    data-action="click->show-meetings-interest#display"
+                    data-show-meetings-interest-target="interested">
+                    Je suis intéressé.e
+            </button>
 
-          <div class="container mt-3 d-none" data-show-meetings-interest-target="friends">
-            <div class="row text-center">
-              <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
+            <div class="container mt-3 d-none" data-show-meetings-interest-target="friends">
+              <div class="row text-center">
+                <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
 
-                <%= f.input :number_of_friends,
-                            label: "Nombre d'amis",
-                            # collection: (0..@meeting.players_needed_max - 1).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
-                            collection: (0..8),
-                            prompt: "Sélectionnez le nombre d'amis",
-                            input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
-                <div class="text-center">
-                  <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill" %>
-                </div>
-
-              <% end %>
+                  <%= f.input :number_of_friends,
+                              label: "Nombre d'amis",
+                              # collection: (0..@meeting.players_needed_max - 1).map { |friends| [friends == 0 ? "Je suis seul.e" : friends == 1 ? "1 ami" : "#{friends} amis", friends] },
+                              collection: (0..8),
+                              prompt: "Sélectionnez le nombre d'amis",
+                              input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
+                  <div class="text-center">
+                    <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill" %>
+                  </div>
+              
+        
+                <% end %>
+              </div>
             </div>
           </div>
+        <% elsif @user_request.accepted? || @user_request.interested? %>
+          <div class="row justify-content-center d-flex">
+            <%= link_to 'Annuler ma demande', request_path(@user_request), data: { turbo_method: :delete, turbo_confirm: "Êtes-vous certain de vouloir annuler cette demande?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
+          </div>
+        <% elsif @user_request.rejected? %>
+        <div class="row justify-content-center d-flex">
+          <p>Votre demande a été refusée.</p>
         </div>
-        <% elsif @meeting.user == current_user %>
+        <% end %>
+      
+      
+      <% elsif @meeting.user == current_user %>
         <div class="row justify-content-center d-flex">
           <%= link_to "Modifier mon annonce", edit_meeting_path(@meeting), class: "btn btn-primary mt-2 p-2 col-6 rounded-pill" %>
-      <% end %>
-    </div>
+        </div>
+        <div class="row justify-content-center d-flex">
+        <% unless @meeting.cancelled? %>
+            <%= link_to 'Annuler mon annonce', cancel_meeting_path(@meeting), data: { turbo_method: :patch, turbo_confirm: "Êtes-vous certain de vouloir annuler cette annonce?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
+          <% end %>
+        </div>
+        
+      <% end %> 
+      
+
+        
+      
   </div>
 </div>
