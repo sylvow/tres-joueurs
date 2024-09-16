@@ -1,0 +1,41 @@
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+}
+
+.carousel-dates {
+  display: flex;
+  overflow: hidden;
+  width: 85%;
+  
+}
+
+.carousel-date {
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  text-align: center;
+  background-color: white;
+}
+
+.carousel-prev,
+.carousel-next {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: white;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  color: #007bff;
+}
