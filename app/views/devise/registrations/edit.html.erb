@@ -33,11 +33,11 @@
       </div>
 
       <div class="form-actions">
-        <%= f.button :submit, "Mettre à jour" %>
+        <%= f.button :submit, "Mettre à jour", class: "btn btn-primary rounded-pill"%>
       </div>
     <% end %>
 
-    <div><%= button_to "Supprimer mon compte", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+    <div><%= button_to "Supprimer mon compte", registration_path(resource_name), class: "btn btn-danger btn-sm rounded-pill mt-3", data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
 
     <%= link_to "Back", :back %>
   </div>
