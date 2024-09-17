@@ -16,12 +16,7 @@ class RequestsController < ApplicationController
   def create
     @meeting = Meeting.find(params[:meeting_id])
     if Request.where(user_id: current_user.id, meeting_id: @meeting.id).exists?
-      respond_to do |format|
-        format.json do 
-          render json: { message: "Vous avez déjà fait une demande pour cette partie" }
-        end
-      end
-      
+      redirect_to meeting_path(@meeting), status: :unprocessable_entity
     else
       @request = Request.new(request_params)
       @request.user = current_user
