@@ -4,8 +4,8 @@ export default class extends Controller {
   static targets = ["datesContainer"]
 
   connect() {
-    this.visibleDates = 7 // Nombre de dates visibles à la fois
-    this.index = this.loadIndex() || 0 // Charger l'index du carrousel depuis le localStorage
+    this.visibleDates = 7
+    this.index = this.loadIndex() || 0
     this.updateVisibleDates()
   }
 
@@ -33,11 +33,14 @@ export default class extends Controller {
   }
 
   selectDate(event) {
-    Array.from(this.datesContainerTarget.children).forEach(date => {
-      date.classList.remove("active")
-    })
+    const clickedDate = event.currentTarget
 
-    event.currentTarget.classList.add("active")
+    if (clickedDate.classList.contains("bg-success")) {
+      this.redirectToIndex()
+    }
+  }
+  redirectToIndex() {
+    window.location.href = "/meetings"
   }
 
   saveIndex() {

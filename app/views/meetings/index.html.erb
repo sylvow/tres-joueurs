@@ -5,7 +5,7 @@
 
   <div class="carousel-dates" data-carousel-target="datesContainer">
     <% @dates.each do |date| %>
-      <%= link_to date.strftime("%d %B"), meetings_path(date: date), class: "carousel-date #{'bg-success' if @selected_date == date}" %>
+      <%= link_to date.strftime("%d %B"), meetings_path(date: date), class: "carousel-date #{'bg-success' if @selected_date == date}", data: { date: date, action: "click->carousel#selectDate" } %>
     <% end %>
   </div>
 
