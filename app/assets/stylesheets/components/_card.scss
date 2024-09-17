@@ -1,7 +1,17 @@
 .meeting-card {
   background-color: $white;
   color: black;
+  .show-link {
+    text-decoration: none;
+    color: black;
 
+    &:hover {
+      text-decoration: none;
+    }
+  }
+.time {
+  background-color: green;
+}
   h3 {
     font-weight: 600;
   }
@@ -47,6 +57,12 @@
     width: 400px;
   }
 }
+
+.meeting-card-bottom {
+  box-shadow: inset 0 0 4px #966100;
+  padding: 3px;
+}
+
 .request-card {
   background-color: $light-gray;
   margin-bottom: 5px;
@@ -109,4 +125,24 @@
 .date-stamp {
   width: 80px;
   height: 80px;
+}
+
+.meeting-card-top {
+  position: relative;
+
+  .profile-pic {
+    padding: 0px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 40px;
+    border-radius: 50%;
+    height: 40px;
+    object-fit: cover;
+  }
+}
+
+.show-card{
+  background-color: $dark;
+  padding: 30px;
 }

@@ -4,13 +4,17 @@
     <h2 class="my-4">Mes annonces</h2>
     <div class="meetings-container">
       <% @my_meetings.each do |meeting| %>
+      <% unless meeting.cancelled? %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
+
+          
 
           <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %>" style="height: 100%;">
             <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
             <%= meeting.date.strftime("%d/%m") %>
             <%= meeting.date.strftime("%H:%M") %>
           </div>
+          
 
 
           <div class="col-9 p-2" style="height: 100%;">
@@ -22,9 +26,12 @@
               <%= link_to "Voir mon annonce", meeting_path(meeting) %>
 
           </div>
+          
         </div>
+        <% end %>
       <% end %>
     </div>
+    
   </div>
   <%= link_to new_meeting_path, class: "fixed-button" do %>
       <i class="fa-solid fa-plus create-icon"></i>

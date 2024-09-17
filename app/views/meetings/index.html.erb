@@ -1,4 +1,18 @@
 <div class="container">
+
+<div class="carousel" data-controller="carousel">
+  <button class="carousel-prev" data-action="click->carousel#previous">⟨</button>
+
+  <div class="carousel-dates" data-carousel-target="datesContainer">
+    <% @dates.each do |date| %>
+      <%= link_to date.strftime("%d %B"), meetings_path(date: date), class: "carousel-date #{'bg-success' if @selected_date == date}" %>
+    <% end %>
+  </div>
+
+  <button class="carousel-next" data-action="click->carousel#next">⟩</button>
+</div>
+
+
   <div class="row text-center p-2" data-controller="show-filters">
     <button class="btn btn-primary mt-2 p-2 col-6 mx-auto rounded-pill"
             data-action="click->show-filters#display"
@@ -22,31 +36,47 @@
 
       <% @meetings.each do |meeting| %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
-          <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+          <% if meeting.user != current_user %>
+            <%= link_to(meeting_path(meeting), class: "show-link") do %>
 
-            <% unless meeting.user.profile_picture.attached? %>
-              <%= image_tag("profil.png", class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
-            <% else %>
-              <%= cl_image_tag(meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 50px; width: 50px;') %>
-            <% end %>
-            <p><strong><%= meeting.date.strftime("%d/%m") %></strong></p>
-            <p><strong><%= meeting.date.strftime("%H:%M") %></strong></p>
-          </div>
-          <div class="col-9 p-2" style="height: 100%;">
-            <div>
-              <h5><strong><%= meeting.title %></strong></h5>
-              <p><strong><%= meeting.game.name %></strong></p>
-              <p>Joueurs : <%= meeting.players_needed_min %>
-                <% if !meeting.players_needed_max.blank? %>
-                  à <%= meeting.players_needed_max %></p>
-                <% end %>
-              <p>Niveau : <%= meeting.level %></p>
-              <p><strong><%= meeting.place_address %></strong></p>
+            <div class="row meeting-card-top">
+              <% unless meeting.user.profile_picture.attached? %>
+                <%= image_tag("profil.png", class: "profile-pic") %>
+              <% else %>
+                <%= cl_image_tag(meeting.user.profile_picture.key, class: "profile-pic") %>
+              <% end %>
+
+              <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center">
+                <%# code %>
+                <p class="fs-1 fw-bold"><%= meeting.date.strftime("%d") %></p>
+                <p><%= meeting.date.strftime("%B") %></p>
+                <p><%= meeting.date.strftime("%H:%M") %></p>
+              </div>
+
+              <div class="col-9 p-2" style="height: 100%;">
+                <div>
+                  <h3><%= meeting.game.name %></h3>
+                  <h6><%= meeting.title %></h6>
+                  <div class="d-none">
+                  <p>Joueurs : <%= meeting.players_needed_min %>
+                    <% if !meeting.players_needed_max.blank? %>
+                      à <%= meeting.players_needed_max %></p>
+                    <% end %>
+                    </div>
+                  <p>Niveau : <%= meeting.level %></p>
+                  <p><strong><%= meeting.place_address %></strong></p>
+                </div>
+              </div>
             </div>
-            <% if meeting.user != current_user %>
-              <%= link_to "Je suis interressé", meeting_path(meeting) %>
-            <% end %>
+
+          <div class="row meeting-card-bottom bg-warning">
+            <div class="text-light d-flex justify-content-center align-items-center">
+              <p>Recherche <strong><%= meeting.players_needed_min %> </strong>joueurs.ses</p>
+            </div>
           </div>
+
+         <% end %>
+         <% end %>
         </div>
       <% end %>
     </div>

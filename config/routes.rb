@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   root to: "meetings#index"
 
   resources :meetings, except: [:destroy] do
+    member do
+      patch :cancel
+    end
     resources :requests, only: [:create]
     resources :messages, only: [:create]
     collection do
@@ -20,8 +23,9 @@ Rails.application.routes.draw do
   end
 
   get 'meetings/:id/messages', to: 'meetings#messages', as: "meeting_message"
-  resources :requests do 
+  resources :requests do
     member do
+      patch :cancel
       patch :accept
       patch :reject
     end

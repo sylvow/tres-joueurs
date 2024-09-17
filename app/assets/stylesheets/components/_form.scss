@@ -3,3 +3,13 @@
   padding: 0;
   border: none;
 }
+
+.secondary-form {
+  background-color: $body-bg;
+  color: $light-gray;
+}
+
+.user-form {
+  margin: auto;
+  max-width: 400px;
+}
