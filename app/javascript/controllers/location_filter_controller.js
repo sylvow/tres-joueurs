@@ -9,12 +9,7 @@ export default class extends Controller {
   }
 
   activateGeo() {
-
-    console.log("activateGeoClicked")
     const radius = this.radiusTarget.value
-    console.log(radius);
-    console.log(this.fieldLatTarget)
-    console.log(this.fieldLngTarget)
     let lat = 0;
     let lng = 0;
     const url = new URL(window.location.href);
@@ -28,8 +23,6 @@ export default class extends Controller {
           // // url.searchParams.set("lng", lng);
           // url.searchParams.set("radius", radius);
           // window.location.href = url;
-          console.log(lat)
-          console.log(lng)
           this.fieldLatTarget.value = lat
           this.fieldLngTarget.value = lng
         });
@@ -37,4 +30,10 @@ export default class extends Controller {
     this.fieldRadiusTarget.value = radius
   }
 
+  deleteField() {
+    this.fieldTarget.value = ""
+    this.fieldRadiusTarget.value = ""
+    this.fieldLatTarget.value = ""
+    this.fieldLngTarget.value = ""
+  }
 }
