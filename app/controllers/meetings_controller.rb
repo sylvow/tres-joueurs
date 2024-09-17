@@ -96,6 +96,19 @@ class MeetingsController < ApplicationController
     end
   end
 
+  def mark_as_full
+    @meeting = Meeting.find(params[:id])
+    if @meeting.full?
+      @meeting.available!
+      redirect_to requests_path if @meeting.save!
+    elsif @meeting.available?
+      @meeting.full!
+      redirect_to requests_path if @meeting.save!
+    else
+      render :requests_path, status: :unprocessable_entity
+    end
+  end
+
   def history
     @finished_meetings = Meeting.where(status: Meeting.statuses[:finished])
     @other_requests = Request.where(meeting_id: @meetings)
