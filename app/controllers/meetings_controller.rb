@@ -4,17 +4,17 @@ class MeetingsController < ApplicationController
   skip_before_action :authenticate_user!
 
   def index
-    @start_date = Date.today
-    @end_date = @start_date + 29.days
-    @dates = (@start_date..@end_date).to_a
+    # @start_date = Date.today
+    # @end_date = @start_date + 29.days
+    # @dates = (@start_date..@end_date).to_a
     
-    @selected_date = params[:date] ? Date.parse(params[:date]) : nil
+    # @selected_date = params[:date] ? Date.parse(params[:date]) : nil
     
-    @meetings = if @selected_date
-                  Meeting.where(date: @selected_date.beginning_of_day..@selected_date.end_of_day)
-                else
-                  Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
-                end
+    # @meetings = if @selected_date
+    #               Meeting.where(date: @selected_date.beginning_of_day..@selected_date.end_of_day)
+    #             else
+    #               Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
+    #             end
 
     if params[:search].present?
       params[:search].split(' ').each do |term|
