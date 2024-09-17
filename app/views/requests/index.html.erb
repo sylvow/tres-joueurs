@@ -1,4 +1,4 @@
-<div class="container" data-controller="mark-as-full">
+<div class="container">
   <div class="d-flex justify-content-between mb-2 align-items-center">
   <h3>Mes jeux en cours (orga)</h3>
   <i class="fa-solid fa-xmark"></i>
@@ -57,10 +57,12 @@
                 <% end %>
               <% end %>
             </div>
+            <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
             <div class="form-check form-switch ms-5 p-2 d-flex">
-              <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" data-action="click->mark-as-full#full">
-              <label class="form-check-label ps-2" for="switch-<%= meeting.id %>">Signaler comme complet</label>
+              <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" <%= "checked" if meeting.full? %>>
+              <label class="form-check-label ps-2" for="switch-<%= meeting.id %>"><%= meeting.full? ? Meeting.statuses[:full] : Meeting.statuses[:available] %></label>
             </div>
+            <% end %>
           </div>
         </div>
       </div>
