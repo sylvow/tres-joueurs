@@ -1,40 +1,72 @@
 <div class="container">
 
-<div class="carousel" data-controller="carousel">
-  <button class="carousel-prev" data-action="click->carousel#previous">⟨</button>
+  <div class="row text-center p-2" data-controller="show-filters location-filter">
 
-  <div class="carousel-dates" data-carousel-target="datesContainer">
-    <% @dates.each do |date| %>
-      <%= link_to date.strftime("%d %B"), meetings_path(date: date), class: "carousel-date #{'bg-success' if @selected_date == date}", data: { date: date, action: "click->carousel#selectDate" } %>
-    <% end %>
-  </div>
-
-  <button class="carousel-next" data-action="click->carousel#next">⟩</button>
-</div>
-
-
-  <div class="row text-center p-2" data-controller="show-filters">
     <button class="btn btn-primary mt-2 p-2 col-6 mx-auto rounded-pill"
             data-action="click->show-filters#display"
             data-show-filters-target="filtersButton">
-            Filtres +
+            FILTRE V2
     </button>
+
     <div class="filter-form d-none " data-show-filters-target="showFilters">
       <%= form_with url: meetings_path, method: :get, local: true do %>
-        <div class="col-md-12 my-2">
-          <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Jeu, Catégorie, Adresse, Lieu, Tags etc." %>
-        </div>
-        <div class="col-md-12">
-          <%= submit_tag "Appliquer les filtres", class: "btn btn-success rounded-pill" %>
+        <div class="row align-items-center justify-content-center">
+
+          <div class="col-md-5 my-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <%= text_field_tag :location, params[:location], class: "form-control",
+            placeholder: "Localisation", data: { location_filter_target: "field"} %>
+          </div>
+
+          <%# hidden %>
+          <div class="col-md-5 my-2 d-none" type="button">
+            <%= text_field_tag :lat, params[:lat], class: "form-control",
+            placeholder: "lat", data: { location_filter_target: "fieldLat"} %>
+          </div>
+          <div class="col-md-5 my-2 d-none" type="button">
+            <%= text_field_tag :lng, params[:lng], class: "form-control",
+            placeholder: "lng", data: { location_filter_target: "fieldLng"} %>
+          </div>
+          <div class="col-md-5 my-2 d-none" type="button">
+            <%= text_field_tag :radius, params[:radius], class: "form-control",
+            placeholder: "radius", data: { location_filter_target: "fieldRadius"} %>
+          </div>
+          <%# /hidden %>
+
+          <div class="col-md-5 my-2">
+            <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Jeu, Catégorie, Tags etc." %>
+          </div>
+
+          <div class="col-md-1">
+            <%= submit_tag "OK", class: "btn btn-success rounded-pill" %>
+          </div>
+
         </div>
       <% end %>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-body">
+            <h5 class="modal-title align-self-center" id="exampleModalLabel">Rechercher autour de toi ?</h5><br>
+            <input data-location-filter-target="radius" type="range" class="form-range" value="10" min="1" max="300" oninput="this.nextElementSibling.value = this.value">
+            <output>10</output>km<br>
+            <button type="button" class="btn btn-primary m-4" data-bs-dismiss="modal" data-action="click->location-filter#activateGeo">OK</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <h2 class="my-4">Liste des meetings</h2>
     <div class="meetings-container">
 
-
-
-      <% @meetings.each do |meeting| %>
+      <% if @meetings.blank? %>
+        <p>Désolé, ta recherche n'a retourné aucun résultat</p>
+      <% else %>
+       <% @meetings.each do |meeting| %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
           <% if meeting.user != current_user %>
             <%= link_to(meeting_path(meeting), class: "show-link") do %>
@@ -78,6 +110,7 @@
          <% end %>
          <% end %>
         </div>
+      <% end %>
       <% end %>
     </div>
   </div>
