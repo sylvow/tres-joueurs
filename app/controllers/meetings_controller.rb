@@ -32,11 +32,6 @@ class MeetingsController < ApplicationController
         lng: m.longitude
       }
     end
-
-    
-
-    
-    
   end
 
   def my_meetings
