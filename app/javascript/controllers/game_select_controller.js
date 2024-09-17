@@ -4,8 +4,6 @@ import TomSelect from "tom-select"
 export default class extends Controller {
 
   connect() {
-    console.log("controller stimulus on")
-
     var config = {
       persist: false,
       createOnBlur: true,

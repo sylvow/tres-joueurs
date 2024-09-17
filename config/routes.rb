@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     collection do
       get :historique, to: 'meetings#history'
     end
+    member do 
+      patch :mark_as_full
+    end
   end
 
   get 'meetings/:id/messages', to: 'meetings#messages', as: "meeting_message"

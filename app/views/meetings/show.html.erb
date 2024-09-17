@@ -1,4 +1,4 @@
-<div class="container p-3 mt-3 ">
+<div class="container p-3 mt-3">
   <div class="row justify-content-center">
     <div class="col-lg-6 shadow rounded-3 mb-3 show-card py-3 shadow" data-controller="show-meetings-interest">
       <div class="image-container d-flex justify-content-center align-items-center">
@@ -67,7 +67,7 @@
 
           <div class="container mt-3 d-none" data-show-meetings-interest-target="friends">
             <div class="row text-center">
-              <%= simple_form_for @request, url: meeting_requests_path(@meeting), method: :post do |f| %>
+              <%= simple_form_for @request, url: meeting_requests_path(@meeting), data: { controller: "popup", action: "submit->popup#alreadyRequested"}, method: :post do |f| %>
 
                 <%= f.input :number_of_friends,
                             label: "Nombre d'amis",
@@ -76,7 +76,7 @@
                             prompt: "Sélectionnez le nombre d'amis",
                             input_html: { class: "form-control col-3", data: { price_calculator_target: "numberOfFriends" } } %>
                 <div class="text-center">
-                  <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill" %>
+                  <%= f.submit 'Envoyer la demande', class: "btn btn-default btn-success rounded-pill"  %>
                 </div>
 
               <% end %>
