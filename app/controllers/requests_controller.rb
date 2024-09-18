@@ -6,6 +6,7 @@ class RequestsController < ApplicationController
 
   # CRUD methods
   def index
+    @requests = current_user.meetings.joins(:requests)
     @user_meetings = Meeting.where(user_id: current_user).where.not(status: :cancelled).where.not(status: :finished)
     @requested_meetings = Meeting.joins(:requests).where(requests: { user_id: current_user }).where.not(requests: { status: :rejected })
     @user_meetings.each do |meeting|
@@ -14,6 +15,9 @@ class RequestsController < ApplicationController
         meeting.save!
       end
     end
+
+    current_user.update(viewed_requests_count: 0) if current_user.viewed_requests_count.nil?
+    current_user.update(viewed_requests_count: Request.where(meeting: current_user.meetings).count)
   end
 
   def show

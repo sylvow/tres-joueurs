@@ -83,6 +83,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_102544) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "kind"
+    t.boolean "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "requests", force: :cascade do |t|
     t.string "status"
     t.integer "number_of_friends"
@@ -109,6 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_102544) do
     t.string "phone_number"
     t.string "avatar"
     t.boolean "admin", default: false, null: false
+    t.integer "viewed_requests_count"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -119,6 +129,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_102544) do
   add_foreign_key "meetings", "users"
   add_foreign_key "messages", "meetings"
   add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "requests", "meetings"
   add_foreign_key "requests", "users"
 end
