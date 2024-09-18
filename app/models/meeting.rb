@@ -19,8 +19,8 @@ class Meeting < ApplicationRecord
   def set_coordinates
     result = Geocoder.search(place_address)
     unless result.blank?
-    latitude = result.first.coordinates[0]
-    longitude = result.first.coordinates[1]
+      latitude = result.first.coordinates[0]
+      longitude = result.first.coordinates[1]
     end
   end
 end

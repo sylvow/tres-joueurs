@@ -6,6 +6,14 @@ export default class extends Controller {
 
   connect() {
     console.log("location-filter stimulus on");
+    const radius = this.radiusTarget.value
+    this.fieldRadiusTarget.value = radius
+  }
+
+  updateRadius() {
+    console.log("radius modified");
+    const radius = this.radiusTarget.value
+    this.fieldRadiusTarget.value = radius
   }
 
   revealField() {
@@ -27,6 +35,7 @@ export default class extends Controller {
 
   activateGeo() {
     const radius = this.radiusTarget.value
+    this.fieldRadiusTarget.value = radius
     // let lat = 0;
     // let lng = 0;
     // const url = new URL(window.location.href);
@@ -46,7 +55,7 @@ export default class extends Controller {
           console.log(lng)
         });
     this.aroundMeFieldTarget.value = `Autour de moi - ${radius} km`
-    this.fieldRadiusTarget.value = radius
+
   }
 
   displayCities() {
@@ -58,7 +67,7 @@ export default class extends Controller {
     .then(response => response.json())
     .then((data) => {
       console.log(data)
-      const results = data.map((city) => city.nom + ', ' + city.code)
+      const results = data.map((city) => city.nom + ', ' + city.departement.code)
       // const lng = data.map((city) => city.centre.coordinates[1])
       // console.log(lng)
       console.log(results)
