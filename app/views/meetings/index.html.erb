@@ -1,6 +1,5 @@
 
 <div class="container">
-
   <div class="row text-center p-2" data-controller="show-filters location-filter">
 
     <button class="btn btn-primary btn-sm my-3 p-2 col-6 mx-auto rounded-pill"
@@ -17,22 +16,26 @@
         <div class="row align-items-center justify-content-center">
 
           <div class="col-md-5 my-2">
+
             <%= search_field_tag :location, params[:location], class: "form-control d-none", id: "aroundMe",
             placeholder: "Localisation", data: { location_filter_target: "aroundMeField"} %>
 
             <%= search_field_tag :city, params[:city], class: "form-control", id: "cityInp",
             placeholder: "Recherche ta ville", data: { location_filter_target: "cityInput", action: "keyup->location-filter#displayCities"} %>
 
-            <ul data-location-filter-target="results">
+            <ul data-location-filter-target="results" class="no-bullet">
             </ul>
 
-          <div class="form-check form-switch">
-            <label class="form-check-label text-muted" for="flexSwitchCheckDefault">Rechercher par géolocalisation</label>
-            <input class="form-check-input activateGeo " type="checkbox" id="flexSwitchCheckDefault" data-location-filter-target="toggler" data-action="click->location-filter#revealField">
+          <div class="form-switch my-2 p-0">
+            <div class="d-flex justify-content-left p-0">
+              <label class="form-check-label text-muted" for="flexSwitchCheckDefault">Rechercher par géolocalisation</label>
+              <input class="form-check-input margin-left" type="checkbox" id="flexSwitchCheckDefault" data-location-filter-target="toggler" data-action="click->location-filter#revealField">
+            </div>
           </div>
 
-            <div class="d-flex p-2">
-              <input class="form-range" data-location-filter-target="radius" type="range" value="10" min="1" max="200" oninput="this.nextElementSibling.value = this.value">
+            <div class="d-flex">
+            <label for="radius" class="form-label text-muted">Rayon</label>
+              <input id="radius" class="form-range margin-left-and-right" data-location-filter-target="radius"  data-action="change->location-filter#updateRadius" type="range" value="10" min="1" max="200" oninput="this.nextElementSibling.value = this.value">
               <output ml-4>10</output>km<br>
             </div>
           </div>
@@ -53,7 +56,11 @@
           <%# /hidden %>
 
           <div class="col-md-5 my-2">
-            <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "Jeu, Catégorie, Tags etc." %>
+            <%= search_field_tag :date, params[:daterange], class: "form-control", placeholder: "Choisis des dates", data: { controller: "date-filter"} %>
+          </div>
+
+          <div class="col-md-5 my-2">
+            <%= search_field_tag :search, params[:search], class: "form-control", placeholder: "Recherche par mots-clés : contrée, société ..." %>
           </div>
 
           <div class="col-md-1">
@@ -64,27 +71,14 @@
       <% end %>
     </div>
 </div>
-    <%# <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <div class="modal-body">
-            <h5 class="modal-title align-self-center" id="exampleModalLabel">Rechercher autour de toi ?</h5><br> %>
-            <%# <input data-location-filter-target="radius" type="range" class="form-range" value="10" min="1" max="300" oninput="this.nextElementSibling.value = this.value"> %>
-            <%# <output>10</output>km<br> %>
-            <%# <button type="button" class="btn btn-primary m-4" data-bs-dismiss="modal" data-action="click->location-filter#activateGeo">OK</button> %>
-            <%# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-action="click->location-filter#deleteField">Non</button>
-          </div>
-        </div>
-      </div>
-    </div> %>
+
 
  <div id="mapid"></div>
-    <h2 class="my-4">Liste des meetings</h2>
     <div class="meetings-container">
 
       <% if @meetings.blank? %>
         <p>Désolé, ta recherche n'a retourné aucun résultat</p>
+        <%= link_to "Réinitialiser la recherche", meetings_path %>
       <% else %>
        <% @meetings.each do |meeting| %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">

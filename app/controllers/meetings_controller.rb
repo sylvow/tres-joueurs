@@ -4,50 +4,41 @@ class MeetingsController < ApplicationController
   skip_before_action :authenticate_user!
 
   def index
+    # Meeting.all.each do |meeting|
+    #   if meeting.date < Date.today
+    #     meeting.finished!
+    #     meeting.save!
+    #   end
+    # end
+
     @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
 
+    # Check if location filter is present
     if params[:lat].present? && params[:lng].present? && params[:radius].present?
-      @close_meetings = Meeting.near([params[:lat], params[:lng]], params[:radius])
+      close_meetings = Meeting.near([params[:lat], params[:lng]], params[:radius])
+      @meetings &= close_meetings
     end
 
+    # Check if date filter is present
+    if params[:daterange].present?
+      start_date = params[:daterange].split(" to ")[0]
+      params[:daterange].split(" to ")[1].nil? ? end_date = start_date : end_date = params[:daterange].split(" to ")[1]
+      timely_meetings = Meeting.where(date: start_date..end_date)
+      @meetings &= timely_meetings
+    end
+
+    # Check if keyword filter is present
     if params[:search].present?
       params[:search].split(' ').each do |term|
-        @meetings = @meetings.joins(:game).where(
+        keyword_meetings = Meeting.joins(:game).where(
           "title ILIKE :term OR games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term OR lower(tags::text) LIKE lower(:term)",
           term: "%#{term}%"
         )
+        @meetings &= keyword_meetings
       end
     end
-
-    @meetings = @close_meetings & @meetings unless @close_meetings.blank?
+    # @meetings.sort_by(&:date)
     @request = Request.new
-
-    # @start_date = Date.today
-    # @end_date = @start_date + 29.days
-    # @dates = (@start_date..@end_date).to_a
-
-    # @selected_date = params[:date] ? Date.parse(params[:date]) : nil
-
-    # @meetings = if @selected_date
-    #               Meeting.where(date: @selected_date.beginning_of_day..@selected_date.end_of_day)
-    #             else
-    #               Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
-    #             end
-
-    # if params[:search].present?
-    #   params[:search].split(' ').each do |term|
-    #     @meetings = @meetings.joins(:game).where(
-    #       "title ILIKE :term OR games.name ILIKE :term OR games.category ILIKE :term OR location_type ILIKE :term OR place_name ILIKE :term OR place_address ILIKE :term OR lower(tags::text) LIKE lower(:term)",
-    #       term: "%#{term}%"
-    #     )
-    #   end
-
-    # @markers = @meetings.geocoded.map do |m|
-    #   {
-    #     lat: m.latitude,
-    #     lng: m.longitude
-    #   }
-    # end
   end
 
   def my_meetings
