@@ -5,19 +5,16 @@ export default class extends Controller {
   static targets = ["aroundMeField", "radius", "fieldLat", "fieldLng", "fieldRadius", "toggler", "cityInput", "results", "city"]
 
   connect() {
-    console.log("location-filter stimulus on");
     const radius = this.radiusTarget.value
     this.fieldRadiusTarget.value = radius
   }
 
   updateRadius() {
-    console.log("radius modified");
     const radius = this.radiusTarget.value
     this.fieldRadiusTarget.value = radius
   }
 
   revealField() {
-    console.log("toggle listened")
     this.resultsTarget.value = ""
     this.cityInputTarget.value =""
     this.aroundMeFieldTarget.value =""
@@ -51,26 +48,20 @@ export default class extends Controller {
           // window.location.href = url;
           this.fieldLatTarget.value = lat
           this.fieldLngTarget.value = lng
-          console.log(lat)
-          console.log(lng)
         });
     this.aroundMeFieldTarget.value = `Autour de moi - ${radius} km`
 
   }
 
   displayCities() {
-    console.log("key up")
-    console.log(this.cityInputTarget.value)
     const word = this.cityInputTarget.value
     const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
     fetch(url)
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
       const results = data.map((city) => city.nom + ', ' + city.departement.code)
       // const lng = data.map((city) => city.centre.coordinates[1])
       // console.log(lng)
-      console.log(results)
       this.resultsTarget.innerHTML = ""
       results.forEach((suggestion) => {
         this.resultsTarget.insertAdjacentHTML('beforeend', `<li data-location-filter-target="city" data-action="click->location-filter#selectCity">${suggestion}</li>`);
@@ -80,21 +71,15 @@ export default class extends Controller {
   }
 
   selectCity(event) {
-    console.log("click")
-    console.log(event.target.innerText)
     this.cityInputTarget.value = event.target.innerText
     const city = event.target.innerText.split(",")[0]
-    console.log(city);
     const url = `https://geo.api.gouv.fr/communes?nom=${city}&fields=departement,bbox&boost=population&limit=5`
     fetch(url)
     .then(response => response.json())
     .then((data) => {
-      console.log(data)
       const coordinates = data[0].bbox.coordinates[0][0]
       const lat = coordinates[1]
       const lng = coordinates[0]
-      console.log(lat)
-      console.log(lng);
       this.fieldLatTarget.value = lat
       this.fieldLngTarget.value = lng
     });

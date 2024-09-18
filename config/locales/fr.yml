@@ -8,3 +8,6 @@ fr:
           ongoing: "En cours"
           cancelled: "Annulé"
           finished: "Terminé"
+    errors:
+      messages:
+        record_invalid: "La validation a échoué : %{errors}"
