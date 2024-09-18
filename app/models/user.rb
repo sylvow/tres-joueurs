@@ -6,5 +6,6 @@ class User < ApplicationRecord
   has_many :messages
   has_many :requests
   has_many :meetings
+  has_many :notifications, through: :requests
   has_one_attached :profile_picture
 end

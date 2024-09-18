@@ -39,7 +39,11 @@ class MeetingsController < ApplicationController
     end
     @now = Time.now
     @sorted_meetings = @meetings.to_a.sort_by { |meeting| (Time.parse(meeting.date.to_s) - @now) }
+
     @request = Request.new
+    @notifications = Notification.where(status: Notification.statuses[:unread]).where(request: Request.where(user: current_user))
+
+    # raise
   end
 
   def my_meetings
@@ -73,7 +77,6 @@ class MeetingsController < ApplicationController
     if @meeting.save
       redirect_to requests_path
     else
-      raise
       render :new, status: :unprocessable_entity
     end
   end
@@ -118,7 +121,7 @@ class MeetingsController < ApplicationController
   def cancel
     if @meeting.user == current_user
       if @meeting.cancelled!
-        render json: { 
+        render json: {
           message: "Votre rencontre à été supprimé.",
           title: @meeting.localized_status,
           redirect_url: requests_path
@@ -126,7 +129,7 @@ class MeetingsController < ApplicationController
       else
         render json: {
           message: "Quelque chose s'est mal passé 😥",
-          title: "Oups.." 
+          title: "Oups.."
           }, status: :unprocessable_entity
       end
     else
