@@ -73,6 +73,7 @@ class MeetingsController < ApplicationController
     if @meeting.save!
       redirect_to meeting_path(@meeting)
     else
+      raise
       render :new, status: :unprocessable_entity
     end
   end

@@ -4,12 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["field"]
 
-  connect() {
-    console.log("players max controller on");
-  }
-
   reveal() {
-    console.log("toggle listened");
     this.fieldTarget.classList.toggle("d-none")
   }
 }

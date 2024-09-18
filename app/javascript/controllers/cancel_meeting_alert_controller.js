@@ -45,18 +45,7 @@ export default class extends Controller {
               icon: "error"
             });
           });
-
-
-
-
       }
     });
-
-
-
-
-
-
-
   }
 }
