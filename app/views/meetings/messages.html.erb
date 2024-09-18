@@ -1,5 +1,42 @@
 <div class="container chat text-dark">
-  <h1>This meetings' messages</h1>
+  <div class="message-card row mb-3" style="overflow: hidden;">
+          
+            <%= link_to(meeting_path(@meeting), class: "show-link") do %>
+
+            <div class="row message-card-top">
+
+              <div class="col-3 p-2 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
+                <%# code %>
+                <p class="fs-1 fw-bold"><%= @meeting.date.strftime("%d") %></p>
+                <p><%= @meeting.date.strftime("%B") %></p>
+                <p><%= @meeting.date.strftime("%H:%M") %></p>
+              </div>
+
+              <div class="col-9 p-2" style="height: 100%;">
+                <div>
+                  <h3><%= @meeting.game.name %></h3>
+                  <h6><%= @meeting.title %></h6>
+                  <div class="d-none">
+                  <p>Joueurs : <%= @meeting.players_needed_min %>
+                    <% if !@meeting.players_needed_max.blank? %>
+                      à <%= @meeting.players_needed_max %></p>
+                    <% end %>
+                    </div>
+                  <p>Niveau : <%= @meeting.level %></p>
+                  <p><strong><%= @meeting.place_address %></strong></p>
+                </div>
+              </div>
+            </div>
+
+          <div class="row message-card-bottom bg-warning">
+            <div class="text-light d-flex justify-content-center align-items-center">
+              <p>Recherche <strong><%= @meeting.players_needed_min %> </strong>joueurs.ses</p>
+            </div>
+          </div>
+
+         
+         <% end %>
+        </div>
   <%= turbo_stream_from "meeting_#{@meeting.id}_messages" %>
 
   <div id="messages" class="messages">
