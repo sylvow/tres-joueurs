@@ -4,11 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["filtersButton", "showFilters"]
 
-  connect() {
-  }
-
   display() {
-
     if ( this.filtersButtonTarget.innerText === "Filtrer les résultats +" ) {
       this.filtersButtonTarget.innerText = "Filtres -";
     } else {

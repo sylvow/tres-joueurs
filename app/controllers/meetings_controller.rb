@@ -69,13 +69,13 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new(meeting_params)
     @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
-    @meeting.status = Meeting.statuses[:available]
+    @meeting.available!
     unless Game.all.pluck(:name).include?(params[:meeting][:game_id])
       game = Game.create(name: params[:meeting][:game_id])
       @meeting.game_id = game.id
     end
-    if @meeting.save!
-      redirect_to meeting_path(@meeting)
+    if @meeting.save
+      redirect_to requests_path
     else
       render :new, status: :unprocessable_entity
     end

@@ -4,11 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["interested", "friends"]
 
-  connect() {
-  }
-
   display() {
-
     if ( this.interestedTarget.innerText === "Je suis intéressé.e" ) {
       this.interestedTarget.innerText = "Je ne suis plus intéressé.e";
       this.interestedTarget.classList.remove("btn-primary");

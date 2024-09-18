@@ -4,7 +4,7 @@
 
       data-controller="game-select poi-autocomplete players-max step-by-step"
       data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-      <%= simple_form_for @meeting, data: { controller: "creation-meeting-alert", action: "submit->creation-meeting-alert#error" } do |f| %>
+      <%= simple_form_for @meeting do |f| %>
         <div class="game-part" data-step-by-step-target="gameInfo">
           <%= f.input :game_id,
                       label: "Commençons par le jeu",
