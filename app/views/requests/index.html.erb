@@ -10,7 +10,7 @@
     <div id="collapseorga" class="request-card bg-white text-black px-3 mt-4 rounded-5 collapse show">
       <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
         <div class="form-check form-switch m-0 d-flex justify-content-end">
-          <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.full? ? Meeting.statuses[:full] : Meeting.statuses[:available] %></label>
+          <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.localized_status %></label>
           <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" <%= "checked" if meeting.full? %>>
         </div>
       <% end %>
