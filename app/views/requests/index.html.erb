@@ -120,7 +120,7 @@
         <%= link_to  meeting_message_path(meeting) do %>
           <button class="btn btn-primary btn-sm">Ecrire au groupe</button>
         <% end %>
-        <%= link_to reject_request_path(meeting.requests.find_by(user_id: current_user)), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler ta participation?" } do %>
+        <%= link_to request_path(meeting.requests.find_by(user_id: current_user)), data: { turbo_method: :delete, turbo_confirm: "Es-tu certain d'annuler ta participation?" } do %>
           <button class="btn btn-danger btn-sm">Annuler ma participation</button>
         <% end %>
       </div>

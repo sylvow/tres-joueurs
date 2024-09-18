@@ -142,6 +142,16 @@
   }
 }
 
+.message-card {
+  position: relative;
+  text-align: center;
+  a {
+    text-decoration: none !important;
+    color: black !important;
+  }
+}
+
+
 .show-card{
   background-color: $dark;
   padding: 30px;
