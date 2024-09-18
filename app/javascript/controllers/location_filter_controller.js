@@ -53,13 +53,29 @@ export default class extends Controller {
 
   }
 
+  // displayCities() {
+  //   const word = this.cityInputTarget.value
+  //   const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
+  //   fetch(url)
+  //   .then(response => response.json())
+  //   .then((data) => {
+  //     const results = data.map((city) => city.nom + ', ' + city.departement.code)
+  //     // const lng = data.map((city) => city.centre.coordinates[1])
+  //     // console.log(lng)
+  //     this.resultsTarget.innerHTML = ""
+  //     results.forEach((suggestion) => {
+  //       this.resultsTarget.insertAdjacentHTML('beforeend', `<li data-location-filter-target="city" data-action="click->location-filter#selectCity">${suggestion}</li>`);
+  //     });
+  //     // document.querySelector("#results").insertAdjacentHTML("afterbegin", liContent);
+  //   });
+  // }
   displayCities() {
     const word = this.cityInputTarget.value
     const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
     fetch(url)
     .then(response => response.json())
     .then((data) => {
-      const results = data.map((city) => city.nom + ', ' + city.departement.code)
+      const results = data.map((city) => city.nom + ', ' + city.code)
       // const lng = data.map((city) => city.centre.coordinates[1])
       // console.log(lng)
       this.resultsTarget.innerHTML = ""
@@ -69,17 +85,18 @@ export default class extends Controller {
       // document.querySelector("#results").insertAdjacentHTML("afterbegin", liContent);
     });
   }
-
   selectCity(event) {
     this.cityInputTarget.value = event.target.innerText
-    const city = event.target.innerText.split(",")[0]
-    const url = `https://geo.api.gouv.fr/communes?nom=${city}&fields=departement,bbox&boost=population&limit=5`
+    const cityCode = event.target.innerText.split(", ")[1]
+    const url = `https://geo.api.gouv.fr/communes?code=${cityCode}&fields=code,nom,centre`
     fetch(url)
     .then(response => response.json())
     .then((data) => {
-      const coordinates = data[0].bbox.coordinates[0][0]
+      const coordinates = data[0].centre.coordinates
       const lat = coordinates[1]
       const lng = coordinates[0]
+      // console.log("lat = " + lat);
+      // console.log("lng = " + lng);
       this.fieldLatTarget.value = lat
       this.fieldLngTarget.value = lng
     });
