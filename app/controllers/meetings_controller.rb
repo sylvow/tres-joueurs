@@ -39,8 +39,11 @@ class MeetingsController < ApplicationController
     end
     @now = Time.now
     @sorted_meetings = @meetings.to_a.sort_by { |meeting| (Time.parse(meeting.date.to_s) - @now) }
-    # raise
+
     @request = Request.new
+    @notifications = Notification.where(status: Notification.statuses[:unread]).where(request: Request.where(user: current_user))
+
+    # raise
   end
 
   def my_meetings
