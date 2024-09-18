@@ -17,4 +17,19 @@
 .filter-form {
   background-color: $dark;
   border-radius: 5px;
+  max-width: 500px;
+  .activateGeo {
+    margin: auto;
+  }
+  .margin-left {
+    margin-left: 10px;
+  }
+  .margin-right {
+    margin-right: 10px;
+  }
+  .margin-left-and-right {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
 }
