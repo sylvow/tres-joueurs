@@ -80,7 +80,7 @@
         <p>Désolé, ta recherche n'a retourné aucun résultat</p>
         <%= link_to "Réinitialiser la recherche", meetings_path %>
       <% else %>
-       <% @meetings.each do |meeting| %>
+       <%  @sorted_meetings.each do |meeting| %>
         <div class="meeting-card shadow rounded-4 row mb-3" style="overflow: hidden;">
           <% if meeting.user != current_user %>
             <%= link_to(meeting_path(meeting), class: "show-link") do %>
