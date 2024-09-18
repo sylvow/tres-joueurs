@@ -1,6 +1,6 @@
 class MeetingsController < ApplicationController
 
-  before_action :set_params, only: %i[show edit update cancel]
+  before_action :set_params, only: %i[show edit update cancel mark_as_full messages]
   skip_before_action :authenticate_user!
 
   def index
@@ -32,11 +32,6 @@ class MeetingsController < ApplicationController
         lng: m.longitude
       }
     end
-
-    
-
-    
-    
   end
 
   def my_meetings
@@ -45,7 +40,6 @@ class MeetingsController < ApplicationController
 
   def show
     @request = Request.new
-    @meeting = Meeting.find(params[:id])
     @user = current_user
     if @user
       @user_request = Request.find_by(meeting_id: @meeting.id, user_id: @user.id)
@@ -82,7 +76,6 @@ class MeetingsController < ApplicationController
 
   def messages
     @message = Message.new
-    @meeting = Meeting.find(params[:id])
   end
 
   def edit
@@ -97,7 +90,6 @@ class MeetingsController < ApplicationController
   end
 
   def mark_as_full
-    @meeting = Meeting.find(params[:id])
     if @meeting.full?
       @meeting.available!
       redirect_to requests_path if @meeting.save!
@@ -115,8 +107,11 @@ class MeetingsController < ApplicationController
   end
 
   def cancel
-    @meeting.cancelled!
-    redirect_to meetings_path, notice: 'Votre annonce a été annulée.'
+    if @meeting.cancelled!
+      render json: { message: "Votre rencontre à été supprimé.", title: Meeting.statuses[:cancelled] }, status: :ok
+    else
+      render json: { message: "Quelque chose s'est mal passé 😥", title: "Oups.." }, status: :unprocessable_entity
+    end
   end
 
   private

@@ -8,6 +8,12 @@ class RequestsController < ApplicationController
   def index
     @user_meetings = Meeting.where(user_id: current_user).where.not(status: :cancelled).where.not(status: :finished)
     @requested_meetings = Meeting.joins(:requests).where(requests: { user_id: current_user }).where.not(requests: { status: :rejected })
+    @user_meetings.each do |meeting|
+      if meeting.date < Date.today
+        meeting.finished!
+        meeting.save!
+      end
+    end
   end
 
   def show
@@ -15,7 +21,7 @@ class RequestsController < ApplicationController
 
   def create
     @meeting = Meeting.find(params[:meeting_id])
-    if Request.where(user_id: current_user.id, meeting_id: @meeting.id).exists?
+    if Request.where(user_id: current_user.id, meeting_id: @meeting.id).exists? || @meeting.full?
       redirect_to meeting_path(@meeting), status: :unprocessable_entity
     else
       @request = Request.new(request_params)
@@ -42,12 +48,12 @@ class RequestsController < ApplicationController
   end
 
   def reject
-    @request.status = "Annuler"
+    @request.status = Request.statuses[:rejected]
     redirect_to requests_path if @request.save!
   end
 
   def accept
-    @request.status = "Validé"
+    @request.status = Request.statuses[:accepted]
     redirect_to requests_path if @request.save!
   end
 
