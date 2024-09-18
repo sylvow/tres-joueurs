@@ -1,5 +1,5 @@
 class Request < ApplicationRecord
-  enum status: { interested: "En attente de validation", accepted: "Validé", rejected: "Annuler" }
+  enum status: { interested: "En attente de validation", accepted: "Validé", rejected: "Annulé" }
 
   # validates :meeting_id, uniqueness: { scope: :user_id, alert: "Vous avez déjà fait une demande pour cette partie", condidions: -> { where(status: "Annuler") } }
 
