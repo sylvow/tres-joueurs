@@ -37,7 +37,8 @@ class MeetingsController < ApplicationController
         @meetings &= keyword_meetings
       end
     end
-    # @meetings.sort_by(&:date)
+    @now = Time.now
+    @sorted_meetings = @meetings.to_a.sort_by { |meeting| (Time.parse(meeting.date.to_s) - @now) }
     @request = Request.new
   end
 
