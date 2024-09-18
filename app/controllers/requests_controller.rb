@@ -58,6 +58,9 @@ class RequestsController < ApplicationController
 
   def accept
     @request.status = Request.statuses[:accepted]
+    @notification = Notification.new(request: @request, content: "Demande acceptée pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime("%d/%m/%y")}")
+    @notification.unread!
+    @notification.save!
     redirect_to requests_path if @request.save!
   end
 

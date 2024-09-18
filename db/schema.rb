@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_18_102544) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_18_140116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,12 +84,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_102544) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "kind"
-    t.boolean "read"
+    t.string "type"
+    t.bigint "request_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_notifications_on_user_id"
+    t.string "content"
+    t.integer "status"
+    t.index ["request_id"], name: "index_notifications_on_request_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -129,7 +130,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_18_102544) do
   add_foreign_key "meetings", "users"
   add_foreign_key "messages", "meetings"
   add_foreign_key "messages", "users"
-  add_foreign_key "notifications", "users"
+  add_foreign_key "notifications", "requests"
   add_foreign_key "requests", "meetings"
   add_foreign_key "requests", "users"
 end
