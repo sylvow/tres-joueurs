@@ -1,7 +1,7 @@
 class MeetingsController < ApplicationController
 
   before_action :set_params, only: %i[show edit update cancel mark_as_full messages]
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
     @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
@@ -123,10 +123,24 @@ class MeetingsController < ApplicationController
   end
 
   def cancel
-    if @meeting.cancelled!
-      render json: { message: "Votre rencontre à été supprimé.", title: Meeting.statuses[:cancelled] }, status: :ok
+    if @meeting.user == current_user
+      if @meeting.cancelled!
+        render json: { 
+          message: "Votre rencontre à été supprimé.",
+          title: @meeting.localized_status,
+          redirect_url: requests_path
+          }, status: :ok
+      else
+        render json: {
+          message: "Quelque chose s'est mal passé 😥",
+          title: "Oups.." 
+          }, status: :unprocessable_entity
+      end
     else
-      render json: { message: "Quelque chose s'est mal passé 😥", title: "Oups.." }, status: :unprocessable_entity
+      render json: {
+        message: "Vous n'êtes pas autorisé à annuler cette rencontre.",
+        title: "Accès refusé"
+      }, status: :forbidden
     end
   end
 

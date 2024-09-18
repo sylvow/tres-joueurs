@@ -1,0 +1,10 @@
+fr:
+  activerecord:
+    attributes:
+      meeting:
+        statuses:
+          available: "Incomplet"
+          full: "Plein"
+          ongoing: "En cours"
+          cancelled: "Annulé"
+          finished: "Terminé"

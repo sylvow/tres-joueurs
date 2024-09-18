@@ -35,7 +35,7 @@ second_game.save!
                         place_address: Faker::Address.city,
                         latitude: 48.86,
                         longitude: 2.33,
-                        status: ["Incomplet", "Plein", "En cours", "Annulé", "Terminé"].sample,
+                        status: [ :available, :full, :ongoing, :cancelled, :finished ].sample,
                         level: ["Débutant", "Intermédiaire", "Expert"].sample,
                         date: DateTime.now,
                         game_id: Game.all.sample.id,

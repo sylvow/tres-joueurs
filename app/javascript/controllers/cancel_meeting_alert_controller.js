@@ -4,8 +4,7 @@ import Swal from 'sweetalert2'
 export default class extends Controller {
   alert(event) {
     event.preventDefault()
-    const id = event.target.id.slice(8);
-    const url = `/meetings/${id}/cancel`
+    const url = event.currentTarget.getAttribute('href')
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const init = { 
       method: "PATCH",
@@ -35,11 +34,29 @@ export default class extends Controller {
               icon: "success"
             }).then( result => {
               if (result.isConfirmed) {
-                window.location.reload();
+                window.location.href = data.redirect_url;
                 }
               });
+          })
+          .catch(() => {
+            Swal.fire({
+              title: "Oups..",
+              text: "La rencontre n'a pas pu être annulée",
+              icon: "error"
+            });
           });
+
+
+
+
       }
     });
+
+
+
+
+
+
+
   }
 }
