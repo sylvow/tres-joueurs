@@ -97,6 +97,14 @@
     color: black !important;
   }
 
+  p {
+    margin-bottom: 1px;
+  }
+
+  .month {
+    margin-bottom: 0;
+  }
+
   .request-card-side-elements {
     // position: absolute;
     text-align: center;
@@ -145,8 +153,8 @@
 }
 
 .date-stamp {
-  width: 55px;
-  height: 55px;
+  width: 80px;
+  height: 80px;
 }
 
 .meeting-card-top {

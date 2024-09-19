@@ -77,7 +77,7 @@
                     <%= cl_image_tag(meeting.user.profile_picture.key, class: "profile-pic") %>
                   <% end %>
 
-                  <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center">
+                  <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center justify-space-around">
                     <p class="fs-1 fw-bold"><%= meeting.date.strftime("%d") %></p>
                     <p><%= meeting.date.strftime("%B") %></p>
                     <p><%= meeting.date.strftime("%H:%M") %></p>
