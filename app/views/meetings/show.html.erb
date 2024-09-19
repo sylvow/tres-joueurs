@@ -15,7 +15,7 @@
 
       <% if @meeting.user != current_user %>
         <% if @user_request.nil? %>
-        <div class="row justify-content-center mb-4">
+        <div class="row justify-content-center mb-3">
           <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
                   data-action="click->show-meetings-interest#display"
                   data-show-meetings-interest-target="interested">
@@ -45,7 +45,7 @@
             <%= link_to 'Annuler ma participation', request_path(@user_request), data: { turbo_method: :delete, turbo_confirm: "Êtes-vous certain de vouloir annuler cette demande?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
           </div>
         <% elsif @user_request.rejected? %>
-          <div class="rejected-request bg-danger text-center">
+          <div class="rejected-request bg-danger text-center mb-3">
             <p>Votre demande a été refusée</p>
           </div>
         <% end %>
@@ -53,7 +53,7 @@
 
         <% elsif @meeting.user == current_user %>
         <div class="row justify-content-center d-flex">
-          <%= link_to "Modifier mon annonce", edit_meeting_path(@meeting), class: "btn btn-primary mt-2 p-2 col-6 rounded-pill" %>
+          <%= link_to "Modifier mon annonce", edit_meeting_path(@meeting), class: "btn btn-primary mt-2 mb-3 p-2 col-6 rounded-pill" %>
         </div>
       <% end %>
 
