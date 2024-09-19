@@ -13,7 +13,8 @@
         </div>
 
         <div class="col-9 p-2 bg-light" style="height: 100%;">
-          <div>
+          <div class="position relative">
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" onclick="window.location.href='/conversations'"></button>
             <h1><%= @meeting.game.name %></h1>
             <p><%= @meeting.title %></p>
             <p class="d-none">Niveau : <%= @meeting.level %></p>

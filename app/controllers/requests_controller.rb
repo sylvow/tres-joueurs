@@ -1,6 +1,6 @@
 class RequestsController < ApplicationController
 
-  helper_method :compute_players_needed
+  helper_method :compute_players
   before_action :set_request, except: [:index, :create]
 
 
@@ -76,9 +76,12 @@ class RequestsController < ApplicationController
 
   # Other methods
 
-  def compute_players_needed(meeting)
-    requests = Request.where(meeting_id: meeting.id)
-    meeting.players_needed_max - requests.sum(:number_of_friends) - requests.count
+  def compute_players(meeting)
+    counter = 0
+    meeting.requests.where(status: :accepted).each do |e|
+      counter += e.number_of_friends 
+    end
+    counter + meeting.requests.where(status: :accepted).count + 1
   end
 
   private
