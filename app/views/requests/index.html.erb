@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="text-center pb-3">Mes activités</h1>
-  <div class="">
+  <div>
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseorga" aria-expanded="true" aria-controls="collapseorga">
         <span>J'organise la rencontre ( <%= @user_meetings.count %> )</span>
@@ -8,78 +8,79 @@
     </h3>
   </div>
   <% @user_meetings.each do |meeting| %>
-    <div id="collapseorga" class="request-card bg-white text-black px-3 mt-4 rounded-5 collapse show">
-      <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
-        <div class="form-check form-switch m-0 d-flex justify-content-end">
-          <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.localized_status %></label>
-          <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" <%= "checked" if meeting.full? %>>
-        </div>
-      <% end %>
-      <div class="d-flex">
-        <div class="col-3 d-flex flex-column text-center gap-1">
-          <div class="date-stamp d-flex flex-column justify-content-center rounded-circle bg-secondary mx-auto ">
-            <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
-            <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
+    <div  id="collapseorga" class="collapse show">
+      <div class="request-card bg-white text-black px-3 mt-4 rounded-5">
+        <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
+          <div class="form-check form-switch m-0 d-flex justify-content-end">
+            <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.localized_status %></label>
+            <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" <%= "checked" if meeting.full? %>>
           </div>
-          <span><%= meeting.date.strftime("%a, %kh%M") %></span>
-          <% if compute_players(meeting) > 1 %>
-            <span><%= compute_players(meeting) %> joueur.s 🔥</span>
-          <% end %>
-        </div>
-        <div class="col-9 text-end d-flex flex-column justify-content-between ps-4">
-          <div>
-            <div class="text-start">
-              <h4><%= link_to meeting.game.name, meeting_path(meeting), class: "badge bg-primary" %></h4>
+        <% end %>
+        <div class="d-flex">
+          <div class="col-3 d-flex flex-column text-center gap-1">
+            <div class="date-stamp d-flex flex-column justify-content-center rounded-circle bg-secondary mx-auto">
+              <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
+              <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
             </div>
-            <div class="d-flex align-items-center">
-                <p class="mb-0"><%= meeting.user.username %> (moi)</p>
-            </div>
-            <% meeting.requests.each do |request| %>
-              <% if !request.rejected? %>
-                <div class="d-flex justify-content-between align-items-center <%= request.status == "interested" ? "bg-danger-subtle" : "bg-success-subtle" %>">
-                  <%= link_to request_path(request) do %>
-                    <p class="mb-0">
-                      <%= request.user.username %>
-                      <% if request.number_of_friends == 0 %>
-                        seul(e)
-                      <% elsif request.number_of_friends == 1 %>
-                        + 1 ami(e)
-                      <% else %>
-                        + <%= request.number_of_friends %> ami(e)s
-                      <% end %>
-                    </p>
-                  <% end %>
-                  <div>
-                    <%= link_to accept_request_path(request), data: { turbo_method: :patch } do %>
-                      <% if request.interested? %>
-                        <i class="fa-regular fa-circle-check px-2"></i>
-                      <% end %>
-                    <% end %>
-                    <%= link_to reject_request_path(request), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette demande?" } do %>
-                      <i class="fa-solid fa-xmark"></i>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
+            <span><%= meeting.date.strftime("%a, %kh%M") %></span>
+            <% if compute_players(meeting) > 1 %>
+              <span><%= compute_players(meeting) %> joueur.s 🔥</span>
             <% end %>
           </div>
+          <div class="col-9 text-end d-flex flex-column justify-content-between ps-4">
+            <div class="d-flex gap-1 flex-column">
+              <div class="text-start">
+                <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
+              </div>
+              <div class="d-flex align-items-center bg-secondary-subtle p-1 rounded-4 shadow">
+                  <p class="mb-0"><%= meeting.user.username %> (moi)</p>
+              </div>
+              <% meeting.requests.each do |request| %>
+                <% if !request.rejected? %>
+                  <div class="d-flex justify-content-between align-items-center rounded-4 p-1 shadow <%= request.status == "interested" ? "bg-danger-subtle" : "bg-success-subtle" %>">
+                    <%= link_to request_path(request) do %>
+                      <p class="mb-0">
+                        <%= request.user.username %>
+                        <% if request.number_of_friends == 0 %>
+                          seul(e)
+                        <% elsif request.number_of_friends == 1 %>
+                          + 1 ami(e)
+                        <% else %>
+                          + <%= request.number_of_friends %> ami(e)s
+                        <% end %>
+                      </p>
+                    <% end %>
+                    <div>
+                      <%= link_to accept_request_path(request), data: { turbo_method: :patch } do %>
+                        <% if request.interested? %>
+                          <i class="fa-regular fa-circle-check px-2"></i>
+                        <% end %>
+                      <% end %>
+                      <%= link_to reject_request_path(request), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette demande?" } do %>
+                        <i class="fa-solid fa-xmark"></i>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+          <div class="d-flex gap-1 justify-content-center mt-4">
+            <i class="fa-solid fa-location-dot"></i>
+            <p class="m-0 lh-1"><%= meeting.place_name %></p>
+          </div>
+        <div class="d-flex justify-content-evenly pt-2">
+          <%= link_to  meeting_message_path(meeting) do %>
+            <button class="btn btn-primary btn-sm"><i class="fa-solid fa-comments"></i> Ecrire au groupe</button>
+          <% end %>
+          <%= link_to cancel_meeting_path(meeting), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette rencontre?", controller: "cancel-meeting-alert", action: "click->cancel-meeting-alert#alert" } do %>
+            <button id="meeting-<%= meeting.id %>" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i> Annuler la rencontre</button>
+          <% end %>
         </div>
       </div>
-        <div class="d-flex gap-1 justify-content-center mt-4">
-          <i class="fa-solid fa-location-dot"></i>
-          <p class="m-0 lh-1"><%= meeting.place_name %></p>
-        </div>
-      <div class="d-flex justify-content-evenly pt-2">
-        <%= link_to  meeting_message_path(meeting) do %>
-          <button class="btn btn-primary btn-sm"><i class="fa-solid fa-comments"></i> Ecrire au groupe</button>
-        <% end %>
-        <%= link_to cancel_meeting_path(meeting), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette rencontre?", controller: "cancel-meeting-alert", action: "click->cancel-meeting-alert#alert" } do %>
-          <button id="meeting-<%= meeting.id %>" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i> Annuler la rencontre</button>
-        <% end %>
-      </div>
-    </div>
+    </div> 
   <% end %>
-
   <div class="mt-4">
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseparticip" aria-expanded="false" aria-controls="collapseparticip">
@@ -87,49 +88,53 @@
       </button>
     </h3>
   </div>
-  <% @requested_meetings.each do |meeting| %>
-    <div id="collapseparticip" class="request-card bg-white text-black px-3 mt-4 rounded-5 collapse <%= "show" if @user_meetings == [] %>">
-      <div class="text-center border border-warning-subtle bg-warning-subtle rounded-3 m-1">
-        <%= Request.statuses[meeting.requests.find_by(user_id: current_user).status] %>
-      </div>
-      <div class="d-flex">
-        <div class="col-3 d-flex flex-column text-center">
-          <div class="date-stamp d-flex flex-column justify-content-center rounded-circle bg-secondary mx-auto">
-            <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
-            <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
-          </div>
-          <%= meeting.date.strftime("%a, %kh%M") %>
+  <div id="collapseparticip" class=" collapse <%= "show" if @user_meetings == [] %>">
+    <% @requested_meetings.each do |meeting| %>
+      <div class="request-card bg-white text-black px-3 mt-4 rounded-5">
+        <div class="text-center border border-warning-subtle bg-warning-subtle rounded-3 m-1">
+          <%= Request.statuses[meeting.requests.find_by(user_id: current_user).status] %>
         </div>
-        <div class="col-9 text-end d-flex flex-column justify-content-between px-4">
-          <div class="d-flex flex-column align-items-start">
-              <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
-              <p class="mb-0"><%= current_user.username %></p>
-              <p class="mb-0"><%= meeting.user.username %> (organisateur)</p>
-              <% meeting.requests.each do |request| %>
-                <% if request.user != current_user %>
-                  <p class="mb-0"><%= request.user.username %></p>
+        <div class="d-flex">
+          <div class="col-3 d-flex flex-column text-center">
+            <div class="date-stamp d-flex flex-column justify-content-center rounded-circle bg-secondary mx-auto">
+              <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
+              <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
+            </div>
+            <%= meeting.date.strftime("%a, %kh%M") %>
+          </div>
+          <%= link_to request_path(meeting.requests.find_by(user_id: current_user)) do %>
+            <div class="col-9 text-end d-flex flex-column justify-content-between px-4">
+              <div class="d-flex flex-column align-items-start">
+                <h4><%= link_to meeting.game.name, meeting_path(meeting) %></h4>
+                <p class="mb-0"><%= current_user.username %></p>
+                <p class="mb-0"><%= meeting.user.username %> (organisateur)</p>
+                <% meeting.requests.each do |request| %>
+                  <% if request.user != current_user %>
+                    <p class="mb-0"><%= request.user.username %></p>
+                  <% end %>
                 <% end %>
-              <% end %>
-          </div>
-            <p class="form-check form-switch p-2 d-flex justify-content-center">
+              </div>
+              <p class="form-check form-switch p-2 d-flex justify-content-center">
               <%= Meeting.statuses[meeting.status] if Meeting.statuses[meeting.status] == Meeting.statuses[:full] %>
-            </p>
+              </p>
+            </div>
+          <% end %>
         </div>
-      </div>
         <div class="d-flex gap-1 justify-content-center mt-4">
           <i class="fa-solid fa-location-dot"></i>
           <p class="m-0 lh-1"><%= meeting.place_name %></p>
         </div>
-      <div class="d-flex justify-content-evenly pt-2">
-        <%= link_to  meeting_message_path(meeting) do %>
-          <button class="btn btn-primary btn-sm">Ecrire au groupe</button>
-        <% end %>
-        <%= link_to request_path(meeting.requests.find_by(user_id: current_user)), data: { turbo_method: :delete, turbo_confirm: "Es-tu certain d'annuler ta participation?" } do %>
-          <button class="btn btn-danger btn-sm">Annuler ma participation</button>
-        <% end %>
+        <div class="d-flex justify-content-evenly pt-2">
+          <%= link_to  meeting_message_path(meeting) do %>
+            <button class="btn btn-primary btn-sm">Ecrire au groupe</button>
+          <% end %>
+          <%= link_to request_path(meeting.requests.find_by(user_id: current_user)), data: { turbo_method: :delete, turbo_confirm: "Es-tu certain d'annuler ta participation?" } do %>
+            <button class="btn btn-danger btn-sm">Annuler ma participation</button>
+          <% end %>
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
   <div class="row col-6 m-auto pt-3 gap-2">
     <%= link_to "Retour", :back, class: "btn btn-secondary" %>
     <%= link_to "Liste des jeux", meetings_path, class: "btn btn-secondary" %>
