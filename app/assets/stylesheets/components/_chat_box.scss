@@ -1,0 +1,27 @@
+.chat-preview {
+  // border: 1px solid $gray-200;
+  border-radius: 5px;
+  background-color: $dark;
+ a {
+    text-decoration: none!important;
+    color: rgb(230, 230, 230);
+  }
+
+  p {
+    margin: 0;
+    font-size: x-small;
+  }
+
+  .message-preview {
+    background-color: white;
+    color: $very-dark;
+    border-radius: 5px;
+  }
+}
+
+.accordion-item {
+  border: none!important;
+}
+.accordion-body {
+  padding: 10px 0px 0px 0px;
+}

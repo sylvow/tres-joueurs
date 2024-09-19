@@ -116,3 +116,16 @@
 .message-input::placeholder {
   color: #999;
 }
+
+.close-button-message {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  z-index: 1;
+  filter: invert(2);
+}
+
+.fa-left-long {
+  color: $dark;
+}
+
