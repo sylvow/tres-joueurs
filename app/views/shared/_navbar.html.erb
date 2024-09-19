@@ -53,12 +53,12 @@
               <a href="<%= conversations_path %>" class="dropdown-item">
                 Messages
               </a>
-                <% unless @notifications.nil? %>
+              <% unless @notifications.nil? %>
                 <% @notifications.each do |notif| %>
-              <a href="#" class="dropdown-item">
-                <small><%= notif.content %></small>
-              </a>
-              <% end %>
+                  <a href="#" class="dropdown-item">
+                    <small><%= notif.content %></small>
+                  </a>
+                <% end %>
               <% end %>
             </div>
 <%# c'est ici que j'ai supprimé le code %>
