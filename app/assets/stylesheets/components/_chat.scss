@@ -84,6 +84,7 @@
   h1 {
     font-weight: bold;
     margin: 0;
+    padding: 0px 30px;
   }
 
 }
@@ -114,12 +115,4 @@
 
 .message-input::placeholder {
   color: #999;
-}
-
-.close-button-message {
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  z-index: 1;
-  filter: invert(2);
 }

@@ -116,9 +116,16 @@
 }
 
 .show-card {
-  // background-color: $dark-orange;
+  width: 95%;
+  color: black;
+  padding: 25px;
+  background-color: white;
   .owner-card {
     background-color: $orange;;
+  }
+
+  p {
+    margin-bottom: 5px;
   }
 }
 
@@ -140,10 +147,4 @@
     height: 40px;
     object-fit: cover;
   }
-}
-
-
-.show-card{
-  background-color: $dark;
-  padding: 30px;
 }
