@@ -1,29 +1,60 @@
 <div class="container">
-  <h1>Your conversations as a planner </h1>
 
-  <div id="messages-list" class="messages-list">
-    <% @planner_conversations.each do |meeting| %>
-      <div id="chat-preview">
-        <small>
-          <strong><%= meeting.game.name %> - <%= meeting.date %></strong>
-          <i><%= meeting.place_name %> - <%= meeting.place_address %></i>
-          <%= link_to 'Accéder à la conversation', meeting_messages_path(meeting) %>
-        </small>
+  <div class="accordion" id="accordionConvo">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Conversations en tant qu'organisateur
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionConvo">
+        <div class="accordion-body">
+          <div class="messages-list">
+            <% @planner_conversations.each do |meeting| %>
+              <% unless meeting.messages.blank? %>
+                <div class="chat-preview shadow my-2 p-1">
+                  <%= link_to(meeting_messages_path(meeting)) do %>
+                    <p class="px-1"><strong><%= meeting.title %></strong></p>
+                    <p class="px-1 mb-1"><strong><%= meeting.game.name %></strong> - le <%= meeting.date.strftime("%d/%m/%y à %H:%M") %></p>
+                    <%# <p><i><%= meeting.place_name meeting.place_address </i></p> %>
+                    <% unless meeting.messages.last.nil? %></p>
+                      <p class="message-preview p-1"><%= meeting.messages.last.user.username %> : <%= meeting.messages.last.content %>, <i> le <%= meeting.messages.last.created_at.strftime("%d/%m/%g à %H:%M") %></i></p>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    <% end %>
-  </div>
+    </div>
 
-  <h1>Your conversations as a participant </h1>
-  <div id="messages-list" class="messages-list">
-    <% @participant_conversations.each do |meeting| %>
-      <div id="chat-preview">
-        <small>
-          <strong><%= meeting.game.name %> - <%= meeting.date %></strong>
-          <i><%= meeting.place_name %> - <%= meeting.place_address %></i>
-          <%= link_to 'Accéder à la conversation', meeting_messages_path(meeting) %>
-        </small>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Conversations en tant que participant
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionConvo">
+        <div class="accordion-body">
+          <div class="messages-list">
+            <% @participant_conversations.each do |meeting| %>
+              <% unless meeting.messages.blank? %>
+                <div class="chat-preview shadow my-2 p-2">
+                  <%= link_to(meeting_messages_path(meeting)) do %>
+                    <p><strong><%= meeting.title %></strong></p>
+                    <p><strong><%= meeting.game.name %></strong> - le <%= meeting.date.strftime("%d/%m/%y à %H:%M") %></p>
+                    <%# <p><i><%= meeting.place_name meeting.place_address </i></p> %>
+                    <% unless meeting.messages.last.nil? %></p>
+                      <p class="message-preview px-2"><%= meeting.messages.last.user.username %> : <%= meeting.messages.last.content %>, <i> le <%= meeting.messages.last.created_at.strftime("%d/%m/%g à %H:%M") %></i></p>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    <% end %>
+    </div>
   </div>
-
 </div>

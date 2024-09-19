@@ -1,6 +1,6 @@
 <div class="navbar navbar-expand navbar-dark navbar-lewagon">
   <div class="container-fluid">
-    <%= link_to meetings_path, class: "navbar-brand" do %>
+    <%= link_to "/", class: "navbar-brand" do %>
       <%= image_tag "https://unpionctout.fr/wp-content/uploads/2018/05/1pion-logo-150x150.png" %>
     <% end %>
 
@@ -53,12 +53,12 @@
               <a href="<%= conversations_path %>" class="dropdown-item">
                 Messages
               </a>
-                <% unless @notifications.nil? %>
+              <% unless @notifications.nil? %>
                 <% @notifications.each do |notif| %>
-              <a href="#" class="dropdown-item">
-                <small><%= notif.content %></small>
-              </a>
-              <% end %>
+                  <a href="#" class="dropdown-item">
+                    <small><%= notif.content %></small>
+                  </a>
+                <% end %>
               <% end %>
             </div>
 <%# c'est ici que j'ai supprimé le code %>
