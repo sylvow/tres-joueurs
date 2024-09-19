@@ -1,5 +1,6 @@
 
 <div class="container">
+  <h1 class="text-center">Liste des jeux</h1>
   <div class="row text-center p-2" data-controller="show-filters location-filter">
     <div class="d-grid gap-2 col-6 mx-auto">
       <button class="btn btn-primary btn-sm my-3 p-2 rounded-pill mx-auto"
@@ -70,7 +71,6 @@
                     <%= cl_image_tag(meeting.user.profile_picture.key, class: "profile-pic") %>
                   <% end %>
                   <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center">
-                    <%# code %>
                     <p class="fs-1 fw-bold"><%= meeting.date.strftime("%d") %></p>
                     <p><%= meeting.date.strftime("%B") %></p>
                     <p><%= meeting.date.strftime("%H:%M") %></p>

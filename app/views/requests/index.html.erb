@@ -1,8 +1,9 @@
 <div class="container">
+  <h1 class="text-center pb-3">Mes activités</h1>
   <div class="">
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseorga" aria-expanded="true" aria-controls="collapseorga">
-        J'organise la rencontre ( <%= @user_meetings.count %> )
+        <span>J'organise la rencontre ( <%= @user_meetings.count %> )</span>
       </button>
     </h3>
   </div>
@@ -20,7 +21,10 @@
             <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
             <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
           </div>
-          <%= meeting.date.strftime("%a, %kh%M") %>
+          <span><%= meeting.date.strftime("%a, %kh%M") %></span>
+          <% if compute_players(meeting) > 1 %>
+            <span><%= compute_players(meeting) %> joueur.s 🔥</span>
+          <% end %>
         </div>
         <div class="col-9 text-end d-flex flex-column justify-content-between ps-4">
           <div>
@@ -32,7 +36,7 @@
             </div>
             <% meeting.requests.each do |request| %>
               <% if !request.rejected? %>
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center <%= request.status == "interested" ? "bg-danger-subtle" : "bg-success-subtle" %>">
                   <%= link_to request_path(request) do %>
                     <p class="mb-0">
                       <%= request.user.username %>
@@ -67,10 +71,10 @@
         </div>
       <div class="d-flex justify-content-evenly pt-2">
         <%= link_to  meeting_message_path(meeting) do %>
-          <button class="btn btn-primary btn-sm">Ecrire au groupe</button>
+          <button class="btn btn-primary btn-sm"><i class="fa-solid fa-comments"></i> Ecrire au groupe</button>
         <% end %>
         <%= link_to cancel_meeting_path(meeting), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette rencontre?", controller: "cancel-meeting-alert", action: "click->cancel-meeting-alert#alert" } do %>
-          <button id="meeting-<%= meeting.id %>" class="btn btn-danger btn-sm">Annuler la rencontre</button>
+          <button id="meeting-<%= meeting.id %>" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i> Annuler la rencontre</button>
         <% end %>
       </div>
     </div>
@@ -79,7 +83,7 @@
   <div class="mt-4">
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseparticip" aria-expanded="false" aria-controls="collapseparticip">
-        Je suis participant ( <%= @requested_meetings.count %> )
+        <span>Je suis participant ( <%= @requested_meetings.count %> )</span>
       </button>
     </h3>
   </div>
@@ -126,5 +130,9 @@
       </div>
     </div>
   <% end %>
+  <div class="row col-6 m-auto pt-3 gap-2">
+    <%= link_to "Retour", :back, class: "btn btn-secondary" %>
+    <%= link_to "Liste des jeux", meetings_path, class: "btn btn-secondary" %>
+  </div>
   <%= render "shared/fixed_new_button" %>
 </div>
