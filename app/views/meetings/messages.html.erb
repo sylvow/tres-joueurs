@@ -1,42 +1,37 @@
-<div class="container chat text-dark">
-  <div class="message-card row mb-3" style="overflow: hidden;">
+
+  <div class="message-card row mb-3">
           
-            <%= link_to(meeting_path(@meeting), class: "show-link") do %>
+    <%= link_to(meeting_path(@meeting), class: "show-link") do %>
 
-            <div class="row message-card-top">
+      <div class="row message-card-top">
 
-              <div class="col-3 p-2 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
-                <%# code %>
-                <p class="fs-1 fw-bold"><%= @meeting.date.strftime("%d") %></p>
-                <p><%= @meeting.date.strftime("%B") %></p>
-                <p><%= @meeting.date.strftime("%H:%M") %></p>
-              </div>
-
-              <div class="col-9 p-2" style="height: 100%;">
-                <div>
-                  <h3><%= @meeting.game.name %></h3>
-                  <h6><%= @meeting.title %></h6>
-                  <div class="d-none">
-                  <p>Joueurs : <%= @meeting.players_needed_min %>
-                    <% if !@meeting.players_needed_max.blank? %>
-                      à <%= @meeting.players_needed_max %></p>
-                    <% end %>
-                    </div>
-                  <p>Niveau : <%= @meeting.level %></p>
-                  <p><strong><%= @meeting.place_address %></strong></p>
-                </div>
-              </div>
-            </div>
-
-          <div class="row message-card-bottom bg-warning">
-            <div class="text-light d-flex justify-content-center align-items-center">
-              <p>Recherche <strong><%= @meeting.players_needed_min %> </strong>joueurs.ses</p>
-            </div>
-          </div>
-
-         
-         <% end %>
+        <div class="col-3 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
+          <%# code %>
+          <h1><%= @meeting.date.strftime("%d") %></h1>
+          <p><%= @meeting.date.strftime("%B") %></p>
+          <p><%= @meeting.date.strftime("%H:%M") %></p>
         </div>
+
+        <div class="col-9 p-2 bg-light" style="height: 100%;">
+          <div>
+            <h1><%= @meeting.game.name %></h1>
+            <p><%= @meeting.title %></p>
+            <p class="d-none">Niveau : <%= @meeting.level %></p>
+            <p><strong><%= @meeting.place_address %></strong></p>
+          </div>
+        </div>
+      </div>
+
+    <div class="row message-card-bottom bg-warning">
+      <div class="text-light d-flex justify-content-center align-items-center">
+        <p>Recherche <strong><%= @meeting.players_needed_min %> </strong>joueurs.ses</p>
+      </div>
+    </div>
+
+    
+    <% end %>
+  </div>
+  <div class="container chat text-dark">
   <%= turbo_stream_from "meeting_#{@meeting.id}_messages" %>
 
   <div id="messages" class="messages">
@@ -52,9 +47,10 @@
     <%# <% other_user = current_user == @meeting.user ? @meeting.user : @meeting.restaurant.user %>
     <%= f.input :content,
       label: false,
-      placeholder: "Message to group", # #{other_user.username}",
-      wrapper_html: {class: "flex-grow-1"}
+      placeholder: "Message au groupe", # #{other_user.username}",
+      wrapper_html: {class: "flex-grow-1"},
+      input_html: {class: "form-control message-input"}
     %>
-    <%= f.submit "Send", class: "btn btn-primary mb-3" %>
+    <%= f.submit "Envoyer", class: "btn btn-success mb-3 send-button" %>
   <% end %>
 </div>
