@@ -16,6 +16,7 @@
       <% if @meeting.user != current_user %>
         <% if @user_request.nil? %>
         <div class="row justify-content-center mb-4">
+
           <button class="btn btn-primary mt-2 p-2 col-6 rounded-pill"
                   data-action="click->show-meetings-interest#display"
                   data-show-meetings-interest-target="interested">
@@ -100,6 +101,14 @@
           <p><strong>Description</strong></p>
           <p class="bg-light rounded-3 p-3 text-dark"><%= @meeting.description %></p>
         </div>
+      <% end %>
+
+      <% if @meeting.user == current_user %>
+        <%= link_to cancel_meeting_path(@meeting), data: { turbo_method: :patch, turbo_confirm: "Es-tu certain d'annuler cette rencontre?", controller: "cancel-meeting-alert", action: "click->cancel-meeting-alert#alert"} do %>
+          <div class="row justify-content-center d-flex">
+            <button id="meeting-<%= @meeting.id %>" class="btn btn-danger mt-2 p-2 col-6 rounded-pill">Annuler la rencontre</button>
+          </div>
+        <% end %>
       <% end %>
     </div>
   </div>
