@@ -7,7 +7,6 @@
   top: -20px;
   right: -20px;
   z-index: 1;
-  filter: invert(2);
 }
 
 .close-button-meeting-new {
@@ -24,4 +23,11 @@
   right: 25px;
   z-index: 1;
   filter: invert(2);
+}
+
+.rejected-request {
+  width: 80%;
+  margin: auto;
+  border-radius: 10px;
+  font-style: italic;
 }
