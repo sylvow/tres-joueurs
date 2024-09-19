@@ -16,7 +16,6 @@ class Meeting < ApplicationRecord
   after_validation :geocode, if: :will_save_change_to_place_address?
   before_save :set_coordinates
 
-
   validates :title, :game_id, :players_needed_min, :location_type, :date, presence: true
 
   private
