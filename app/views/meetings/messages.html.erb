@@ -5,7 +5,7 @@
 
       <div class="row message-card-top">
 
-        <div class="col-3 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
+        <div class=" col-3 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
           <%# code %>
           <h1><%= @meeting.date.strftime("%d") %></h1>
           <p><%= @meeting.date.strftime("%B") %></p>
@@ -13,7 +13,8 @@
         </div>
 
         <div class="col-9 p-2 bg-light" style="height: 100%;">
-          <div>
+          <div class="position relative">
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" onclick="window.location.href='/conversations'"></button>
             <h1><%= @meeting.game.name %></h1>
             <p><%= @meeting.title %></p>
             <p class="d-none">Niveau : <%= @meeting.level %></p>

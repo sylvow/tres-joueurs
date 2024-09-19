@@ -45,8 +45,8 @@
             <%= link_to 'Annuler ma participation', request_path(@user_request), data: { turbo_method: :delete, turbo_confirm: "Êtes-vous certain de vouloir annuler cette demande?" }, class: "btn btn-danger mt-2 p-2 col-6 rounded-pill" %>
           </div>
         <% elsif @user_request.rejected? %>
-          <div class="row justify-content-center d-flex">
-            <p>Votre demande a été refusée.</p>
+          <div class="rejected-request bg-danger text-center">
+            <p>Votre demande a été refusée</p>
           </div>
         <% end %>
 
@@ -57,20 +57,20 @@
         </div>
       <% end %>
 
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between border-top pt-3">
         <p><strong>Jeu</strong></p>
         <span><%= @meeting.game.name %></span>
       </div>
 
-      <div class="d-flex justify-content-between pb-2">
-        <p><strong>Nombre de joueurs.ses recherché.es</strong></p>
+      <div class="d-flex justify-content-between">
+        <p><strong>Nombre de joueurs recherchés</strong></p>
         <span><%= @meeting.players_needed_min %>
           <% unless @meeting.players_needed_max == @meeting.players_needed_min || @meeting.players_needed_max.blank? %>
             à <%= @meeting.players_needed_max %></span>
           <% end %>
       </div>
 
-      <div class="d-flex justify-content-between pb-2">
+      <div class="d-flex justify-content-between">
         <p><strong>Niveau</strong></p>
         <span><%= @meeting.level %></span>
       </div>
@@ -81,7 +81,7 @@
       </div>
 
 
-      <div class="d-flex justify-content-between pb-2">
+      <div class="d-flex justify-content-between">
         <p><strong>Localisation</strong></p>
         <div class="row pb-2">
           <span class="text-end"><%= @meeting.location_type %></span>
@@ -92,7 +92,7 @@
 
       <div class="d-flex justify-content-between pb-2">
         <p><strong>Date</strong></p>
-        <span><%= @meeting.date.strftime("le %d/%m/%y à %H:%M") %></span>
+        <span>le <i><%= @meeting.date.strftime("%d/%m/%y à %H:%M") %></i></span>
       </div>
 
       <% if !@meeting.description.blank? %>
