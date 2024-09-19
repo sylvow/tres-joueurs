@@ -5,7 +5,7 @@
 
       <div class="row message-card-top">
 
-        <div class=" col-3 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
+        <div class="col-3 <%= meeting_status_class(@meeting.status) %> d-flex flex-column justify-content-center align-items-center">
           <%# code %>
           <h1><%= @meeting.date.strftime("%d") %></h1>
           <p><%= @meeting.date.strftime("%B") %></p>
