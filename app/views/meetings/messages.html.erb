@@ -1,6 +1,6 @@
 
   <div class="message-card row mb-3">
-          
+
     <%= link_to(meeting_path(@meeting), class: "show-link") do %>
 
       <div class="row message-card-top">
@@ -18,7 +18,7 @@
             <h1><%= @meeting.game.name %></h1>
             <p><%= @meeting.title %></p>
             <p class="d-none">Niveau : <%= @meeting.level %></p>
-            <p><strong><%= @meeting.place_address %></strong></p>
+            <p><%= @meeting.place_address %></p>
           </div>
         </div>
       </div>
@@ -29,10 +29,14 @@
       </div>
     </div>
 
-    
     <% end %>
   </div>
+
   <div class="container chat text-dark">
+    <%= link_to(conversations_path) do %>
+      <i class="fa-solid fa-left-long"></i>
+    <% end %>
+
   <%= turbo_stream_from "meeting_#{@meeting.id}_messages" %>
 
   <div id="messages" class="messages">

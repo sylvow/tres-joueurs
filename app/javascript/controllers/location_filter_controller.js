@@ -69,6 +69,7 @@ export default class extends Controller {
   //     // document.querySelector("#results").insertAdjacentHTML("afterbegin", liContent);
   //   });
   // }
+
   displayCities() {
     const word = this.cityInputTarget.value
     const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
