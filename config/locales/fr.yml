@@ -4,7 +4,7 @@ fr:
       meeting:
         statuses:
           available: "Incomplet"
-          full: "Plein"
+          full: "Complet"
           ongoing: "En cours"
           cancelled: "Annulé"
           finished: "Terminé"

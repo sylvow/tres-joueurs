@@ -47,7 +47,7 @@ class MeetingsController < ApplicationController
   end
 
   def my_meetings
-    @my_meetings = current_user.meetings
+    @my_meetings = current_user.meetings.where.not(status: :cancelled)
   end
 
   def show

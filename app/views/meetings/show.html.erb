@@ -8,7 +8,9 @@
           <%= cl_image_tag(@meeting.user.profile_picture.key, class: "img-fluid rounded-circle", style: 'height: 40px; width: 40px;') %>
         <% end %>
         <p class="text-center m-0 fst-italic"> par <%= @meeting.user.username %></p>
-          <a href="/meetings" class="btn-close close-button" aria-label="Close"></a>
+      <%= link_to :back do %>       
+          <button class="btn-close close-button" aria-label="Close"></button>
+      <% end %>
       </div>
 
       <h2 class="pt-3 text-center"><%= @meeting.title %></h2>
