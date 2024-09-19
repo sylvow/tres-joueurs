@@ -1,6 +1,10 @@
 .meeting-card {
   background-color: $white;
   color: black;
+  a {
+    text-decoration: none;
+  }
+
   .show-link {
     text-decoration: none;
     color: black;
@@ -9,11 +13,21 @@
       text-decoration: none;
     }
   }
-.time {
-  background-color: green;
-}
+
+  .time {
+    background-color: green;
+  }
+
   h3 {
-    font-weight: 600;
+    font-weight: 500;
+   }
+
+  h6 {
+    font-weight: 400;
+    margin-bottom: 2px!important;
+  }
+  .place-info {
+    font-size: x-small;
   }
 
   img {
@@ -38,6 +52,7 @@
       margin-bottom: 0;
     }
   }
+
   .meeting-card-side-elements {
     text-align: center;
 

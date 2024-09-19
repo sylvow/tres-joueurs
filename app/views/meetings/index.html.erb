@@ -1,15 +1,17 @@
 
 <div class="container">
-  <h1 class="text-center">Liste des jeux</h1>
-  <div class="row text-center p-2" data-controller="show-filters location-filter">
+  <h1 class="text-center">Trouve des potes pour jouer près de chez toi !</h1>
+  <div class="row text-center p-2 mx-auto" data-controller="show-filters location-filter">
     <div class="d-grid gap-2 col-6 mx-auto">
-      <button class="btn btn-primary btn-sm my-3 p-2 rounded-pill mx-auto"
+      <button class="btn btn-primary btn-sm mt-3 p-2 rounded-pill mx-auto"
               data-action="click->show-filters#display"
               data-show-filters-target="filtersButton">
               Filtrer les résultats +
       </button>
+      <%= link_to "Réinitialiser", meetings_path, class:"small-link text-decoration-none mb-3" %>
     </div>
-    <div class="row">
+
+    <div class="row mx-auto">
       <div class="filter-form d-none p-2 mb-4 mx-auto" data-show-filters-target="showFilters">
         <%= form_with url: meetings_path, method: :get, local: true do %>
           <div class="container">
@@ -55,45 +57,49 @@
         <% end %>
       </div>
     </div>
+
     <div class="meetings-container">
       <% if @sorted_meetings.blank? %>
         <p>Désolé, ta recherche n'a retourné aucun résultat</p>
         <%= link_to "Réinitialiser la recherche", meetings_path %>
       <% else %>
+
         <% @sorted_meetings.each do |meeting| %>
+
           <div class="meeting-card shadow rounded-4 row mb-3 shadow" style="overflow: hidden;">
             <% if meeting.user != current_user %>
               <%= link_to(meeting_path(meeting), class: "show-link") do %>
+
                 <div class="row meeting-card-top">
                   <% unless meeting.user.profile_picture.attached? %>
                     <%= image_tag("profil.png", class: "profile-pic") %>
                   <% else %>
                     <%= cl_image_tag(meeting.user.profile_picture.key, class: "profile-pic") %>
                   <% end %>
+
                   <div class="col-3 p-2 <%= meeting_status_class(meeting.status) %> d-flex flex-column justify-content-center align-items-center">
                     <p class="fs-1 fw-bold"><%= meeting.date.strftime("%d") %></p>
                     <p><%= meeting.date.strftime("%B") %></p>
                     <p><%= meeting.date.strftime("%H:%M") %></p>
                   </div>
+
                   <div class="col-9 p-2" style="height: 100%;">
                     <div>
-                      <h3><%= meeting.game.name %></h3>
+                      <div class="col-9 mx-auto">
+                        <h3><%= meeting.game.name %></h3>
+                      </div>
                       <h6><%= meeting.title %></h6>
                       <div class="d-none">
                         <p>
-                          Joueurs : 
-                          <%= meeting.players_needed_min %> 
+                          Joueurs :
+                          <%= meeting.players_needed_min %>
                             <% if !meeting.players_needed_max.blank? %>
-                            à 
+                            à
                             <%= meeting.players_needed_max %>
                             <% end %>
                         </p>
                       </div>
-                      <p class="pt-2">
-                        <strong>
-                          <%= meeting.place_address %>
-                        </strong>
-                      </p>
+                      <p class="place-info"> <%= meeting.place_name %>, <%= meeting.place_address %> </p>
                     </div>
                   </div>
                 </div>
@@ -104,9 +110,9 @@
                         <%= meeting.localized_status %>
                       </p>
                     <% else %>
-                      <p>Recherche 
+                      <p>Recherche
                         <strong>
-                          <%= meeting.players_needed_min %> 
+                          <%= meeting.players_needed_min %>
                         </strong>
                         joueurs.ses
                       </p>
@@ -115,10 +121,12 @@
                 </div>
               <% end %>
             <% end %>
-          </div>       
+          </div>
+
         <% end %>
       <% end %>
     </div>
+
   </div>
   <%= render "shared/fixed_new_button" %>
 </div>

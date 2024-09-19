@@ -41,13 +41,20 @@ class MeetingsController < ApplicationController
     @sorted_meetings = @meetings.to_a.sort_by { |meeting| (Time.parse(meeting.date.to_s) - @now) }
 
     @request = Request.new
-    @notifications = Notification.where(status: Notification.statuses[:unread]).where(request: Request.where(user: current_user))
-
     # raise
   end
 
   def my_meetings
+    @now = Time.now
     @my_meetings = current_user.meetings.where.not(status: :cancelled)
+    # @my_meetings.each do |meeting|
+    #   if meeting.date < Date.today
+    #     meeting.finished!
+    #     meeting.save!
+    #   end
+    # end
+    @my_meetings = current_user.meetings.where.not(status: :finished)
+    @my_sorted_meetings = @my_meetings.to_a.sort_by { |meeting| (Time.parse(meeting.date.to_s) - @now) }
   end
 
   def show
