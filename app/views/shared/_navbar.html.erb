@@ -44,15 +44,7 @@
             <% end %>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-              <a href="<%= requests_path %>" class="dropdown-item">
-                Requests
-                <% if Request.where(meeting: current_user.meetings).count > (current_user.viewed_requests_count || 0) %>
-                  <span class="badge bg-danger">!</span>
-                <% end %>
-              </a>
-              <a href="<%= conversations_path %>" class="dropdown-item">
-                Messages
-              </a>
+
               <% unless @notifications.nil? %>
                 <% @notifications.each do |notif| %>
                   <a href="#" class="dropdown-item">
