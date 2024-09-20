@@ -7,9 +7,10 @@
       </button>
     </h3>
   </div>
+      <div  id="collapseorga" class="collapse show">
   <% @user_meetings.each do |meeting| %>
-    <div  id="collapseorga" class="collapse show">
-      <div class="request-card bg-white text-black px-3 mt-4 rounded-5">
+    <div class="bg-light p-3 mt-4 rounded-5">
+      <div class="request-card bg-white text-black px-3 rounded-5 shadow-lg">
         <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
           <div class="form-check form-switch m-0 d-flex justify-content-end">
             <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.localized_status %></label>
@@ -23,6 +24,7 @@
                 <p class="very-small"><%= meeting.date.strftime("%B") %></p>
                 <p class="mega-small"><%= meeting.date.strftime("%a, %kh%M") %></p>
               </div>
+
             <% if compute_players(meeting) > 1 %>
               <span><%= compute_players(meeting) %> joueur.s 🔥</span>
             <% end %>
@@ -81,6 +83,7 @@
       </div>
     </div>
   <% end %>
+      </div>
   <div class="mt-4">
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseparticip" aria-expanded="false" aria-controls="collapseparticip">
