@@ -153,10 +153,25 @@
 }
 
 .date-stamp {
+<<<<<<< HEAD
+  width: 80px;
+  height: 80px;
+
+  .very-small {
+    font-size: small;
+  }
+  .mega-small {
+    font-size: xx-small;
+  }
+  .day {
+    margin-bottom: -5px;
+  }
+=======
   width: 55px;
   height: 55px;
   color: black;
   background-color: #1EDD88;
+>>>>>>> master
 }
 
 .meeting-card-top {

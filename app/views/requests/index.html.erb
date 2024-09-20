@@ -17,13 +17,14 @@
             <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" <%= "checked" if meeting.full? %>>
           </div>
         <% end %>
-        <div class="d-flex">
-          <div class="col-3 d-flex flex-column text-center gap-1">
-            <div class="date-stamp d-flex flex-column justify-content-center rounded-circle mx-auto fw-bold">
-              <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
-              <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
-            </div>
-            <span><%= meeting.date.strftime("%a, %kh%M") %></span>
+        <div class="d-flex align-items-center">
+          <div class="col-3 d-flex flex-column text-center gap-1 justify-content-center">
+              <div class="date-stamp bg-primary d-flex rounded-circle flex-column justify-content-center align-items-center">
+                <p class="day fs-1 fw-bold day"><%= meeting.date.strftime("%d") %></p>
+                <p class="very-small"><%= meeting.date.strftime("%B") %></p>
+                <p class="mega-small"><%= meeting.date.strftime("%a, %kh%M") %></p>
+              </div>
+
             <% if compute_players(meeting) > 1 %>
               <span><%= compute_players(meeting) %> joueur.s 🔥</span>
             <% end %>
