@@ -9,7 +9,7 @@
   </div>
       <div  id="collapseorga" class="collapse show">
   <% @user_meetings.each do |meeting| %>
-    <div class="bg-light p-3 mt-4 rounded-5">
+    <div class="bg-light p-1 mt-4 rounded-5">
       <div class="request-card bg-white text-black px-3 rounded-5 shadow-lg">
         <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
           <div class="form-check form-switch m-0 d-flex justify-content-end">
