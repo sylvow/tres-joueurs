@@ -7,20 +7,21 @@
       </button>
     </h3>
   </div>
+      <div  id="collapseorga" class="collapse show">
   <% @user_meetings.each do |meeting| %>
-    <div  id="collapseorga" class="collapse show">
-      <div class="request-card bg-white text-black px-3 mt-4 rounded-5">
+    <div class="bg-light p-3 mt-4 rounded-5">
+      <div class="request-card bg-white text-black px-3 rounded-5 shadow-lg">
         <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
           <div class="form-check form-switch m-0 d-flex justify-content-end">
             <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.localized_status %></label>
             <input class="form-check-input" type="checkbox" role="switch" id="switch-<%= meeting.id %>" <%= "checked" if meeting.full? %>>
           </div>
         <% end %>
-        <div class="d-flex align-items-center">
-          <div class="col-3 d-flex flex-column text-center gap-1 justify-content-center">
-              <div class="date-stamp bg-primary d-flex rounded-circle flex-column justify-content-center align-items-center">
-                <p class="day fs-1 fw-bold"><%= meeting.date.strftime("%d") %></p>
-                <p class="month"><%= meeting.date.strftime("%B") %></p>
+        <div class="d-flex">
+          <div class="col-3 d-flex flex-column text-center gap-1">
+            <div class="date-stamp d-flex flex-column justify-content-center rounded-circle mx-auto fw-bold">
+              <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
+              <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
             </div>
             <span><%= meeting.date.strftime("%a, %kh%M") %></span>
             <% if compute_players(meeting) > 1 %>
@@ -81,6 +82,7 @@
       </div>
     </div>
   <% end %>
+      </div>
   <div class="mt-4">
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseparticip" aria-expanded="false" aria-controls="collapseparticip">
