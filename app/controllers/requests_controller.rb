@@ -31,7 +31,7 @@ class RequestsController < ApplicationController
       @request = Request.new(request_params)
       @request.user = current_user
       @request.meeting = @meeting
-      if request_params[:number_of_friends].nil?
+      if request_params[:number_of_friends] == ""
         @request.number_of_friends = 0
       end
       @request.interested!
