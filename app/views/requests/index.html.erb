@@ -19,10 +19,10 @@
         <div class="d-flex align-items-center">
           <div class="col-3 d-flex flex-column text-center gap-1 justify-content-center">
               <div class="date-stamp bg-primary d-flex rounded-circle flex-column justify-content-center align-items-center">
-                <p class="day fs-1 fw-bold"><%= meeting.date.strftime("%d") %></p>
-                <p class="month"><%= meeting.date.strftime("%B") %></p>
-            </div>
-            <span><%= meeting.date.strftime("%a, %kh%M") %></span>
+                <p class="day fs-1 fw-bold day"><%= meeting.date.strftime("%d") %></p>
+                <p class="very-small"><%= meeting.date.strftime("%B") %></p>
+                <p class="mega-small"><%= meeting.date.strftime("%a, %kh%M") %></p>
+              </div>
             <% if compute_players(meeting) > 1 %>
               <span><%= compute_players(meeting) %> joueur.s 🔥</span>
             <% end %>

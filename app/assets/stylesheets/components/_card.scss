@@ -155,6 +155,16 @@
 .date-stamp {
   width: 80px;
   height: 80px;
+
+  .very-small {
+    font-size: small;
+  }
+  .mega-small {
+    font-size: xx-small;
+  }
+  .day {
+    margin-bottom: -5px;
+  }
 }
 
 .meeting-card-top {
