@@ -7,9 +7,10 @@
       </button>
     </h3>
   </div>
+      <div  id="collapseorga" class="collapse show">
   <% @user_meetings.each do |meeting| %>
-    <div  id="collapseorga" class="collapse show">
-      <div class="request-card bg-white text-black px-3 mt-4 rounded-5">
+    <div class="bg-light p-3 mt-4 rounded-5">
+      <div class="request-card bg-white text-black px-3 rounded-5 shadow-lg">
         <%= link_to mark_as_full_meeting_path(meeting), data: { turbo_method: :patch } do %>
           <div class="form-check form-switch m-0 d-flex justify-content-end">
             <label class="form-check-label ps-2 pe-5" for="switch-<%= meeting.id %>"><%= meeting.localized_status %></label>
@@ -18,7 +19,7 @@
         <% end %>
         <div class="d-flex">
           <div class="col-3 d-flex flex-column text-center gap-1">
-            <div class="date-stamp d-flex flex-column justify-content-center rounded-circle bg-secondary mx-auto">
+            <div class="date-stamp d-flex flex-column justify-content-center rounded-circle mx-auto fw-bold">
               <span class="text-center lh-1"><%= meeting.date.strftime("%-d") %></span>
               <span class="text-center lh-1"><%= meeting.date.strftime("%b") %></span>
             </div>
@@ -79,8 +80,9 @@
           <% end %>
         </div>
       </div>
-    </div> 
+    </div>
   <% end %>
+      </div>
   <div class="mt-4">
     <h3 class="d-grid">
       <button class="btn btn-dark" data-bs-toggle="collapse"  href="#collapseparticip" aria-expanded="false" aria-controls="collapseparticip">
