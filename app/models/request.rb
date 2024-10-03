@@ -5,5 +5,5 @@ class Request < ApplicationRecord
 
   belongs_to :meeting
   belongs_to :user
-  has_many :notifications, dependent: :destroy
+  has_many :notifications, as: :notifiable, dependent: :destroy
 end
