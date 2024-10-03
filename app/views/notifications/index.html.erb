@@ -1,20 +1,17 @@
 <div class="container p-3 mt-3">
   <div class="row justify-content-center">
     <h1>Notifications</h1>
-
-    <h3> Demandes à approuver : </h3>
-    <% if @notif_req_received.blank? %>
-      <p>Vous n'avez aucune demande de participation à approuver ou rejeter</p>
+    <% if @sorted_notif.blank? %>
+      <p>Vous n'avez aucune notification</p>
     <% else %>
-      <% @notif_req_received.each do |notif| %>
-        <p><%= notif.content %>, <strong><%= link_to "voir", meeting_path(notif.request.meeting) %></strong> </p>
-      <% end %>
-    <% end %>
-
-    <h3> Autres notifications</h3>
-    <% unless @sorted_notif_req_approved.nil? %>
-      <% @sorted_notif_req_approved.each do |notif| %>
-        <p><%= notif.content %> - <%= notif.created_at.strftime('%d/%m/%y à %H:%M') %></p>
+      <% @sorted_notif.each do |notif| %>
+        <% if notif.category == "new-message" %>
+          <p><%= notif.content %>, <strong><%= link_to "voir", meeting_messages_path(notif.notifiable.meeting) %></strong> </p>
+        <% elsif notif.category == "approved-request" %>
+          <p><%= notif.content %>, <strong><%= link_to "voir", meeting_path(notif.notifiable.meeting) %></strong> </p>
+        <% elsif notif.category == "pending-request" %>
+          <p><%= notif.content %>, <strong><%= link_to "voir", meeting_path(notif.notifiable) %></strong> </p>
+        <% end %>
       <% end %>
     <% end %>
   </div>

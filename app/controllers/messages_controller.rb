@@ -6,6 +6,13 @@ class MessagesController < ApplicationController
     @message.meeting = @meeting
     @message.user = current_user
     if @message.save
+      @notification = Notification.new(
+        notifiable_type: 'Message',
+        notifiable_id: @message.id,
+        category: 'new-message',
+        content: "Nouveau message reçu pour #{@message.meeting.game.name} le #{@message.meeting.date.strftime('%d/%m/%y')}")
+      @notification.unread!
+      @notification.save!
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",

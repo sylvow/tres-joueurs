@@ -37,7 +37,8 @@ class RequestsController < ApplicationController
       @request.interested!
       if @request.save!
         @notification = Notification.new(
-          request: @request,
+          notifiable_type: 'Meeting',
+          notifiable_id: @request.meeting.id,
           category: 'pending-request',
           content: "Demande en attente d'approbation pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime('%d/%m/%y')}")
         @notification.unread!
@@ -68,7 +69,8 @@ class RequestsController < ApplicationController
   def accept
     @request.status = Request.statuses[:accepted]
     @notification = Notification.new(
-      request: @request,
+      notifiable_type: 'Request',
+      notifiable_id: @request.id,
       category: 'approved-request',
       content: "Demande acceptée pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime('%d/%m/%y')}")
     @notification.unread!
