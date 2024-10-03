@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     collection do
       get :historique, to: 'meetings#history'
     end
-    member do 
+    member do
       patch :mark_as_full
     end
   end
@@ -34,5 +34,7 @@ Rails.application.routes.draw do
   resources :games, only: [:create]
   get 'conversations', to: 'meetings#conversations', as: "conversations"
   get 'my-meetings', to: 'meetings#my_meetings', as: "my-meetings"
+
+  resources :notifications, only: [:index]
 
 end
