@@ -73,16 +73,22 @@ class MeetingsController < ApplicationController
   end
 
   def create
+    @games = Game.all
     @meeting = Meeting.new(meeting_params)
+    unless @games.pluck(:name).include?(params[:meeting][:game_id])
+      @new_game = Game.create(name: params[:meeting][:game_id])
+      @new_game.save!
+      @meeting.game_id = @new_game.id
+    end
+    # raise
     @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
     @meeting.available!
-    unless Game.all.pluck(:name).include?(params[:meeting][:game_id])
-      game = Game.create(name: params[:meeting][:game_id])
-      @meeting.game_id = game.id
-    end
-    if @meeting.save
+    # raise
+    if @meeting.save!
+      # raise
       redirect_to requests_path
+      flash.notice = "Rencontre pour #{@meeting.game.name} créée avec succès"
     else
       render :new, status: :unprocessable_entity
     end

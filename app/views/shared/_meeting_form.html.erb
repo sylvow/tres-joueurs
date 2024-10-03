@@ -10,7 +10,7 @@
           <%= f.input :game_id,
                       label: "Commençons par le jeu",
                       input_html: {id: "input-tags", placeholder: "Contrée, 7 Wonders", autocomplete: "off"},
-                      collection: Game.all
+                      collection: @games
                       %>
           <%= f.input :players_needed_min,
                       placeholder: "1, 2, 3...",
