@@ -75,7 +75,9 @@ class MeetingsController < ApplicationController
   def create
     @games = Game.all
     @meeting = Meeting.new(meeting_params)
-    unless @games.pluck(:name).include?(params[:meeting][:game_id])
+    if @games.pluck(:id).include?(params[:meeting][:game_id].to_i)
+      @meeting.game_id = params[:meeting][:game_id]
+    else
       @new_game = Game.create(name: params[:meeting][:game_id])
       @new_game.save!
       @meeting.game_id = @new_game.id
