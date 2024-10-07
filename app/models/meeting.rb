@@ -3,6 +3,7 @@ class Meeting < ApplicationRecord
   belongs_to :game
   has_many :requests, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :notifications, as: :notifiable, dependent: :destroy
 
   accepts_nested_attributes_for :game
 

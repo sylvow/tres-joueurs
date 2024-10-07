@@ -2,6 +2,8 @@ class Message < ApplicationRecord
   belongs_to :meeting
   belongs_to :user
   after_create_commit :broadcast_message
+  has_many :notifications, as: :notifiable, dependent: :destroy
+
 
   private
 

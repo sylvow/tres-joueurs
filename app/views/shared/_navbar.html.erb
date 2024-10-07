@@ -12,8 +12,6 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
         <% if user_signed_in? %>
 
-
-
           <li class="nav-item">
             <%= link_to "Trouver un jeu", meetings_path, class: "nav-link text-primary" %>
           </li>
@@ -36,33 +34,20 @@
               <%= link_to "Déconnexion", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item bg-danger" %>
             </div>
           </li>
-          <li class="nav-item dropdown">
-          <a href="#" class="nav-link" id="notificationsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-bell"></i>
-            <% if Request.where(meeting: current_user.meetings).count > (current_user.viewed_requests_count || 0) %>
-              <span class="badge bg-danger"><%= Request.where(status: :interested).where(user: current_user).count %></span>
-            <% end %>
-          </a>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
 
-              <% unless @notifications.nil? %>
-                <% @notifications.each do |notif| %>
-                  <a href="#" class="dropdown-item">
-                    <small><%= notif.content %></small>
-                  </a>
-                <% end %>
-              <% end %>
-            </div>
-<%# c'est ici que j'ai supprimé le code %>
-        </li>
-        <% else %>
           <li class="nav-item">
-            <%= link_to "Trouver un jeu", meetings_path, class: "nav-link" %>
+            <%= link_to notifications_path, class: "nav-link text-primary" do %>
+              <i class="fa fa-bell"></i>
+            <% end %>
           </li>
-          <li class="nav-item">
-            <%= link_to "Me connecter", new_user_session_path, class: "nav-link" %>
-          </li>
-        <% end %>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Trouver un jeu", meetings_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Me connecter", new_user_session_path, class: "nav-link" %>
+            </li>
+          <% end %>
       </ul>
     </div>
   </div>

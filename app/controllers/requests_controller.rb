@@ -36,6 +36,13 @@ class RequestsController < ApplicationController
       end
       @request.interested!
       if @request.save!
+        @notification = Notification.new(
+          notifiable_type: 'Meeting',
+          notifiable_id: @request.meeting.id,
+          category: 'pending-request',
+          content: "Demande en attente d'approbation pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime('%d/%m/%y')}")
+        @notification.unread!
+        @notification.save!
         redirect_to requests_path
       else
         redirect_to meeting_path(@meeting), status: :unprocessable_entity
@@ -61,7 +68,11 @@ class RequestsController < ApplicationController
 
   def accept
     @request.status = Request.statuses[:accepted]
-    @notification = Notification.new(request: @request, content: "Demande acceptée pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime("%d/%m/%y")}")
+    @notification = Notification.new(
+      notifiable_type: 'Request',
+      notifiable_id: @request.id,
+      category: 'approved-request',
+      content: "Demande acceptée pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime('%d/%m/%y')}")
     @notification.unread!
     @notification.save!
     redirect_to requests_path if @request.save!
@@ -82,7 +93,7 @@ class RequestsController < ApplicationController
   def compute_players(meeting)
     counter = 0
     meeting.requests.where(status: :accepted).each do |e|
-      counter += e.number_of_friends 
+      counter += e.number_of_friends
     end
     counter + meeting.requests.where(status: :accepted).count + 1
   end

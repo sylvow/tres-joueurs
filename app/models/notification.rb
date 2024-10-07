@@ -1,6 +1,5 @@
 class Notification < ApplicationRecord
-  belongs_to :request
+  belongs_to :notifiable, polymorphic: true
 
-  enum status: [ :unread, :read ]
-
+  enum status: %i[unread read]
 end
