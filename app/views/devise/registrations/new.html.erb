@@ -30,6 +30,7 @@
                     label: "Date de naissance",
                     required: true,
                     autofocus: true,
+                    start_year: 1900,
                     input_html: { autocomplete: "date of birth" }%>
         <%= f.input :phone_number,
                     label: "Numéro de téléphone",
@@ -52,7 +53,7 @@
       </div>
 
       <div class="form-actions">
-        <%= f.button :submit, "S'inscrire" %>
+        <%= f.button :submit, "S'inscrire", class:"btn btn-primary" %>
       </div>
     <% end %>
 

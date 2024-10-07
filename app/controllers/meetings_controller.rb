@@ -5,7 +5,7 @@ class MeetingsController < ApplicationController
 
   def index
     # Meeting.all.each do |meeting|
-    #   if meeting.date < Date.today
+    #   if meeting.date <= Date.today - 1
     #     meeting.finished!
     #     meeting.save!
     #   end
