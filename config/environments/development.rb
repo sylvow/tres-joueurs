@@ -34,7 +34,7 @@ Rails.application.configure do
   end
 
   config.active_storage.service = :cloudinary
-  
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 
@@ -42,6 +42,18 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+# Looking to send emails in production? Check out our Email API/SMTP product!
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: 'api',
+    # user_name: ENV.fetch('MAILTRAP_SMTP_USER'),
+    password: '6de6572939d5d3f5e71e5925544bdc90',
+    # password: ENV.fetch('MAILTRAP_SMTP_PASSWORD'),
+    address: 'live.smtp.mailtrap.io',
+    host: 'live.smtp.mailtrap.io',
+    port: '587',
+    authentication: :login
+  }
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

@@ -43,6 +43,7 @@ class RequestsController < ApplicationController
           content: "Demande en attente d'approbation pour #{@request.meeting.game.name} le #{@request.meeting.date.strftime('%d/%m/%y')}")
         @notification.unread!
         @notification.save!
+        NotifierMailer.with(user: @request.meeting.user, notification: @notification).notification_email.deliver_now
         redirect_to requests_path
       else
         redirect_to meeting_path(@meeting), status: :unprocessable_entity
