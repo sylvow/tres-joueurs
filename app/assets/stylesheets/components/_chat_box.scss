@@ -18,10 +18,25 @@
     border-radius: 5px;
   }
 }
-
+.accordion {
+  max-width: 800px;
+  margin: auto;
+}
 .accordion-item {
   border: none!important;
 }
 .accordion-body {
   padding: 10px 0px 0px 0px;
+}
+
+#headingOne {
+  margin-right: 3px;
+}
+
+#headingTwo {
+  margin-left: 3px;
+}
+
+.inner-btn-margin-left {
+  margin-left: 5px;
 }

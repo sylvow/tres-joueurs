@@ -137,7 +137,7 @@ class MeetingsController < ApplicationController
     if @meeting.user == current_user
       if @meeting.cancelled!
         render json: {
-          message: "Votre rencontre à été supprimé.",
+          message: "Votre rencontre à été supprimée.",
           title: @meeting.localized_status,
           redirect_url: requests_path
           }, status: :ok

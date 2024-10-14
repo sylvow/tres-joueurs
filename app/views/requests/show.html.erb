@@ -1,10 +1,13 @@
-<h3>Détail de la demande</h3>
-<p>Jeu: <%= @request.meeting.game.name %></p>
-<p>Category: <%= @request.meeting.game.category %></p>
-<p>Nombre de joueurs souhaitant rejoindre le jeu: <%= @request.number_of_friends + 1 %></p>
-<p>Lieu: <%= @request.meeting.place_name %>, <%= @request.meeting.place_address %></p>
-<p>Status: <%= @request.status %></p>
-<% if @request.meeting.players_needed_max %>
-<p>Nombre de joueurs encore nécessaire avant validation: <%= @request.meeting.players_needed_max - @request.meeting.players_needed_min %></p>
-<% end %>
-<%= link_to "Retour aux demandes", requests_path %>
+<div class="container">
+  <h1 class="text-center pb-3">Détail de la demande de participation</h1>
+  <p>Jeu: <%= @request.meeting.game.name %></p>
+  <p>Category: <%= @request.meeting.game.category %></p>
+  <p>Nombre de joueurs souhaitant rejoindre le jeu: <%= @request.number_of_friends %> ami.e.s + moi</p>
+  <%= link_to "Modifier", edit_request_path(@request) %>
+  <p>Lieu: <%= @request.meeting.place_name %>, <%= @request.meeting.place_address %></p>
+  <p>Status: <%= @request.status %></p>
+  <% if @request.meeting.players_needed_max %>
+  <p>Nombre de joueurs encore nécessaire avant validation: <%= @request.meeting.players_needed_max - @request.meeting.players_needed_min %></p>
+  <% end %>
+  <%= link_to "Retour aux demandes", requests_path %>
+</div>
