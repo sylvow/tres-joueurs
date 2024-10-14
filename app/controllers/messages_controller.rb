@@ -13,6 +13,9 @@ class MessagesController < ApplicationController
         content: "Nouveau message reçu pour #{@message.meeting.game.name} le #{@message.meeting.date.strftime('%d/%m/%y')}")
       @notification.unread!
       @notification.save!
+      # raise
+      NotifierMailer.with(user: @message.meeting.user, notification: @notification).notification_email.deliver_now
+      # , url: meeting_messages_path(@message.meeting)
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",
