@@ -36,20 +36,17 @@ Rails.application.configure do
   config.active_storage.service = :cloudinary
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: "localhost:3000" }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
   Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
 
 
-# Looking to send emails in production? Check out our Email API/SMTP product!
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    # # user_name: 'api',
     # user_name: ENV.fetch('MAILTRAP_SMTP_USER'),
-    # # password: '6de6572939d5d3f5e71e5925544bdc90',
     # password: ENV.fetch('MAILTRAP_SMTP_PASSWORD'),
     # address: 'live.smtp.mailtrap.io',
     # host: 'live.smtp.mailtrap.io',
