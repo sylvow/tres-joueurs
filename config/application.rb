@@ -24,7 +24,7 @@ module TresJoueurs
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    # 
+    #
     # configuration de la langue par défaut
     config.i18n.default_locale = :fr
 

@@ -1,12 +1,23 @@
 <div class="container">
 
+
+
+
+
   <div class="accordion" id="accordionConvo">
     <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Conversations en tant qu'organisateur
-        </button>
-      </h2>
+      <div class="d-flex">
+        <h2 class="accordion-header flex-fill mr-4" id="headingOne">
+          <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Organisateur
+          </button>
+        </h2>
+        <h2 class="accordion-header flex-fill ml-4" id="headingTwo">
+          <button class="accordion-button rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Participant
+          </button>
+        </h2>
+      </div>
       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionConvo">
         <div class="accordion-body">
           <div class="messages-list">
@@ -30,11 +41,7 @@
     </div>
 
     <div class="accordion-item">
-      <h2 class="accordion-header" id="headingTwo">
-        <button class="accordion-button rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Conversations en tant que participant
-        </button>
-      </h2>
+
       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionConvo">
         <div class="accordion-body">
           <div class="messages-list">

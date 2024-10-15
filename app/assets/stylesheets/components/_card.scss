@@ -155,6 +155,8 @@
 .date-stamp {
   width: 80px;
   height: 80px;
+  border-radius: 0px 0px 5px 5px;
+  background-color: $light-gray;
 
   .very-small {
     font-size: small;
@@ -186,5 +188,23 @@
 .participant {
   a {
     text-decoration: none;
+  }
+}
+
+.location-small {
+  font-size: x-small;
+}
+
+.request-status {
+  font-weight: bold;
+  font-size: small;
+  .interested {
+    color: $orange;
+  }
+  .confirmed {
+    color: #005e3a;
+  }
+  .canceled {
+    color: $red;
   }
 }
