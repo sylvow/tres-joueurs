@@ -26,8 +26,7 @@
 
   <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
     <%= render 'shared/navbar' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render 'shared/flash_messages' if !flash.empty? %>
     <%= yield %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
