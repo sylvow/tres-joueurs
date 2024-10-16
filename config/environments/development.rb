@@ -46,15 +46,8 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    # user_name: ENV.fetch('MAILTRAP_SMTP_USER'),
-    # password: ENV.fetch('MAILTRAP_SMTP_PASSWORD'),
-    # address: 'live.smtp.mailtrap.io',
-    # host: 'live.smtp.mailtrap.io',
-    # port: '587',
-    # authentication: :login
-    # # ci-dessous les paramètres pour le serveur de test / sandbox / ne décompte pas les crédits
-    user_name: '7c9be4abf48315',
-    password: '0e295a737ff1ae',
+    user_name: ENV.fetch('MAILTRAP_SMTP_USER_SANDBOX'),
+    password: ENV.fetch('MAILTRAP_SMTP_PASSWORD_SANDBOX'),
     address: 'sandbox.smtp.mailtrap.io',
     host: 'sandbox.smtp.mailtrap.io',
     port: '2525',
