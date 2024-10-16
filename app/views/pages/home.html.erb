@@ -1,7 +1,88 @@
 <div class="container-home">
-  <div class="content-home">
-    <%= image_tag "logo.png", class:'hp-logo'%>
-    <p>Oublie les écrans, et viens partager de vrais moments</p>
-      <%= link_to "Choisis ton jeu", meetings_path, class: "btn btn-primary btn-large rounded-pill shadow p-1 px-4" %>
+
+  <div class="main-home">
+
+    <div class="top-title">
+      <h1>Oublie les écrans,</h1>
+      <h2>partage de vrais moments</h2>
+    </div>
+
+    <div class="middle-title">
+      <%= image_tag "logo.png", class:'hp-logo'%>
+      <h5>La plateforme gratuite pour<br>
+      trouver des partenaires de jeu<br>
+      près de chez toi</h5>
+    </div>
+
+    <div class="bottom-title">
+    <%= link_to "Choisis ton jeu",
+          meetings_path,
+          id:"choisis-ton-jeu",
+          class: "btn btn-primary btn-large rounded-pill shadow p-1 px-4 mt-4" %>
+    </div>
+
   </div>
+
+  <div class="comment-ca-marche-home">
+
+    <h1>Comment ça marche?</h1>
+
+    <div class="comment-card orga">
+      <div class="row card-header">
+        <div class="icon-header col-2">
+          <i class="fa-solid fa-diamond"></i>
+        </div>
+        <div class="text-header col-10">
+          <h4>Organise une rencontre</h4>
+          <%# <h6>une rencontre</h6> %>
+        </div>
+      </div>
+      <div class="card-content d-flex justify-content-center">
+        <p>Définis le jeu, la date, le lieu et poste ton annonce !</p>
+      </div>
+    </div>
+    <div class="transition">
+      <h1>ou ...</h1>
+    </div>
+    <div class="comment-card participant">
+      <div class="row card-header">
+        <div class="icon-header col-2">
+          <i class="fa-solid fa-dice"></i>
+        </div>
+        <div class="text-header col-10">
+          <h4>Participe à une rencontre</h4>
+          <%# <h6>une rencontre</h6> %>
+        </div>
+      </div>
+      <div class="card-content">
+        <p>Recherche les annonces près de chez toi, les jeux que t'aimes bien ou à découvrir</p>
+      </div>
+    </div>
+
+    <div class="transition">
+      <i class="fa-solid fa-chevron-down"></i><br>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="comment-card fonctionnalite">
+      <div class="row card-header">
+        <div class="icon-header col-2">
+          <i class="fa-solid fa-arrows-to-circle"></i>
+        </div>
+        <div class="text-header col-10">
+          <h4>Y'a plus qu'à se retrouver 🥳</h4>
+          <%# <h6>une rencontre</h6> %>
+        </div>
+      </div>
+      <div class="card-content">
+        <p>Tu peux discuter avec les autres participants via le chat, pour faire connaissance avant la rencontre !</p>
+      </div>
+    </div>
+
+    <div class="attention">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <p><small>Attention, TresJoueurs n'est pas un site de rencontre amoureuse, mais une plateforme de mise en relation de personnes aimant les jeux de cartes et de société.</small></p>
+      <p><small>Aucun comportement inapproprié (verbal ou physique) ne sera toléré.</small></p>
+    </div>
+  <div>
 <div>
