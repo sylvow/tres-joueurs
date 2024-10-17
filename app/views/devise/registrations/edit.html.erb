@@ -9,11 +9,11 @@
         <%= f.input :email, required: true, autofocus: true %>
 
         <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-          <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+          <p>En attente de confirmation pour : <%= resource.unconfirmed_email %></p>
         <% end %>
 
         <%= f.input :password,
-                    label: "Mot de passe",
+                    label: "Nouveau Mot de passe",
                     hint: "Ne rien mettre si vous ne souhaitez pas le changer",
                     required: false,
                     input_html: { autocomplete: "new-password" } %>
