@@ -82,7 +82,7 @@ class MeetingsController < ApplicationController
       @new_game.save!
       @meeting.game_id = @new_game.id
     end
-    # raise
+    raise
     @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
     @meeting.available!
@@ -92,8 +92,9 @@ class MeetingsController < ApplicationController
       redirect_to requests_path
       flash.notice = "Rencontre pour #{@meeting.game.name} créée avec succès"
     else
+      # raise
       render :new, status: :unprocessable_entity
-      flash.noitce = "Erreur lors de la création de la rencontre"
+      flash.notice = "Erreur lors de la création de la rencontre"
     end
   end
 
