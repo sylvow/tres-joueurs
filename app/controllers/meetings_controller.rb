@@ -42,6 +42,12 @@ class MeetingsController < ApplicationController
 
     @request = Request.new
     # raise
+
+    # @cities = JSON.parse(File.read(Rails.root.join('./cities.json')))['cities']
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    #   format.json { render json: @cities }
+    # end
   end
 
   def my_meetings
@@ -82,7 +88,6 @@ class MeetingsController < ApplicationController
       @new_game.save!
       @meeting.game_id = @new_game.id
     end
-    raise
     @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
     @meeting.available!

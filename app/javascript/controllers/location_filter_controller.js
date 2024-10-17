@@ -53,51 +53,43 @@ export default class extends Controller {
 
   }
 
-  // displayCities() {
-  //   const word = this.cityInputTarget.value
-  //   const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
-  //   fetch(url)
-  //   .then(response => response.json())
-  //   .then((data) => {
-  //     const results = data.map((city) => city.nom + ', ' + city.departement.code)
-  //     // const lng = data.map((city) => city.centre.coordinates[1])
-  //     // console.log(lng)
-  //     this.resultsTarget.innerHTML = ""
-  //     results.forEach((suggestion) => {
-  //       this.resultsTarget.insertAdjacentHTML('beforeend', `<li data-location-filter-target="city" data-action="click->location-filter#selectCity">${suggestion}</li>`);
-  //     });
-  //     // document.querySelector("#results").insertAdjacentHTML("afterbegin", liContent);
-  //   });
-  // }
-
   displayCities() {
-    const word = this.cityInputTarget.value
-    const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
-    fetch(url)
+    const word = this.cityInputTarget.value.toLowerCase()
+    // const url = `https://geo.api.gouv.fr/communes?nom=${word}&fields=departement&boost=population&limit=5`
+    fetch('./cities.json')
     .then(response => response.json())
-    .then((data) => {
-      const results = data.map((city) => city.nom + ', ' + city.code)
-      // const lng = data.map((city) => city.centre.coordinates[1])
-      // console.log(lng)
+    .then(data => {
+      const cities = data['cities'];
+      console.log(cities);
+      // const word = this.cityInputTarget.value.toLowerCase()
+      console.log(word)
+      const filteredCities = cities.filter(city =>
+          city.city_code.toLowerCase().includes(word)
+        )
+        console.log("Filtered Cities:", filteredCities)
+        // this.displaySuggestions(filteredCities)
+      const results = filteredCities.map((city) => city.city_code.toUpperCase() + ', ' + city.zip_code)
       this.resultsTarget.innerHTML = ""
       results.forEach((suggestion) => {
         this.resultsTarget.insertAdjacentHTML('beforeend', `<li data-location-filter-target="city" data-action="click->location-filter#selectCity">${suggestion}</li>`);
       });
-      // document.querySelector("#results").insertAdjacentHTML("afterbegin", liContent);
-    });
+    })
   }
+
   selectCity(event) {
     this.cityInputTarget.value = event.target.innerText
-    const cityCode = event.target.innerText.split(", ")[1]
-    const url = `https://geo.api.gouv.fr/communes?code=${cityCode}&fields=code,nom,centre`
-    fetch(url)
+    const city_name = event.target.innerText.split(", ")[0]
+    // const url = `https://geo.api.gouv.fr/communes?code=${cityCode}&fields=code,nom,centre`
+    fetch('./cities.json')
     .then(response => response.json())
     .then((data) => {
-      const coordinates = data[0].centre.coordinates
-      const lat = coordinates[1]
-      const lng = coordinates[0]
-      // console.log("lat = " + lat);
-      // console.log("lng = " + lng);
+      const cities = data['cities'];
+      const selectedCity = cities.filter(city =>
+        city.city_code.toLowerCase() === city_name.toLowerCase()
+      )
+      console.log(selectedCity);
+      const lat = selectedCity[0]['latitude']
+      const lng = selectedCity[0]['longitude']
       this.fieldLatTarget.value = lat
       this.fieldLngTarget.value = lng
     });
