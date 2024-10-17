@@ -26,9 +26,9 @@ second_game.save!
   user = User.new(email: "user#{index}@gmail.com", username: "user#{index}", first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, date_of_birth: Faker::Date.birthday(min_age: 16, max_age: 50), phone_number: Faker::PhoneNumber.phone_number, password: 123456)
   user.save!
 
-  meeting = Meeting.new(title: Faker::Game.title, 
-                        description: "Description du jeu, qui est vraiment génial et c'est le jeu numéro #{index}", 
-                        players_needed_min: 3, 
+  meeting = Meeting.new(title: Faker::Game.title,
+                        description: "Description du jeu, qui est vraiment génial et c'est le jeu numéro #{index}",
+                        players_needed_min: 3,
                         players_needed_max: 8,
                         location_type: "Bar",
                         place_name: "#{index} rue de la beuverie",
