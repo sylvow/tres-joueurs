@@ -4,12 +4,12 @@ class MeetingsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
-    # Meeting.all.each do |meeting|
-    #   if meeting.date <= Date.today - 1
-    #     meeting.finished!
-    #     meeting.save!
-    #   end
-    # end
+    Meeting.where.not(status: :finished).each do |meeting|
+      if meeting.date <= Date.today - 1
+        meeting.finished!
+        meeting.save!
+      end
+    end
 
     @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
 
@@ -82,7 +82,7 @@ class MeetingsController < ApplicationController
       @new_game.save!
       @meeting.game_id = @new_game.id
     end
-    # raise
+    raise
     @meeting.players_needed_max = @meeting.players_needed_min if @meeting.players_needed_max.blank?
     @meeting.user = current_user
     @meeting.available!
@@ -92,7 +92,9 @@ class MeetingsController < ApplicationController
       redirect_to requests_path
       flash.notice = "Rencontre pour #{@meeting.game.name} créée avec succès"
     else
+      # raise
       render :new, status: :unprocessable_entity
+      flash.notice = "Erreur lors de la création de la rencontre"
     end
   end
 

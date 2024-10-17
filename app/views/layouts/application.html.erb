@@ -21,12 +21,14 @@
     <script src="https://cdn.jsdelivr.net/gh/AdrianVillamayor/Wizard-JS@1.9.9/src/wizard.min.js"></script>
     <script src="leaflet-geocoder-ban.min.js"></script>
     <link rel="stylesheet" href="leaflet-geocoder-ban.css">
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
 
   </head>
 
   <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
     <%= render 'shared/navbar' %>
-    <%= render 'shared/flash_messages' if !flash.empty? %>
+    <%= render 'shared/flash' if !flash.empty? %>
     <%= yield %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
