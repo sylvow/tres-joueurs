@@ -4,12 +4,12 @@ class MeetingsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[index show]
 
   def index
-    # Meeting.all.each do |meeting|
-    #   if meeting.date <= Date.today - 1
-    #     meeting.finished!
-    #     meeting.save!
-    #   end
-    # end
+    Meeting.where.not(status: :finished).each do |meeting|
+      if meeting.date <= Date.today - 1
+        meeting.finished!
+        meeting.save!
+      end
+    end
 
     @meetings = Meeting.where.not(status: :cancelled).where.not(status: :finished).where.not(user_id: current_user)
 
@@ -93,6 +93,7 @@ class MeetingsController < ApplicationController
       flash.notice = "Rencontre pour #{@meeting.game.name} créée avec succès"
     else
       render :new, status: :unprocessable_entity
+      flash.noitce = "Erreur lors de la création de la rencontre"
     end
   end
 

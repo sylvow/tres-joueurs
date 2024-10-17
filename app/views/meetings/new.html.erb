@@ -6,6 +6,11 @@
       <a href="/meetings" class="btn-close close-button-meeting-new" aria-label="Close"></a>
     </div>
 
+      <% if @meeting.errors.any? %>
+        <% @meeting.errors.full_messages.each do |message|%>\
+          <h3><%= message %> </h3>
+        <%end%>
+      <%end%>
 
   <%= render 'shared/meeting_form' %>
 

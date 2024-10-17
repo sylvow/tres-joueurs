@@ -5,6 +5,9 @@
       data-poi-autocomplete-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
       <a href="/meetings" class="btn-close close-button-meeting-new" aria-label="Close"></a>
 
+
+
+
       <%= simple_form_for @meeting do |f| %>
         <div class="game-part" data-step-by-step-target="gameInfo">
           <%= f.input :game_id,
@@ -54,6 +57,15 @@
                         label: "Adresse",
                         input_html: { data: { poi_autocomplete_target: "address" }, class:"secondary-form"} %>
           </div>
+           <div class="d-none">
+             <%= f.input :latitude,
+                        label: "Latitude",
+                        input_html: { data: { poi_autocomplete_target: "latitude" }, class:"secondary-form"} %>
+            <%= f.input :longitude,
+                        label: "Longitude",
+                        input_html: { data: { poi_autocomplete_target: "longitude" }, class:"secondary-form"} %>
+          </div>
+
           <div class="prev-and-next d-flex justify-content-between">
             <button class="btn btn-primary btn-sm" type="button" data-action="click->step-by-step#goToGameInfo">
               <i class="fa-solid fa-arrow-left"></i>
@@ -81,7 +93,7 @@
             </button>
           </div>
           <div class="text-center pt-3">
-            <%= f.button :submit,"Soumettre", class: "btn btn-primary " %>
+            <%= f.button :submit, "Soumettre", class: "btn btn-primary " %>
             <%= link_to "Annuler", meetings_path, class: "btn btn-danger text-white" %>
           </div>
         </div>

@@ -14,17 +14,17 @@ class Meeting < ApplicationRecord
   end
 
   geocoded_by :place_address
-  after_validation :geocode, if: :will_save_change_to_place_address?
-  before_save :set_coordinates
+  # after_validation :geocode, if: :will_save_change_to_place_address?
+  # before_save :set_coordinates
 
   validates :title, :game_id, :players_needed_min, :location_type, :date, presence: true
 
   private
-  def set_coordinates
-    result = Geocoder.search(place_address)
-    unless result.blank?
-      latitude = result.first.coordinates[0]
-      longitude = result.first.coordinates[1]
-    end
-  end
+  # def set_coordinates
+  #   result = Geocoder.search(place_address)
+  #   unless result.blank?
+  #     latitude = result.first.coordinates[0]
+  #     longitude = result.first.coordinates[1]
+  #   end
+  # end
 end
