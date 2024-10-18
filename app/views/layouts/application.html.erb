@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
     <link rel="stylesheet" href="/css/tom-select.default.css">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <%= stylesheet_link_tag "https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" %>
@@ -19,17 +21,15 @@
     <script src="https://api.mapbox.com/search-js/v1.0.0-beta.21/web.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AdrianVillamayor/Wizard-JS@1.9.9/styles/css/main.css">
     <script src="https://cdn.jsdelivr.net/gh/AdrianVillamayor/Wizard-JS@1.9.9/src/wizard.min.js"></script>
-    <script src="leaflet-geocoder-ban.min.js"></script>
-    <link rel="stylesheet" href="leaflet-geocoder-ban.css">
     <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
     <%= render 'shared/navbar' %>
     <%= render 'shared/flash' if !flash.empty? %>
     <%= yield %>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>
